@@ -1,7 +1,7 @@
 {
  "paper": true,
- "generated_at": "2026-11-08T22:47:04+01:00",
- "data_asof": "2026-11-08T22:45:40+01:00",
+ "generated_at": "2026-11-08T22:47:42+01:00",
+ "data_asof": "2026-11-08T22:47:42+01:00",
  "start_sol": 3.0,
  "cash_sol": 3.0,
  "equity_sol": 3.0,
@@ -14,25 +14,26 @@
  "open_positions": 0,
  "win_rate": null,
  "last_poll": {
-  "timestamp": "2026-11-08T22:45:40+01:00",
+  "timestamp": "2026-11-08T22:47:42+01:00",
   "mode": "NIGHT",
-  "slot": 467070750,
+  "slot": 467071209,
   "wallets_polled": 5,
   "wallets_total": 5,
-  "eligible_wallets": 2,
+  "eligible_wallets": 1,
   "baseline_wallets": 0,
-  "parsed_transactions": 0,
+  "parsed_transactions": 24,
   "new_swap_events": 0,
   "convergence_signals": 0,
   "backlog_wallets": [
    "Daumen"
   ],
   "errors": [],
-  "sol_usd": 88.48,
-  "market_data_at": "2026-11-08T22:45:40+01:00",
+  "sol_usd": 88.38,
+  "market_data_at": "2026-11-08T22:47:42+01:00",
   "rpc_calls": {
    "getSlot": 1,
    "getSignaturesForAddress": 5,
+   "getTransaction": 24,
    "DexScreener": 1
   }
  },
@@ -123,9 +124,41 @@
    "timestamp": "2026-11-08T22:45:40+01:00",
    "equity_sol": 3.0,
    "stale": false
+  },
+  {
+   "timestamp": "2026-11-08T22:47:42+01:00",
+   "equity_sol": 3.0,
+   "stale": false
   }
  ],
  "decisions": [
+  {
+   "timestamp": "2026-11-08T22:47:42+01:00",
+   "paper": true,
+   "action": "POLL",
+   "reason": "5/5 wallets checked; 0 new swaps; 0 convergence signals",
+   "mode": "NIGHT",
+   "slot": 467071209,
+   "wallets_polled": 5,
+   "wallets_total": 5,
+   "eligible_wallets": 1,
+   "baseline_wallets": 0,
+   "parsed_transactions": 24,
+   "new_swap_events": 0,
+   "convergence_signals": 0,
+   "backlog_wallets": [
+    "Daumen"
+   ],
+   "errors": [],
+   "sol_usd": 88.38,
+   "market_data_at": "2026-11-08T22:47:42+01:00",
+   "rpc_calls": {
+    "getSlot": 1,
+    "getSignaturesForAddress": 5,
+    "getTransaction": 24,
+    "DexScreener": 1
+   }
+  },
   {
    "timestamp": "2026-11-08T22:45:40+01:00",
    "paper": true,
@@ -631,8 +664,8 @@
    "win_rate": 0.554294175715696,
    "hold_median_s": 211.5,
    "hold_samples": 10,
-   "eligible": true,
-   "status": "qualified historical seed",
+   "eligible": false,
+   "status": "paused: address activity too noisy (>=40 successful touches/30m)",
    "stats_asof": "2026-10-25T22:20:00+01:00",
    "stats_label": "2026-10-25 22:20 CET",
    "source": {
