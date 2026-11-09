@@ -193,7 +193,7 @@ $('chg').innerHTML='<span class="'+cls(pnl)+'">'+(pnl>0?'▲':pnl<0?'▼':'■')
 $('usd').textContent=px()?(S.usd?'= '+f(D.equity_sol)+' SOL':'≈ $'+(D.equity_sol*px()).toFixed(2))+' at SOL $'+px()+' (DexScreener, '+tm(p.market_data_at)+')':'USD hidden: no SOL price in data';
 drawChart();renderTrades();renderStats();renderRecap();renderRisk();renderHist();renderWhales();renderAgents();renderSignals();renderFeed();renderHealth();renderAcct();homeCta();ttlRight();tick();if(typeof lcSync==='function'&&LC)lcSync()}
 function homeCta(){const ps=D.positions||[],b=$('homeOpen');b.classList.toggle('none',!ps.length);b.innerHTML=ps.length?'<span><i class="pulse"></i>'+ps.length+' open trade'+(ps.length>1?'s':'')+': '+ps.map(p=>esc(p.symbol)+' <span class="'+cls(p.unrealized_pnl_sol)+'">'+samt(p.unrealized_pnl_sol)+'</span>').join(' · ')+'</span><i>Live ›</i>':'<span>No open trades · watching '+((D.whales||[]).filter(w=>w.eligible).length)+' wallets</span><i>Trades ›</i>'}
-function drawChart(){if(!D)return;EQ.render()}
+function drawChart(){if(!D)return;if(typeof R!=="undefined")EQ.R=R;EQ.render()}
 const EQ={
   all:[],vis:[],geom:null,R:'live',follow:true,endT:null,spanMs:null,minSpan:15*60e3,
   scrubbing:false,panning:false,mode:null,holdTimer:null,origin:null,lastPan:null,vel:0,raf:0,
@@ -247,7 +247,7 @@ const EQ={
       /* Position vertically near last point but keep fully inside chart */
       const r=el.getBoundingClientRect(),yy=(L[1]/H)*r.height;endPill.style.top=Math.max(40,Math.min(r.height-48,yy))+'px';endPill.style.transform='translateY(-50%)';
       endPill.innerHTML='<span class="v">'+f(last.y)+'</span><span class="p">'+(showCh<0?'−':'+')+f(Math.abs(showCh))+' · '+(showPc<0?'−':'+')+f(Math.abs(showPc),1)+'%</span>'}
-    const away=!EQ.follow||(win.data1-win.t1>30e3);EQ.showLiveBtn(away);
+    EQ.showLiveBtn(!EQ.follow);
     EQ.geom={t0,t1,lo,hi,padL,padR,padT,padB,W,H,pw,ph,col,near,start,data0:win.data0,data1:win.data1};
     const spanH=Math.round((t1-t0)/3600e3*10)/10;
     $('cnote').textContent=vis.length+' marks · '+tm(t0)+' → '+tm(t1)+(EQ.follow?' · live':(' · '+spanH+'h window'))+' · swipe to scroll · pinch zoom · hold to scrub'},
@@ -288,7 +288,7 @@ const EQ={
   el.addEventListener('wheel',e=>{e.preventDefault();const f=e.deltaY>0?1.18:1/1.18;EQ.zoomAt(f,e.clientX)},{passive:false});
   /* Pinch zoom */
   el.addEventListener('touchstart',e=>{if(e.touches.length===2){clearHold();EQ.mode='pinch';pinch0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);span0=EQ.spanMs||(EQ.geom?(EQ.geom.t1-EQ.geom.t0):3.6e6);el.style.touchAction='none'}},{passive:true});
-  el.addEventListener('touchmove',e=>{if(EQ.mode==='pinch'&&e.touches.length===2){e.preventDefault();const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(pinch0>0){const mid=(e.touches[0].clientX+e.touches[1].clientX)/2;EQ.spanMs=span0;EQ.zoomAt(pinch0/Math.max(10,d),mid);EQ.spanMs=Math.max(EQ.minSpan,span0*(pinch0/Math.max(10,d)));EQ.render()}}},{passive:false});
+  el.addEventListener('touchmove',e=>{if(EQ.mode==='pinch'&&e.touches.length===2){e.preventDefault();const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(pinch0>0){const mid=(e.touches[0].clientX+e.touches[1].clientX)/2;const factor=pinch0/Math.max(10,d);const g=EQ.geom;if(!g)return;let span=Math.max(EQ.minSpan,Math.min(g.data1-g.data0,span0*factor));EQ.spanMs=span;EQ.follow=false;const rel=Math.max(0,Math.min(1,(mid-el.getBoundingClientRect().left)/(el.getBoundingClientRect().width||1)));const anchor=g.t0+rel*(g.t1-g.t0);EQ.endT=Math.min(g.data1,Math.max(g.data0+span,anchor+span*(g.t1-anchor)/Math.max(1,g.t1-g.t0)));EQ.render()}}},{passive:false});
   el.addEventListener('touchend',e=>{if(e.touches.length<2&&EQ.mode==='pinch')endAll()},{passive:true});
 })();
 function parts(ps,io){return (io?'<span class="chip g" style="margin-right:6px">Initials out</span>':'')+(ps&&ps.length?'<div class="lbl" style="margin:6px 0">Partial sells:</div>'+ps.map(e=>'<div class="li"><span>'+esc(/initials/.test(e.reason)?'Initials out':(e.reason||'').split(':')[0])+' · '+tm(e.timestamp)+(e.market_cap?' · '+mc(e.market_cap):'')+'</span><i>'+amt(e.amount_sol)+' · <span class="'+cls(e.pnl_sol)+'">'+samt(e.pnl_sol)+'</span></i></div>').join(''):'')}
