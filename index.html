@@ -214,7 +214,7 @@ const c=pts.map(e=>[X(e.t),Y(e.y)]);let d='M'+c[0][0].toFixed(2)+','+c[0][1].toF
 const L=c[c.length-1],ch=pts[pts.length-1].y-pts[0].y,col=ch<0?'#ff5c6c':'#2bff88',lx=Math.min(W-padR-46,Math.max(padL+46,L[0])),ly=Math.max(4,L[1]-34);
 const yTicks=(()=>{const n=4,out=[];for(let i=0;i<n;i++){const v=lo+(hi-lo)*i/(n-1);out.push(v)}return out})();
 const xTicks=(()=>{const n=t1-t0>20*3600e3?5:4,out=[];for(let i=0;i<n;i++)out.push(t0+(t1-t0)*i/(n-1));return out})();
-let grid='';yTicks.forEach(v=>{const y=Y(v);grid+='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+y+'" y2="'+y+'" stroke="#1a1c1f" stroke-width="1"/>';grid+='<text x="'+(padL-6)+'" y="'+(y+4)+'" fill="#8b9098" font-size="10" text-anchor="end" font-variant-numeric="tabular-nums">'+f(v)+'</text>'});
+let grid='';yTicks.forEach((v,i)=>{const y=Y(v);grid+='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+y+'" y2="'+y+'" stroke="#1a1c1f" stroke-width="1"/>';grid+='<text x="'+(padL-6)+'" y="'+(y+4)+'" fill="#8b9098" font-size="10" text-anchor="end" font-variant-numeric="tabular-nums">'+f(v)+(i===yTicks.length-1?' SOL':'')+'</text>'});
 xTicks.forEach(t=>{const x=X(t);grid+='<text x="'+x+'" y="'+(H-8)+'" fill="#8b9098" font-size="10" text-anchor="middle">'+tm(t)+'</text>'});
 let startLayer='';if(near){const by=Y(start);startLayer='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+by+'" y2="'+by+'" stroke="#3a3d42" stroke-dasharray="3 5"/><text x="'+(W-padR)+'" y="'+(by-4)+'" fill="#6a6f76" font-size="9" text-anchor="end">start '+f(start)+'</text>'}
 else{startLayer='<text x="'+(W-padR)+'" y="'+(padT+10)+'" fill="#6a6f76" font-size="9" text-anchor="end">start '+f(start)+' ↑</text>'}
