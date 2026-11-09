@@ -76,6 +76,22 @@ details summary{list-style:none;cursor:pointer}details summary::-webkit-details-
 nav{position:fixed;left:0;right:0;bottom:0;background:rgba(0,0,0,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:7px 0 calc(7px + env(safe-area-inset-bottom));z-index:10}nav div{display:flex;justify-content:space-around;width:100%;max-width:480px}nav a{color:var(--m);text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;min-width:56px}nav a{-webkit-tap-highlight-color:transparent;transition:color .2s}nav a.on{color:var(--g);text-shadow:0 0 12px rgba(43,255,136,.45)}nav a.on svg{filter:drop-shadow(0 0 6px rgba(43,255,136,.55))}nav svg{width:22px;height:22px}nav .nb{position:absolute;top:-4px;right:8px;background:var(--r);color:#fff;font-size:10px;font-weight:800;border-radius:9px;padding:0 5px;min-width:16px;text-align:center}nav .nb:empty{display:none}
 .compact .box{padding:10px;margin-bottom:7px}.compact .bal{font-size:40px}.compact .chart svg{height:140px}.compact section{margin-bottom:18px}.compact .act{padding:7px 0}
 @media(min-width:700px){.cards .box{flex-basis:46%}}
+/* live chart v2 */
+.lc-sym{flex-wrap:wrap}.lc-status{font:700 11px -apple-system,system-ui,sans-serif;letter-spacing:.04em;padding:3px 8px;border-radius:999px;border:1px solid #333;color:#d7dadf}.lc-status.open{border-color:rgba(43,255,136,.5);color:var(--g)}.lc-status.closed{color:var(--m)}
+.lc-pxrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.lc-chg{font:800 14px -apple-system,system-ui,sans-serif;padding:4px 10px;border-radius:999px;font-variant-numeric:tabular-nums;background:#1b1d20;color:#d7dadf}.lc-chg.up{color:#00140a;background:var(--g);box-shadow:0 0 16px rgba(43,255,136,.4)}.lc-chg.dn{color:#fff;background:var(--r);box-shadow:0 0 16px rgba(255,92,108,.35)}
+.lc-pill.stale{color:#ffb84d;border-color:rgba(255,184,77,.45);box-shadow:none}
+.lc-read{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px 8px;padding:8px 14px;min-height:64px;font-variant-numeric:tabular-nums;border-bottom:1px solid #121417;flex:none}
+.lc-read .k{min-width:0}.lc-read .k span{display:block;font-size:10px;color:var(--m);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}.lc-read .k b{display:block;font-size:12.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lc-read .k b.up{color:var(--g)}.lc-read .k b.dn{color:var(--r)}
+.lc-read .tag{font-weight:800;color:var(--g)}.lc-read .tag.x{color:#fff}
+.lc-ctrl{gap:8px;padding:6px 12px;align-items:center}.lc-seg{display:inline-flex;background:#0b0c0e;border:1px solid #1f2226;border-radius:999px;padding:2px;gap:2px}.lc-ctrl .lc-seg button{border:0;background:transparent;padding:6px 10px;font-size:12px}.lc-ctrl .lc-seg button.on{background:var(--g);color:#000}
+.lc-ctrl .lc-tg{padding:6px 11px;font-size:12px}.lc-ctrl .lc-tg.on{background:rgba(43,255,136,.12);color:var(--g);border-color:rgba(43,255,136,.45);box-shadow:none}
+.lc-stage{cursor:crosshair;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.lc-golive{position:absolute;right:78px;bottom:36px;z-index:2;background:var(--g);color:#000;border:0;border-radius:999px;padding:7px 12px;font:800 12px -apple-system,system-ui,sans-serif;box-shadow:0 0 18px rgba(43,255,136,.45);cursor:pointer;transition:opacity .2s,transform .2s}.lc-golive.hide{opacity:0;transform:translateY(6px);pointer-events:none}
+.lc-hint{position:absolute;left:50%;top:8px;transform:translateX(-50%);z-index:2;background:rgba(10,12,14,.85);border:1px solid #22262b;color:#c9cdd2;font-size:11px;padding:5px 10px;border-radius:999px;pointer-events:none;white-space:nowrap;max-width:94%;overflow:hidden;text-overflow:ellipsis;transition:opacity .4s}.lc-hint.off{opacity:0}
+.lc-legend{gap:6px 12px;padding:7px 14px}.lc-legend i{font-style:normal}.lc-legend .e{color:#7aa2ff}.lc-legend .s{color:var(--r)}.lc-legend .k{color:#ffd166}.lc-legend .p{color:#ffb84d}.lc-legend .io{color:#c77dff}.lc-legend .x{color:#fff}.lc-legend .q{color:#7ef0c0}
+.lc-foot{padding:6px 14px calc(10px + env(safe-area-inset-bottom));font-size:10.5px}
+@media(max-width:380px){.lc-read{grid-template-columns:repeat(4,minmax(0,1fr))}.lc-ctrl .lc-seg button{padding:6px 8px}}
+@media (prefers-reduced-motion:reduce){.lc-golive,.lc-hint{transition:none}}
 </style></head><body><div class="toast" id="toast" role="status" aria-live="polite"></div><header class="appbar"><div class="top"><span class="badge">PAPER</span><span class="clock" id="clock" aria-label="Current time Europe/Amsterdam">—</span><span class="mode" id="mode">—</span></div><div class="ttl"><b id="ttl">Home</b><span id="ttlr"></span></div><div class="ptr" id="ptr">Release to refresh</div></header>
 <main class="app" id="app">
 <div class="panel on" id="tab-home" data-tab="home" role="tabpanel" aria-label="Home">
@@ -114,42 +130,37 @@ nav{position:fixed;left:0;right:0;bottom:0;background:rgba(0,0,0,.94);backdrop-f
   <div class="livechart-sheet">
     <div class="lc-head">
       <div class="lc-head-top">
-        <div>
-          <div class="lc-sym"><i class="pulse"></i><span id="lcTitle">—</span><span class="chip g">PAPER</span></div>
-          <div class="lc-px up" id="lcPx">—</div>
-          <div class="lc-sub">
-            <span class="lc-pill live" id="lcLivePill">LIVE quote</span>
-            <span id="lcPnl">PnL —</span>
-            <span id="lcEntryMeta">Entry —</span>
-            <span id="lcAge">—</span>
-          </div>
+        <div style="min-width:0">
+          <div class="lc-sym"><i class="pulse" id="lcPulse"></i><span id="lcTitle">—</span><span class="chip g">PAPER</span><span class="lc-status" id="lcStatus">—</span></div>
+          <div class="lc-pxrow"><span class="lc-px up" id="lcPx">—</span><span class="lc-chg" id="lcChg">—</span></div>
+          <div class="lc-sub"><span class="lc-pill live" id="lcLivePill">LIVE</span><span id="lcPnl">—</span><span id="lcEntryMeta">—</span></div>
         </div>
         <button type="button" class="lc-close" id="lcClose" aria-label="Close chart">Close</button>
       </div>
     </div>
-    <div class="lc-ctrl" id="lcTf" role="toolbar" aria-label="Candle timeframe">
-      <button type="button" data-tf="1" class="on">1m</button>
-      <button type="button" data-tf="5">5m</button>
-      <button type="button" data-tf="15">15m</button>
-      <button type="button" data-tf="60">1H</button>
+    <div class="lc-read" id="lcRead" aria-live="off"></div>
+    <div class="lc-ctrl">
+      <div class="lc-seg" id="lcTf" role="toolbar" aria-label="Candle timeframe"><button type="button" data-tf="1" class="on">1m</button><button type="button" data-tf="5">5m</button><button type="button" data-tf="15">15m</button><button type="button" data-tf="60">1H</button></div>
+      <div class="lc-seg" id="lcRange" role="toolbar" aria-label="Range"><button type="button" data-r="trade" class="on">Trade</button><button type="button" data-r="30m">30m</button><button type="button" data-r="2h">2h</button><button type="button" data-r="6h">6h</button><button type="button" data-r="all">All</button></div>
     </div>
-    <div class="lc-ctrl" id="lcUnit" role="toolbar" aria-label="Price unit">
-      <button type="button" data-unit="sol" class="on">Price (SOL)</button>
-      <button type="button" data-unit="mc">Market cap</button>
+    <div class="lc-ctrl">
+      <div class="lc-seg" id="lcUnit" role="toolbar" aria-label="Y axis"><button type="button" data-unit="mc" class="on">MCap</button><button type="button" data-unit="usd">Price</button></div>
+      <div class="lc-seg" id="lcStyle" role="toolbar" aria-label="Chart style"><button type="button" data-s="candle" class="on">Candles</button><button type="button" data-s="line">Line</button></div>
+      <button type="button" class="lc-tg on" id="lcVol" aria-pressed="true">Vol</button>
+      <button type="button" class="lc-tg on" id="lcAuto" aria-pressed="true" title="Auto-fit the Y axis">Auto Y</button>
     </div>
     <div class="lc-stage" id="lcStage">
-      <canvas id="lcCanvas" width="900" height="520" aria-label="Candlestick chart"></canvas>
-      <div class="lc-cross" id="lcCross"><i class="v"></i><i class="h"></i><div class="lc-tip" id="lcTip"></div></div>
+      <canvas id="lcCanvas" width="900" height="520" aria-label="Candlestick chart with trade markers"></canvas>
+      <button type="button" class="lc-golive hide" id="lcGoLive">Live ⟶</button>
+      <div class="lc-hint" id="lcHint">Drag to pan · hold or tap to scrub · pinch to zoom · drag the right axis to stretch</div>
     </div>
     <div class="lc-legend">
-      <i class="e">━ entry</i>
-      <i class="s">━ stop (−30% trail)</i>
-      <i class="p">● partial sell</i>
-      <i class="q">● live quote (separate from candles)</i>
+      <i class="e">┅ entry</i><i class="s">┅ trailing stop</i><i class="k">┈ peak</i><i class="p">▼ partial sell</i><i class="io">◆ initials out</i><i class="x">✕ exit</i><i class="q">● live quote</i>
     </div>
-    <div class="lc-foot" id="lcNote">Candles: GeckoTerminal public OHLCV. Live quote: DexScreener ~1s browser poll. No simulated ticks.</div>
+    <div class="lc-foot" id="lcNote">Candles: GeckoTerminal public OHLCV in USD (market cap = price × our entry MC/price ratio). Live: DexScreener ~1s browser poll, separate from candles. No simulated ticks.</div>
   </div>
 </div>
+
 <script>
 "use strict";
 const TZ='Europe/Amsterdam';let D=null,R='live',ALL=false,PS='tonight',HF='all';
@@ -178,7 +189,7 @@ function render(){document.querySelectorAll('.sk').forEach(e=>e.classList.remove
 $('mode').textContent=(p.mode||'—').split(':')[0];$('bal').innerHTML=S.usd&&px()?'$'+(D.equity_sol*px()).toFixed(2):f(D.equity_sol)+'<small>SOL</small>';
 $('chg').innerHTML='<span class="'+cls(pnl)+'">'+(pnl>0?'▲':pnl<0?'▼':'■')+' '+samt(pnl)+' ('+pct(pc)+')</span><span class="pillx">'+f(D.multiplier,2)+'x</span>';
 $('usd').textContent=px()?(S.usd?'= '+f(D.equity_sol)+' SOL':'≈ $'+(D.equity_sol*px()).toFixed(2))+' at SOL $'+px()+' (DexScreener, '+tm(p.market_data_at)+')':'USD hidden: no SOL price in data';
-drawChart();renderTrades();renderStats();renderRecap();renderRisk();renderHist();renderWhales();renderAgents();renderSignals();renderFeed();renderHealth();renderAcct();homeCta();ttlRight();tick()}
+drawChart();renderTrades();renderStats();renderRecap();renderRisk();renderHist();renderWhales();renderAgents();renderSignals();renderFeed();renderHealth();renderAcct();homeCta();ttlRight();tick();if(typeof lcSync==='function'&&LC)lcSync()}
 function homeCta(){const ps=D.positions||[],b=$('homeOpen');b.classList.toggle('none',!ps.length);b.innerHTML=ps.length?'<span><i class="pulse"></i>'+ps.length+' open trade'+(ps.length>1?'s':'')+': '+ps.map(p=>esc(p.symbol)+' <span class="'+cls(p.unrealized_pnl_sol)+'">'+samt(p.unrealized_pnl_sol)+'</span>').join(' · ')+'</span><i>Live ›</i>':'<span>No open trades · watching '+((D.whales||[]).filter(w=>w.eligible).length)+' wallets</span><i>Trades ›</i>'}
 function drawChart(){let pts=(D.equity||[]).map(e=>({t:Date.parse(e.timestamp),y:e.equity_sol}));if(R!=='live'){const c=Date.now()-R*3600e3;pts=pts.filter(e=>e.t>=c)}
 if(!pts.length){$('chart').innerHTML='<svg viewBox="0 0 360 190"></svg>';$('cnote').textContent='No equity history in this range';return}
@@ -194,7 +205,7 @@ if(!ps.length){$('tlist').innerHTML='<div class="box"><div class="empty" style="
 $('tlist').innerHTML=ps.map(p=>{const u=p.unrealized_pnl_sol,pc=p.unrealized_pnl_pct,st=p.stop_mc,c=nil(u)?'flat':cls(u),cp=p.entry_price_sol&&p.entry_mc&&p.current_mc?p.entry_price_sol*p.current_mc/p.entry_mc:null;
 return '<div class="box '+(u>0?'pos':u<0?'neg':'')+'"><div class="trh"><div><b>'+esc(p.symbol||'—')+'</b>'+(p.initials_out?' <span class="chip g">Initials out</span>':'')+'<small>'+esc(p.name||'—')+(p.mark_stale?' · <span class="dn">mark stale</span>':'')+'</small></div><div class="pl '+c+'">'+samt(u)+'<small><br>'+pct(pc)+'</small></div></div>'+
 '<div class="kv"><div><span>Entry '+(S.price?'price':'MC')+'</span><b>'+lvl(p.entry_mc,p.entry_price_sol)+'</b></div><div><span>Now</span><b>'+lvl(p.current_mc,cp)+'</b></div><div><span>'+(p.trail_active?'Trailing stop':'Stop (−30%)')+'</span><b class="dn">'+lvl(st,p.stop_price_sol)+'</b></div><div><span>Peak</span><b>'+lvl(p.peak_mc,p.peak_price_sol)+'</b></div><div><span>Next scale-out +'+((p.tp_step_next||1)*10)+'%</span><b class="up">'+lvl(p.tp_mc,p.tp_price_sol)+'</b></div><div><span>Remaining</span><b>'+(nil(p.remaining_pct)?'—':f(p.remaining_pct,0)+'%')+'</b></div><div><span>To next</span><b>'+(nil(p.tp_mc)||nil(st)||nil(p.current_mc)?'—':f(Math.max(0,Math.min(100,(p.current_mc-st)/(p.tp_mc-st)*100)),0)+'%')+'</b></div><div><span>Size</span><b>'+amt(p.remaining_cost_sol)+'</b></div><div><span>Of stack</span><b>'+(nil(p.stack_pct)?'—':f(p.stack_pct,1)+'%')+'</b></div><div><span>Opened</span><b>'+dtm(p.opened_at)+'</b></div></div>'+(nil(p.tp_mc)||nil(st)||nil(p.current_mc)?'':'<div class="lbl" style="display:flex;justify-content:space-between"><span class="dn">stop '+mc(st)+'</span><span class="up">next +'+((p.tp_step_next||1)*10)+'% '+mc(p.tp_mc)+'</span></div><div class="bar" role="progressbar" aria-label="Progress from stop to take-profit"><i style="width:'+Math.max(0,Math.min(100,(p.current_mc-st)/(p.tp_mc-st)*100))+'%"></i></div>')+'<div class="lbl">In trade <b data-open="'+esc(p.opened_at)+'" style="color:#fff">'+dur(since(p.opened_at))+'</b></div>'+
-parts(p.partials,false)+'<button type="button" class="btn live" data-chart="'+esc(p.mint)+'" data-sym="'+esc(p.symbol||'')+'" data-entry-sol="'+(p.entry_price_sol??'')+'" data-entry-usd="'+(p.entry_price_usd??'')+'" data-entry-mc="'+(p.entry_mc??'')+'" data-stop-sol="'+(p.stop_price_sol??'')+'" data-stop-mc="'+(p.stop_mc??'')+'" data-peak-sol="'+(p.peak_price_sol??'')+'" data-opened="'+esc(p.opened_at||'')+'" data-pair="'+esc(p.pair||'')+'" data-pnl="'+(p.unrealized_pnl_sol??'')+'" data-pnl-pct="'+(p.unrealized_pnl_pct??'')+'" data-partials="'+esc(JSON.stringify((p.partials||p.exits||[]).map(e=>({t:e.timestamp,mc:e.market_cap,reason:e.reason,pnl:e.pnl_sol}))))+'">Live chart</button><div class="why"><em>Why we’re in:</em> '+esc(p.why||'—')+wl(p.triggered_by)+'</div></div>'}).join('')}
+parts(p.partials,false)+'<button type="button" class="btn live" data-chart="'+esc(p.mint)+'" data-sym="'+esc(p.symbol||'')+'" data-entry-sol="'+(p.entry_price_sol??'')+'" data-entry-usd="'+(p.entry_price_usd??'')+'" data-entry-mc="'+(p.entry_mc??'')+'" data-stop-sol="'+(p.stop_price_sol??'')+'" data-stop-mc="'+(p.stop_mc??'')+'" data-peak-sol="'+(p.peak_price_sol??'')+'" data-opened="'+esc(p.opened_at||'')+'" data-pair="'+esc(p.pair||'')+'" data-pnl="'+(p.unrealized_pnl_sol??'')+'" data-initials="'+(p.initials_out?1:0)+'" data-pnl-pct="'+(p.unrealized_pnl_pct??'')+'" data-partials="'+esc(JSON.stringify((p.partials||p.exits||[]).map(e=>({t:e.timestamp,mc:e.market_cap,reason:e.reason,pnl:e.pnl_sol}))))+'">Live chart</button><div class="why"><em>Why we’re in:</em> '+esc(p.why||'—')+wl(p.triggered_by)+'</div></div>'}).join('')}
 function renderStats(){const s=(D.stats||{})[PS];if(!s){$('stats').innerHTML='<div class="empty">Stats not in data yet</div>';return}
 const it=[['Realised',samt(s.realized_pnl_sol),cls(s.realized_pnl_sol)],['Unrealised',samt(s.unrealized_pnl_sol),cls(s.unrealized_pnl_sol)],['Trades',s.trades,''],['Win rate',nil(s.win_rate)?'—':f(s.win_rate*100,1)+'%',''],['Profit factor',nil(s.profit_factor)?'—':f(s.profit_factor,2),''],['Max DD',s.trades?amt(s.max_drawdown_sol):'—','dn'],['Avg win',amt(s.avg_win_sol),'up'],['Avg loss',amt(s.avg_loss_sol),'dn'],['Streak',s.streak?(s.streak>0?s.streak+'W':-s.streak+'L'):'—',s.streak>0?'up':s.streak<0?'dn':''],['Best',s.best?esc(s.best.symbol)+' '+samt(s.best.pnl_sol):'—','up'],['Worst',s.worst?esc(s.worst.symbol)+' '+samt(s.worst.pnl_sol):'—','dn'],['W / L',s.wins+' / '+s.losses,'']];
 $('stats').innerHTML=it.map(x=>'<div><span>'+x[0]+'</span><b class="'+x[2]+'">'+x[1]+'</b></div>').join('')+(s.trades?'':'<div style="grid-column:1/-1"><span>No closed trades in this period yet.</span></div>')}
@@ -207,7 +218,7 @@ const hr=k.hard_rules||[];$('rules').innerHTML=hr.length?hr.map(r=>'<div class="
 const catChip=c=>{c=c||'other';const col=/take|whales exited/.test(c)?'g':/stop/.test(c)?'r':/night/.test(c)?'y':'';return '<span class="chip '+col+'">'+esc(c)+'</span>'};
 function renderHist(){const all=(D.closed_view||[]).slice().reverse(),h=all.filter(t=>HF==='all'||(HF==='win'?t.pnl_sol>0:t.pnl_sol<=0));
 $('hist').innerHTML=h.length?h.map(t=>'<details class="box '+(t.pnl_sol>0?'pos':'neg')+'"><summary><div class="trh"><div><b>'+esc(t.symbol||'—')+'</b><small>'+dtm(t.closed_at)+' · held '+dur(t.hold_s)+'</small></div><div class="pl '+cls(t.pnl_sol)+'">'+samt(t.pnl_sol)+'<small><br>'+pct(t.pnl_pct)+'</small></div></div><div style="margin-top:6px">'+catChip(t.exit_category)+'</div></summary>'+
-'<div class="kv"><div><span>Entry</span><b>'+lvl(t.entry_mc)+'</b></div><div><span>Exit</span><b>'+lvl(t.exit_mc)+'</b></div><div><span>Size</span><b>'+amt(t.cost_sol)+'</b></div><div><span>Opened</span><b>'+dtm(t.opened_at)+'</b></div><div><span>Closed</span><b>'+dtm(t.closed_at)+'</b></div><div><span>Hold</span><b>'+dur(t.hold_s)+'</b></div></div><div class="lbl">Final exit: '+esc(t.exit_reason||'—')+' · P&amp;L includes partials</div>'+parts(t.partials,t.initials_out)+'<button type="button" class="btn live" data-chart="'+esc(t.mint)+'" data-sym="'+esc(t.symbol||'')+'" data-entry-sol="'+(t.entry_price_sol??'')+'" data-entry-usd="'+(t.entry_price_usd??'')+'" data-entry-mc="'+(t.entry_mc??'')+'" data-stop-sol="'+(t.stop_price_sol??'')+'" data-stop-mc="'+(t.stop_mc??'')+'" data-peak-sol="'+(t.peak_price_sol??'')+'" data-opened="'+esc(t.opened_at||'')+'" data-closed="'+esc(t.closed_at||'')+'" data-pair="'+esc(t.pair||'')+'" data-pnl="'+(t.pnl_sol??'')+'" data-pnl-pct="'+(t.pnl_pct??'')+'" data-partials="'+esc(JSON.stringify((t.partials||[]).map(e=>({t:e.timestamp,mc:e.market_cap,reason:e.reason,pnl:e.pnl_sol}))))+'">Live chart</button><div class="why"><em>Why we’re in:</em> '+esc(t.why||'—')+wl(t.triggered_by)+'</div></details>').join(''):'<div class="box"><div class="empty">'+(all.length?'No '+(HF==='win'?'winning':'losing')+' trades yet':'No closed paper trades yet')+'</div></div>'}
+'<div class="kv"><div><span>Entry</span><b>'+lvl(t.entry_mc)+'</b></div><div><span>Exit</span><b>'+lvl(t.exit_mc)+'</b></div><div><span>Size</span><b>'+amt(t.cost_sol)+'</b></div><div><span>Opened</span><b>'+dtm(t.opened_at)+'</b></div><div><span>Closed</span><b>'+dtm(t.closed_at)+'</b></div><div><span>Hold</span><b>'+dur(t.hold_s)+'</b></div></div><div class="lbl">Final exit: '+esc(t.exit_reason||'—')+' · P&amp;L includes partials</div>'+parts(t.partials,t.initials_out)+'<button type="button" class="btn live" data-chart="'+esc(t.mint)+'" data-sym="'+esc(t.symbol||'')+'" data-entry-sol="'+(t.entry_price_sol??'')+'" data-entry-usd="'+(t.entry_price_usd??'')+'" data-entry-mc="'+(t.entry_mc??'')+'" data-stop-sol="'+(t.stop_price_sol??'')+'" data-stop-mc="'+(t.stop_mc??'')+'" data-peak-sol="'+(t.peak_price_sol??'')+'" data-opened="'+esc(t.opened_at||'')+'" data-closed="'+esc(t.closed_at||'')+'" data-pair="'+esc(t.pair||'')+'" data-pnl="'+(t.pnl_sol??'')+'" data-initials="'+(t.initials_out?1:0)+'" data-exit-mc="'+(t.exit_mc??'')+'" data-exit-reason="'+esc(t.exit_reason||'')+'" data-pnl-pct="'+(t.pnl_pct??'')+'" data-partials="'+esc(JSON.stringify((t.partials||[]).map(e=>({t:e.timestamp,mc:e.market_cap,reason:e.reason,pnl:e.pnl_sol}))))+'">Live chart</button><div class="why"><em>Why we’re in:</em> '+esc(t.why||'—')+wl(t.triggered_by)+'</div></details>').join(''):'<div class="box"><div class="empty">'+(all.length?'No '+(HF==='win'?'winning':'losing')+' trades yet':'No closed paper trades yet')+'</div></div>'}
 function renderWhales(){const ws=(D.whales||[]).slice().sort((a,b)=>(b.eligible-a.eligible)||((b.copy_pnl_sol||0)-(a.copy_pnl_sol||0))||((b.pnl_sol_30d||0)-(a.pnl_sol_30d||0)));$('wcount').textContent=ws.filter(w=>w.eligible).length+' qualified · '+ws.length+' watched';
 $('wl').innerHTML=ws.length?ws.map((w,i)=>'<div class="box"><div class="ch" style="margin:0"><div class="ic">'+(i+1)+'</div><div style="min-width:0"><b>'+esc(w.label)+'</b><small>'+(w.user_override?'<span class="chip y">'+esc(w.status)+'</span>':w.eligible?'<span class="up">qualified</span>':'probation · '+esc(String(w.status||'').replace(/^probation: /,'')))+'</small></div><span class="dot'+(w.eligible?'':' off')+'"></span></div>'+
 '<div class="kv"><div><span>Last activity</span><b>'+(w.last_activity?dur(since(w.last_activity))+' ago':'—')+'</b></div><div><span>Buys seen (30m)</span><b>'+(w.signalled_buys??'—')+'</b></div><div><span>Our copies</span><b>'+(w.copies||0)+(w.copies?' · '+w.copy_wins+'W':'')+'</b></div><div><span>Copy P&amp;L</span><b class="'+cls(w.copy_pnl_sol)+'">'+(w.copies?samt(w.copy_pnl_sol):'—')+'</b></div><div><span>30d PnL (research)</span><b>'+(nil(w.pnl_sol_30d)?'—':f(w.pnl_sol_30d,0)+' SOL')+'</b></div><div><span>Win rate (research)</span><b>'+(nil(w.win_rate)?'—':f(w.win_rate*100,0)+'%')+'</b></div></div>'+
@@ -265,414 +276,302 @@ if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch
 
 
 
-/* Live chart — smooth neon terminal. Real GeckoTerminal OHLCV + DexScreener quotes only. No invented ticks. */
-let LC=null, lcTimer=null, lcLive=[], lcRaf=0, lcResizeObs=null;
-const LC_TF={1:{path:'minute',agg:1,limit:180,label:'1m'},5:{path:'minute',agg:5,limit:180,label:'5m'},15:{path:'minute',agg:15,limit:180,label:'15m'},60:{path:'hour',agg:1,limit:168,label:'1H'}};
+/* Live chart v2 — TradingView-style canvas. Real GeckoTerminal OHLCV (USD) + DexScreener ~1s quote only. No simulated ticks. */
+let LC=null,lcTimer=null,lcRaf=0,lcRO=null;
+const LC_TF={1:{path:'minute',agg:1,sec:60},5:{path:'minute',agg:5,sec:300},15:{path:'minute',agg:15,sec:900},60:{path:'hour',agg:1,sec:3600}};
 const LC_REDUCE=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-function lcNum(x){const n=parseFloat(x); return isFinite(n)?n:null}
-function lcFmtSol(v, span){
-  if(v==null||!isFinite(v)) return '—';
-  const a=Math.abs(v), s=span!=null?Math.abs(span):a;
-  // Stable readable labels for tiny meme prices (no jumping format family within a scale).
-  if(s>=1e-2) return v.toFixed(4)+' SOL';
-  if(s>=1e-4) return v.toFixed(6)+' SOL';
-  if(s>=1e-6) return v.toFixed(9).replace(/0+$/,'').replace(/\.$/,'')+' SOL';
-  return v.toExponential(3).replace('e-','e−')+' SOL';
-}
-function lcFmtMc(v){return v==null?'—':(v>=1e6?'$'+f(v/1e6,2)+'M':v>=1e3?'$'+f(v/1e3,1)+'K':'$'+f(v,0))}
-function lcTxt(id, text, className){
-  const el=$(id); if(!el) return;
-  if(text!=null && el.textContent!==text) el.textContent=text;
-  if(className!=null && el.className!==className) el.className=className;
-}
-function $$ (sel,root){return Array.from((root||document).querySelectorAll(sel))}
+const LC_F='-apple-system,system-ui,"Segoe UI",sans-serif',LC_M='ui-monospace,SFMono-Regular,Menlo,monospace';
+const LCC={g:'#2bff88',r:'#ff5c6c',e:'#5b8cff',s:'#ff5c6c',pk:'#ffd166',p:'#ffb84d',io:'#c77dff',live:'#7ef0c0',grid:'rgba(255,255,255,.06)',ax:'#a3a9b1'};
+const lcFHM=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
+const lcFHMS=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});
+const lcFDM=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,day:'numeric',month:'short'});
+const lcHM=t=>lcFHM.format(new Date(t*1000)),lcHMS=t=>lcFHMS.format(new Date(t*1000));
+function lcNum(x){const n=parseFloat(x);return isFinite(n)?n:null}
+function $$(sel,root){return Array.from((root||document).querySelectorAll(sel))}
+function lcMc(v){if(v==null||!isFinite(v))return'—';const a=Math.abs(v);return a>=1e9?'$'+(v/1e9).toFixed(2)+'B':a>=1e6?'$'+(v/1e6).toFixed(a>=1e8?1:2)+'M':a>=1e3?'$'+(v/1e3).toFixed(a>=1e5?0:1)+'K':'$'+v.toFixed(0)}
+function lcUsd(v){if(v==null||!isFinite(v))return'—';if(v>=1)return'$'+v.toFixed(4);const s=Number(v.toPrecision(4));return'$'+(s<1e-6?s.toExponential(3).replace('e-','e−'):String(s))}
+function lcSolTxt(v){if(v==null||!isFinite(v))return'—';return(v>=0.01?v.toFixed(4):v>=1e-6?Number(v.toPrecision(4)).toString():v.toExponential(3).replace('e-','e−'))+' SOL'}
+function lcFmt(v){return LC&&LC.unit==='mc'?lcMc(v):lcUsd(v)}
+function lcPct(p){return p==null||!isFinite(p)?'—':(p>=0?'+':'−')+Math.abs(p).toFixed(Math.abs(p)>=100?0:1)+'%'}
+function lcTxt(id,text,cn){const el=$(id);if(!el)return;if(text!=null&&el.textContent!==text)el.textContent=text;if(cn!=null&&el.className!==cn)el.className=cn}
+function lcNice(range,n){const raw=range/Math.max(1,n),mag=Math.pow(10,Math.floor(Math.log10(raw))),x=raw/mag;return(x<1.5?1:x<3?2:x<7?5:10)*mag}
+function lcAxisLbl(v,step){if(LC.unit==='mc'){const d=Math.abs(v)>=1e6||step>=1e6?1e6:1e3,dec=Math.max(0,Math.min(3,Math.ceil(-Math.log10(step/d)-1e-9)));return'$'+(v/d).toFixed(dec)+(d===1e6?'M':'K')}const dec=Math.max(0,Math.min(12,Math.ceil(-Math.log10(step)-1e-9)));return'$'+v.toFixed(dec)}
+function lcOff(t){const p=amsParts(new Date(t*1000));return(Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second)-Math.floor(t)*1000)/1000}
+/* value conversions: candles are USD; guides come as SOL/MC from the bot */
+const lcU=usd=>usd==null||!isFinite(usd)?null:(LC.unit==='mc'?(LC.K?usd*LC.K:null):usd);
+const lcUM=mc=>mc==null||!isFinite(mc)?null:(LC.unit==='mc'?mc:(LC.K?mc/LC.K:null));
+const lcMcSol=sol=>sol!=null&&LC.entrySol&&LC.entryMc?sol/LC.entrySol*LC.entryMc:null;
+function lcVsEntryUsd(usd){if(usd==null)return null;if(LC.entryUsd)return(usd/LC.entryUsd-1)*100;if(LC.K&&LC.entryMc)return(usd*LC.K/LC.entryMc-1)*100;return null}
+function lcVsEntryU(u){if(u==null||!LC.entryMc)return null;const e=lcUM(LC.entryMc);return e?(u/e-1)*100:null}
 
-function scheduleDraw(){
-  if(lcRaf) return;
-  lcRaf=requestAnimationFrame(()=>{ lcRaf=0; if(LC&&!document.hidden) drawLiveChart(); });
-}
-
+function scheduleDraw(){if(lcRaf)return;lcRaf=requestAnimationFrame(()=>{lcRaf=0;if(LC&&!document.hidden)drawLiveChart()})}
+function lcAttr(el,k){return el.getAttribute('data-'+k)||''}
 function openLiveChart(el){
-  let partials=[];
-  try{partials=JSON.parse(el.getAttribute('data-partials')||'[]')||[]}catch(e){partials=[]}
-  const prevView = (LC && LC.mint===el.getAttribute('data-chart')) ? LC.view : {x0:0,x1:1};
-  LC={
-    mint:el.getAttribute('data-chart'),
-    sym:el.getAttribute('data-sym')||'TOKEN',
-    entrySol:lcNum(el.getAttribute('data-entry-sol')),
-    entryUsd:lcNum(el.getAttribute('data-entry-usd')),
-    entryMc:lcNum(el.getAttribute('data-entry-mc')),
-    stopSol:lcNum(el.getAttribute('data-stop-sol')),
-    stopMc:lcNum(el.getAttribute('data-stop-mc')),
-    peakSol:lcNum(el.getAttribute('data-peak-sol')),
-    opened:el.getAttribute('data-opened')||'',
-    closed:el.getAttribute('data-closed')||'',
-    pair:el.getAttribute('data-pair')||'',
-    pnl:lcNum(el.getAttribute('data-pnl')),
-    pnlPct:lcNum(el.getAttribute('data-pnl-pct')),
-    partials,
-    tf:1, unit:'sol', ohlcv:null, ohlcvKey:'', candles:null,
-    view:prevView,
-    yScale:null, // locked {min,max} between candle/view changes — stops axis jump on each quote
-    dragging:false, lastX:0, pinch:null, cross:null,
-    quoteInflight:false, candleInflight:false, quoteAbort:null, candleAbort:null,
-    canvasKey:''
-  };
-  lcLive=[];
-  const modal=$('livechart');
-  modal.classList.remove('hide','lc-closing');
-  document.body.style.overflow='hidden';
-  lcTxt('lcTitle', LC.sym);
-  lcTxt('lcEntryMeta', 'Entry '+dtm(LC.opened)+' Europe/Amsterdam · '+lcFmtSol(LC.entrySol));
-  lcSetPnl(LC.pnl, LC.pnlPct);
-  lcTxt('lcNote', 'Candles: GeckoTerminal public OHLCV (real aggregates). Live quote: DexScreener ~1s browser poll — separate from candles. No simulated ticks. Pages JSON still every 5 min / on trade.');
-  lcTxt('lcPx', '…'); lcTxt('lcAge', 'fetching quote…');
-  $$('#lcTf button').forEach(b=>b.classList.toggle('on', b.getAttribute('data-tf')==='1'));
-  $$('#lcUnit button').forEach(b=>b.classList.toggle('on', b.getAttribute('data-unit')==='sol'));
-  ensureLcResize();
-  resizeLc(true);
-  refreshLiveChart(true);
-  startLcTicker();
-}
-function lcSetPnl(pnl, pct){
-  if(pnl==null){ lcTxt('lcPnl','PnL —',''); return; }
-  lcTxt('lcPnl', 'PnL '+samt(pnl)+(pct==null?'':' · '+pct.toFixed(1)+'%'), cls(pnl));
+  let partials=[];try{partials=JSON.parse(lcAttr(el,'partials')||'[]')||[]}catch(e){partials=[]}
+  const op=Date.parse(lcAttr(el,'opened'))/1000,cl=lcAttr(el,'closed')?Date.parse(lcAttr(el,'closed'))/1000:NaN;
+  const keep=LC&&LC.mint===lcAttr(el,'chart')?LC:null;
+  LC={mint:lcAttr(el,'chart'),sym:lcAttr(el,'sym')||'TOKEN',pair:lcAttr(el,'pair'),openedIso:lcAttr(el,'opened'),
+    entrySol:lcNum(lcAttr(el,'entry-sol')),entryUsd:lcNum(lcAttr(el,'entry-usd')),entryMc:lcNum(lcAttr(el,'entry-mc')),
+    stopSol:lcNum(lcAttr(el,'stop-sol')),stopMc:lcNum(lcAttr(el,'stop-mc')),peakSol:lcNum(lcAttr(el,'peak-sol')),
+    opened:isFinite(op)?op:null,closed:isFinite(cl)?cl:null,exitMc:lcNum(lcAttr(el,'exit-mc')),exitReason:lcAttr(el,'exit-reason'),
+    initials:lcAttr(el,'initials')==='1',pnl:lcNum(lcAttr(el,'pnl')),pnlPct:lcNum(lcAttr(el,'pnl-pct')),partials,
+    tf:keep?keep.tf:1,unit:keep?keep.unit:'mc',style:keep?keep.style:'candle',vol:keep?keep.vol:true,range:'trade',
+    candles:[],ckey:'',cAt:0,cInflight:false,cAbort:null,qInflight:false,qAbort:null,
+    view:null,follow:false,fpad:0,autoY:true,y:null,cross:null,scrub:false,live:null,err:'',g:null,canvasKey:''};
+  LC.K=LC.entryMc&&LC.entryUsd?LC.entryMc/LC.entryUsd:(LC.entryMc&&LC.entrySol&&px()?LC.entryMc/(LC.entrySol*px()):null);
+  if(!LC.K)LC.unit='usd';
+  const m=$('livechart');m.classList.remove('hide','lc-closing');document.body.style.overflow='hidden';
+  lcTxt('lcTitle',LC.sym);lcTxt('lcPx','…');lcTxt('lcChg','—','lc-chg');
+  lcTxt('lcEntryMeta','Entry '+(LC.opened?lcHM(LC.opened):'—')+' · '+lcMc(LC.entryMc));
+  try{if(localStorage.getItem('wd.lchint'))$('lcHint').classList.add('off');else $('lcHint').classList.remove('off')}catch(e){}
+  lcBtns();lcHeader();lcReadout();ensureLcResize();resizeLc(true);
+  lcFetchQuote();lcFetchCandles(true);startLcTicker();
 }
 function closeLiveChart(){
-  stopLcTicker();
-  if(LC){
-    if(LC.quoteAbort) try{LC.quoteAbort.abort()}catch(e){}
-    if(LC.candleAbort) try{LC.candleAbort.abort()}catch(e){}
-  }
-  const modal=$('livechart');
-  const finish=()=>{ modal.classList.add('hide'); modal.classList.remove('lc-closing'); document.body.style.overflow=''; LC=null; lcLive=[]; $('lcCross').classList.remove('on'); };
-  if(LC_REDUCE){ finish(); return; }
-  modal.classList.add('lc-closing');
-  setTimeout(finish, 160);
+  stopLcTicker();if(LC){try{LC.qAbort&&LC.qAbort.abort()}catch(e){}try{LC.cAbort&&LC.cAbort.abort()}catch(e){}}
+  const m=$('livechart'),fin=()=>{m.classList.add('hide');m.classList.remove('lc-closing');document.body.style.overflow='';LC=null};
+  if(LC_REDUCE){fin();return}m.classList.add('lc-closing');setTimeout(fin,160);
 }
-function startLcTicker(){
-  stopLcTicker();
-  lcTimer=setInterval(()=>{ if(!LC||document.hidden) return; refreshLiveChart(false); }, 1000);
-}
-function stopLcTicker(){ clearInterval(lcTimer); lcTimer=null; cancelAnimationFrame(lcRaf); lcRaf=0; }
-function ensureLcResize(){
-  const st=$('lcStage'); if(!st||lcResizeObs) return;
-  if(typeof ResizeObserver==='function'){
-    lcResizeObs=new ResizeObserver(()=>{ if(LC) resizeLc(false); });
-    lcResizeObs.observe(st);
-  }
-}
-function resizeLc(force){
-  const st=$('lcStage'), c=$('lcCanvas'); if(!st||!c||!LC) return;
-  const dpr=Math.min(window.devicePixelRatio||1, 2);
-  const w=st.clientWidth, h=Math.max(240, st.clientHeight);
-  const key=w+'x'+h+'@'+dpr;
-  if(!force && LC.canvasKey===key) return;
-  LC.canvasKey=key;
-  c.width=Math.floor(w*dpr); c.height=Math.floor(h*dpr);
-  c.style.width=w+'px'; c.style.height=h+'px';
-  const ctx=c.getContext('2d',{alpha:false});
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  scheduleDraw();
-}
+function startLcTicker(){stopLcTicker();lcTimer=setInterval(()=>{if(!LC||document.hidden)return;lcFetchQuote();lcFetchCandles(false);if(LC.follow)lcFollow();lcHeader();scheduleDraw()},1000)}
+function stopLcTicker(){clearInterval(lcTimer);lcTimer=null;cancelAnimationFrame(lcRaf);lcRaf=0}
+function ensureLcResize(){const st=$('lcStage');if(!st||lcRO||typeof ResizeObserver!=='function')return;lcRO=new ResizeObserver(()=>{if(LC)resizeLc(false)});lcRO.observe(st)}
+function resizeLc(force){const st=$('lcStage'),c=$('lcCanvas');if(!st||!c||!LC)return;const dpr=Math.min(window.devicePixelRatio||1,2),w=st.clientWidth,h=Math.max(220,st.clientHeight),key=w+'x'+h+'@'+dpr;
+  if(!force&&LC.canvasKey===key)return;LC.canvasKey=key;c.width=Math.floor(w*dpr);c.height=Math.floor(h*dpr);c.style.width=w+'px';c.style.height=h+'px';c.getContext('2d',{alpha:false}).setTransform(dpr,0,0,dpr,0,0);scheduleDraw()}
 
-async function refreshLiveChart(forceCandles){
-  if(!LC || document.hidden) return;
-  // Quote poll — skip if previous still in flight (slow network)
-  if(!LC.quoteInflight){
-    LC.quoteInflight=true;
-    const ac=new AbortController(); LC.quoteAbort=ac;
-    try{
-      const tok=await fetch('https://api.dexscreener.com/latest/dex/tokens/'+encodeURIComponent(LC.mint),{cache:'no-store',signal:ac.signal}).then(r=>{if(!r.ok)throw Error('DexScreener HTTP '+r.status);return r.json()});
-      if(!LC) return;
-      const pairs=(tok.pairs||[]).filter(p=>p.chainId==='solana').sort((a,b)=>((b.liquidity&&b.liquidity.usd)||0)-((a.liquidity&&a.liquidity.usd)||0));
-      const best=pairs[0];
-      if(!best){ lcTxt('lcPx','No Solana pair'); lcTxt('lcAge','quote unavailable'); }
-      else {
-        if(!LC.pair) LC.pair=best.pairAddress;
-        const pxSol=parseFloat(best.priceNative), pxUsd=parseFloat(best.priceUsd), fetched=Date.now();
-        LC.liveSol=pxSol; LC.liveUsd=pxUsd; LC.liveAt=fetched; LC.dex=best.dexId;
-        lcLive.push({t:fetched/1000, sol:pxSol}); if(lcLive.length>240) lcLive=lcLive.slice(-240);
-        const up=LC.entrySol!=null?pxSol>=LC.entrySol:true;
-        let pxText;
-        if(LC.unit==='mc' && LC.entrySol && LC.entryMc && pxSol) pxText=lcFmtMc(pxSol/LC.entrySol*LC.entryMc);
-        else pxText=lcFmtSol(pxSol, LC.yScale?LC.yScale.max-LC.yScale.min:null)+(isFinite(pxUsd)?' · $'+Number(pxUsd).toPrecision(4):'');
-        lcTxt('lcPx', pxText, 'lc-px '+(up?'up':'dn'));
-        if(LC.entrySol && pxSol){
-          const uPnlPct=(pxSol/LC.entrySol-1)*100;
-          const base=LC.pnl!=null?('Paper '+samt(LC.pnl)+(LC.pnlPct==null?'':' · '+LC.pnlPct.toFixed(1)+'%')):null;
-          lcTxt('lcPnl', (base?base+' · ':'')+'mark '+(uPnlPct>=0?'+':'')+uPnlPct.toFixed(1)+'% vs entry', cls(uPnlPct));
-        }
-        const age='quote '+new Date(fetched).toLocaleTimeString('en-GB',{hour12:false,timeZone:'Europe/Amsterdam'})+' Europe/Amsterdam · DexScreener · '+esc(best.dexId||'')+' · source print time unavailable';
-        lcTxt('lcAge', age);
-        scheduleDraw(); // update LIVE line only path via full draw with locked yScale
-      }
-    }catch(e){
-      if(e.name!=='AbortError') lcTxt('lcAge', 'feed error: '+e.message+' · chart may be stale');
-    }finally{
-      if(LC){ LC.quoteInflight=false; LC.quoteAbort=null; }
-    }
-  }
-
-  const spec=LC_TF[LC.tf]||LC_TF[1];
-  const key=(LC.pair||'')+'|'+spec.path+'|'+spec.agg;
-  if(!(forceCandles || LC.ohlcvKey!==key || !LC.ohlcv)) return;
-  if(!LC.pair || LC.candleInflight) return;
-  LC.candleInflight=true;
-  const cac=new AbortController(); LC.candleAbort=cac;
+/* ---------- data ---------- */
+async function lcFetchQuote(){
+  if(!LC||LC.qInflight)return;LC.qInflight=true;const ac=new AbortController();LC.qAbort=ac;const me=LC;
   try{
-    const oh=await fetch('https://api.geckoterminal.com/api/v2/networks/solana/pools/'+encodeURIComponent(LC.pair)+'/ohlcv/'+spec.path+'?aggregate='+spec.agg+'&limit='+spec.limit+'&currency=token',{cache:'no-store',signal:cac.signal}).then(r=>{if(!r.ok)throw Error('GeckoTerminal HTTP '+r.status);return r.json()});
-    if(!LC) return;
-    const prevKey=LC.ohlcvKey;
-    LC.ohlcv=((oh.data&&oh.data.attributes&&oh.data.attributes.ohlcv_list)||[]).slice().reverse();
-    LC.ohlcvKey=key;
-    LC.candles=LC.ohlcv.map(r=>({t:+r[0], o:+r[1], h:+r[2], l:+r[3], c:+r[4]})).filter(x=>isFinite(x.t)&&x.o>0&&x.h>0&&x.l>0&&x.c>0);
-    // Preserve pan/zoom unless timeframe/pair identity changed
-    if(prevKey && prevKey!==key) LC.view={x0:0,x1:1};
-    LC.yScale=null; // recompute scale for new candle set
-    scheduleDraw();
-  }catch(e){
-    if(e.name!=='AbortError') lcTxt('lcAge', ($('lcAge').textContent||'')+' · candles: '+e.message);
-  }finally{
-    if(LC){ LC.candleInflight=false; LC.candleAbort=null; }
-  }
+    const j=await fetch('https://api.dexscreener.com/latest/dex/tokens/'+encodeURIComponent(me.mint),{cache:'no-store',signal:ac.signal}).then(r=>{if(!r.ok)throw Error('DexScreener HTTP '+r.status);return r.json()});
+    if(LC!==me)return;
+    const ps=(j.pairs||[]).filter(p=>p.chainId==='solana');
+    const best=ps.find(p=>me.pair&&p.pairAddress===me.pair)||ps.sort((a,b)=>((b.liquidity||{}).usd||0)-((a.liquidity||{}).usd||0))[0];
+    if(!best){me.err='no Solana pair on DexScreener';lcHeader();return}
+    if(!me.pair){me.pair=best.pairAddress;lcFetchCandles(true)}
+    const usd=parseFloat(best.priceUsd);if(!(usd>0))throw Error('no USD price');
+    me.live={usd,at:Date.now(),dex:best.dexId||''};me.err='';lcHeader();if(!me.cross)lcReadout();scheduleDraw();
+  }catch(e){if(e.name!=='AbortError'&&LC===me){me.err='quote: '+e.message;lcHeader()}}
+  finally{if(me.qAbort===ac){me.qInflight=false;me.qAbort=null}}
+}
+async function lcFetchCandles(force){
+  if(!LC||!LC.pair)return;const me=LC,sp=LC_TF[me.tf],key=me.pair+'|'+me.tf,every=me.closed?Infinity:(me.tf===1?15000:30000);
+  if(!force&&(me.cInflight||(me.ckey===key&&Date.now()-me.cAt<every)))return;
+  if(me.cAbort)try{me.cAbort.abort()}catch(e){}
+  me.cInflight=true;const ac=new AbortController();me.cAbort=ac;
+  let u='https://api.geckoterminal.com/api/v2/networks/solana/pools/'+encodeURIComponent(me.pair)+'/ohlcv/'+sp.path+'?aggregate='+sp.agg+'&limit=1000&currency=usd';
+  const nowS=Date.now()/1000;if(me.closed&&nowS-me.closed>600)u+='&before_timestamp='+Math.floor(Math.min(nowS,me.closed+Math.max(3600,150*sp.sec)));
+  try{
+    const j=await fetch(u,{cache:'no-store',signal:ac.signal}).then(r=>{if(!r.ok)throw Error('GeckoTerminal HTTP '+r.status);return r.json()});
+    if(LC!==me||me.cAbort!==ac)return;
+    const list=((j.data&&j.data.attributes&&j.data.attributes.ohlcv_list)||[]).map(r=>({t:+r[0],o:+r[1],h:+r[2],l:+r[3],c:+r[4],v:+r[5]||0})).filter(x=>isFinite(x.t)&&x.o>0&&x.h>0&&x.l>0&&x.c>0).sort((a,b)=>a.t-b.t);
+    const changed=me.ckey!==key;me.candles=list;me.ckey=key;me.cAt=Date.now();if(/candles/.test(me.err))me.err='';
+    if(!me.view)lcSetRange(me.range);else{if(changed)lcClampView();if(me.follow)lcFollow()}
+    lcHeader();if(!me.cross)lcReadout();scheduleDraw();
+  }catch(e){if(e.name!=='AbortError'&&LC===me){me.err='candles: '+e.message;lcHeader();scheduleDraw()}}
+  finally{if(me.cAbort===ac){me.cInflight=false;me.cAbort=null}}
+}
+/* keep guides fresh when the dashboard reloads (45s) */
+function lcSync(){
+  if(!LC||!D)return;const p=(D.positions||[]).find(x=>x.mint===LC.mint&&(x.opened_at||'')===LC.openedIso);
+  if(p){LC.stopSol=lcNum(p.stop_price_sol);LC.stopMc=lcNum(p.stop_mc);LC.peakSol=lcNum(p.peak_price_sol);LC.pnl=lcNum(p.unrealized_pnl_sol);LC.pnlPct=lcNum(p.unrealized_pnl_pct);LC.initials=!!p.initials_out;
+    LC.partials=(p.partials||p.exits||[]).map(e=>({t:e.timestamp,mc:e.market_cap,reason:e.reason,pnl:e.pnl_sol}))}
+  else if(!LC.closed){const t=(D.closed_view||[]).find(x=>x.mint===LC.mint&&(x.opened_at||'')===LC.openedIso);
+    if(t){LC.closed=Date.parse(t.closed_at)/1000;LC.exitMc=lcNum(t.exit_mc);LC.exitReason=t.exit_reason||'';LC.pnl=lcNum(t.pnl_sol);LC.pnlPct=lcNum(t.pnl_pct);
+      LC.partials=(t.partials||[]).map(e=>({t:e.timestamp,mc:e.market_cap,reason:e.reason,pnl:e.pnl_sol}));LC.follow=false;toast(LC.sym+' paper trade closed')}}
+  lcHeader();scheduleDraw();
 }
 
-function lcToUnit(sol){
-  if(sol==null||!isFinite(sol)) return null;
-  if(LC.unit==='mc'){
-    if(LC.entrySol && LC.entryMc) return sol/LC.entrySol*LC.entryMc;
-    return null;
-  }
-  return sol;
+/* ---------- view (time-based, seconds) ---------- */
+function lcEdge(){const c=LC.candles,last=c.length?c[c.length-1].t+LC_TF[LC.tf].sec:Date.now()/1000;return LC.closed?last:Math.max(last,Date.now()/1000)}
+function lcSetRange(r){
+  if(!LC)return;LC.range=r;const sec=LC_TF[LC.tf].sec,c=LC.candles,edge=lcEdge();let t0,t1;
+  if(r==='trade'&&LC.opened){const end=LC.closed||edge,d=Math.max(end-LC.opened,24*sec);t0=LC.opened-Math.max(d*.22,8*sec);t1=end+Math.max(d*.14,5*sec)}
+  else if(r==='all'&&c.length){t0=c[0].t;t1=edge+(edge-c[0].t)*.04}
+  else{const m=r==='30m'?1800:r==='6h'?21600:7200,end=LC.closed?Math.min(edge,LC.closed+m*.2):edge;t1=end+m*.07;t0=end-m}
+  LC.view={t0,t1};LC.autoY=true;lcClampView();const e2=lcEdge();LC.follow=!LC.closed&&LC.view.t1>=e2;LC.fpad=LC.view.t1-e2;lcBtns();scheduleDraw();
+}
+function lcClampView(){
+  const v=LC.view;if(!v)return;const sec=LC_TF[LC.tf].sec,c=LC.candles,edge=lcEdge(),first=c.length?c[0].t:edge-600*sec;
+  let sp=v.t1-v.t0;const minS=10*sec,maxS=Math.max((edge-first)*1.4,80*sec);sp=Math.min(maxS,Math.max(minS,sp));
+  let t1=v.t0+sp;if(t1>edge+sp*.5)t1=edge+sp*.5;if(t1-sp<first-sp*.5)t1=first-sp*.5+sp;LC.view={t0:t1-sp,t1};
+}
+function lcFollow(){const v=LC.view;if(!v)return;const sp=v.t1-v.t0,t1=lcEdge()+LC.fpad;LC.view={t0:t1-sp,t1}}
+function lcAfterView(){lcClampView();const e=lcEdge();LC.follow=!LC.closed&&LC.view.t1>=e;if(LC.follow)LC.fpad=LC.view.t1-e;LC.range=null;lcBtns();scheduleDraw()}
+function lcGoLive(){if(!LC||!LC.view)return;const sp=LC.view.t1-LC.view.t0;LC.fpad=sp*.08;LC.view={t0:lcEdge()+LC.fpad-sp,t1:lcEdge()+LC.fpad};LC.follow=!LC.closed;LC.autoY=true;lcBtns();scheduleDraw()}
+function lcBtns(){
+  if(!LC)return;const tog=(sel,attr,val)=>$$(sel).forEach(b=>{const on=b.getAttribute(attr)===String(val);b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+  tog('#lcTf button','data-tf',LC.tf);tog('#lcRange button','data-r',LC.range);tog('#lcUnit button','data-unit',LC.unit);tog('#lcStyle button','data-s',LC.style);
+  const vb=$('lcVol'),ab=$('lcAuto');vb.classList.toggle('on',LC.vol);vb.setAttribute('aria-pressed',LC.vol);ab.classList.toggle('on',LC.autoY);ab.setAttribute('aria-pressed',LC.autoY);
+  const atEdge=LC.view?LC.view.t1>=lcEdge()-1:true;$('lcGoLive').classList.toggle('hide',atEdge);$('lcGoLive').textContent=LC.closed?'Latest ⟶':'Live ⟶';
 }
 
+/* ---------- header + readout ---------- */
+function lcHeader(){
+  if(!LC)return;const lv=LC.live,last=LC.candles[LC.candles.length-1],usd=lv?lv.usd:(last?last.c:null),fresh=lv&&Date.now()-lv.at<6000;
+  const val=LC.unit==='mc'?(usd!=null&&LC.K?lcMc(usd*LC.K):'—'):lcUsd(usd),vs=lcVsEntryUsd(usd);
+  lcTxt('lcPx',val,'lc-px '+(vs==null||vs>=0?'up':'dn'));lcTxt('lcChg',vs==null?'—':lcPct(vs)+' vs entry','lc-chg '+(vs==null?'':vs>=0?'up':'dn'));
+  lcTxt('lcLivePill',LC.err?'FEED ERROR':fresh?'LIVE '+lcHMS(lv.at/1000):lv?'STALE '+lcHMS(lv.at/1000):'CONNECTING','lc-pill '+(LC.err||!fresh?'stale':'live'));
+  const pnl=LC.pnl!=null?'Paper '+samt(LC.pnl)+(LC.pnlPct!=null?' ('+lcPct(LC.pnlPct)+')':''):'';
+  lcTxt('lcPnl',pnl+(LC.err?' · '+LC.err:''),LC.err?'dn':cls(LC.pnl||0));
+  const nP=(LC.partials||[]).length;
+  if(LC.closed)lcTxt('lcStatus','CLOSED '+lcHM(LC.closed)+(LC.exitMc?' · exit '+lcMc(LC.exitMc):''),'lc-status closed');
+  else lcTxt('lcStatus','OPEN · '+(nP?nP+' sold · ':'')+(LC.initials?'initials out · ':'')+'stop '+lcMc(LC.stopMc!=null?LC.stopMc:lcMcSol(LC.stopSol)),'lc-status open');
+  $('lcPulse').style.visibility=LC.closed?'hidden':'visible';
+}
+function lcReadout(){
+  const el=$('lcRead');if(!el||!LC)return;const cr=LC.cross&&LC.cross.c,c=cr||LC.candles[LC.candles.length-1]||null,lv=LC.live;
+  let tag,t,usd;
+  if(cr){tag='<span class="tag x">✛</span> ';t=cr.t;usd=cr.c}else if(lv&&!LC.closed){tag='<span class="tag">● LIVE</span> ';t=lv.at/1000;usd=lv.usd}else{tag='<span class="tag x">LAST</span> ';t=c?c.t:null;usd=c?c.c:null}
+  const vs=lcVsEntryUsd(usd),sol=usd!=null&&px()?usd/px():null,K=(l,v,cn)=>'<div class="k"><span>'+l+'</span><b'+(cn?' class="'+cn+'"':'')+'>'+v+'</b></div>';
+  const fm=x=>x==null?'—':lcFmt(lcU(x));
+  el.innerHTML=K(tag+'Time',t?lcHMS(t):'—')+K('MCap',usd!=null&&LC.K?lcMc(usd*LC.K):'—')+K('Price',lcUsd(usd))+K('≈ SOL',sol!=null?lcSolTxt(sol).replace(' SOL',''):'—')+K('vs entry',lcPct(vs),vs==null?'':vs>=0?'up':'dn')
+    +K((cr?'':'Last ')+'Open',c?fm(c.o):'—')+K('High',c?fm(c.h):'—')+K('Low',c?fm(c.l):'—')+K('Close',c?fm(c.c):'—',c?(c.c>=c.o?'up':'dn'):'')+K('Vol',c?lcMc(c.v).replace('$','$'):'—');
+}
+function lcSetCross(p){if(!LC)return;LC.cross={x:p.x,y:p.y,c:null};try{if(!localStorage.getItem('wd.lchint')){localStorage.setItem('wd.lchint','1');$('lcHint').classList.add('off')}}catch(e){}scheduleDraw()}
+function lcClearCross(){if(!LC||!LC.cross)return;LC.cross=null;lcReadout();scheduleDraw()}
+
+/* ---------- drawing ---------- */
+function lcRR(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function lcPill(ctx,x,y,txt,bg,fg,font,align){ctx.font=font;const w=ctx.measureText(txt).width+10,h=18;let x0=align==='right'?x-w:align==='center'?x-w/2:x;lcRR(ctx,x0,y-h/2,w,h,5);ctx.fillStyle=bg;ctx.fill();ctx.fillStyle=fg;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText(txt,x0+5,y+.5);return w}
 function drawLiveChart(){
-  const c=$('lcCanvas'), st=$('lcStage'); if(!c||!LC||!st) return;
-  const ctx=c.getContext('2d',{alpha:false});
-  const W=st.clientWidth, H=st.clientHeight;
-  if(W<10||H<10) return;
-  // opaque clear (faster, no flicker)
-  ctx.fillStyle='#07080a'; ctx.fillRect(0,0,W,H);
-  ctx.save();
-  const g=ctx.createLinearGradient(0,0,0,H);
-  g.addColorStop(0,'rgba(43,255,136,0.05)'); g.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='rgba(255,255,255,0.04)'; ctx.lineWidth=1;
-  for(let i=1;i<5;i++){ const y=H*i/5; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  const c=$('lcCanvas'),st=$('lcStage');if(!c||!LC||!st)return;const ctx=c.getContext('2d',{alpha:false}),W=st.clientWidth,H=st.clientHeight;if(W<10||H<10)return;
+  const phone=W<560,fs=phone?12:11.5,padL=4,padR=phone?70:80,padT=10,padB=26,pw=W-padL-padR,ph=H-padT-padB,volH=LC.vol?Math.round(ph*.15):0,mainH=ph-volH-(LC.vol?8:0);
+  ctx.fillStyle='#07080a';ctx.fillRect(0,0,W,H);const bgG=ctx.createLinearGradient(0,0,0,H);bgG.addColorStop(0,'rgba(43,255,136,.045)');bgG.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=bgG;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#0b0d10';ctx.fillRect(W-padR,0,padR,H);ctx.fillRect(0,H-padB,W,padB);ctx.strokeStyle='#1c1f23';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(W-padR+.5,0);ctx.lineTo(W-padR+.5,H);ctx.moveTo(0,H-padB+.5);ctx.lineTo(W,H-padB+.5);ctx.stroke();
+  const sec=LC_TF[LC.tf].sec,all=LC.candles;
+  if(!LC.view||!all.length){ctx.fillStyle='#9aa0a8';ctx.font='13px '+LC_F;ctx.textBaseline='alphabetic';ctx.textAlign='left';ctx.fillText(LC.err?'⚠ '+LC.err:!LC.pair?'Finding the pool…':LC.cInflight||!LC.ckey?'Loading real candles…':'No candle data from GeckoTerminal for this pool',14,30);LC.g=null;return}
+  const v=LC.view,span=v.t1-v.t0,X=t=>padL+(t-v.t0)/span*pw;
+  const vis=all.filter(k=>k.t+sec>=v.t0&&k.t<=v.t1);
+  const entryU=lcUM(LC.entryMc),stopU=lcUM(LC.stopMc!=null?LC.stopMc:lcMcSol(LC.stopSol)),peakU=lcUM(lcMcSol(LC.peakSol)),exitU=lcUM(LC.exitMc),liveU=LC.live?lcU(LC.live.usd):null;
+  const parts=(LC.partials||[]).map(p=>({t:Date.parse(p.t)/1000,u:lcUM(lcNum(p.mc)),mc:lcNum(p.mc),io:/initial/i.test(p.reason||''),pnl:p.pnl})).filter(p=>isFinite(p.t)).sort((a,b)=>a.t-b.t);
+  /* y target */
+  let lo=Infinity,hi=-Infinity;vis.forEach(k=>{const l=lcU(k.l),h=lcU(k.h);if(l!=null){lo=Math.min(lo,l);hi=Math.max(hi,h)}});
+  const inT=t=>t!=null&&t>=v.t0&&t<=v.t1;
+  if(liveU!=null&&!LC.closed&&v.t1>=Date.now()/1000-sec){lo=Math.min(lo,liveU);hi=Math.max(hi,liveU)}
+  parts.forEach(p=>{if(inT(p.t)&&p.u!=null){lo=Math.min(lo,p.u);hi=Math.max(hi,p.u)}});if(inT(LC.closed)&&exitU!=null){lo=Math.min(lo,exitU);hi=Math.max(hi,exitU)}
+  if(!isFinite(lo)){if(entryU!=null){lo=entryU*.9;hi=entryU*1.1}else{lo=0;hi=1}}
+  const r0=Math.max(hi-lo,hi*.01);[entryU,stopU,peakU].forEach(gv=>{if(gv!=null&&gv>=lo-r0*.7&&gv<=hi+r0*.7){lo=Math.min(lo,gv);hi=Math.max(hi,gv)}});
+  const pad=Math.max(hi-lo,hi*.01)*.09,tgt={min:lo-pad,max:hi+pad};let animating=false;
+  if(LC.autoY){if(!LC.y||LC_REDUCE||!isFinite(LC.y.min))LC.y=tgt;else{const k=.24,dm=tgt.min-LC.y.min,dM=tgt.max-LC.y.max,eps=(tgt.max-tgt.min)*.002;if(Math.abs(dm)>eps||Math.abs(dM)>eps){LC.y={min:LC.y.min+dm*k,max:LC.y.max+dM*k};animating=true}else LC.y=tgt}}
+  const ymin=LC.y.min,ymax=LC.y.max,yr=ymax-ymin||1,Y=u=>padT+(1-(u-ymin)/yr)*mainH;
+  /* grid + y labels */
+  ctx.save();ctx.beginPath();ctx.rect(padL,padT,pw,ph);ctx.clip();
+  const ys=lcNice(yr,phone?5:7);ctx.strokeStyle=LCC.grid;ctx.lineWidth=1;ctx.beginPath();for(let gv=Math.ceil(ymin/ys)*ys;gv<=ymax;gv+=ys){const y=Math.round(Y(gv))+.5;ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y)}
+  const off=lcOff(v.t0),steps=[1,2,5,10,15,30,60,120,180,360,720,1440,2880],minPx=phone?72:92;let tsM=steps.find(s=>s*60/span*pw>=minPx)||2880;const tsS=tsM*60,ticks=[];
+  for(let t=Math.ceil((v.t0+off)/tsS)*tsS-off;t<=v.t1;t+=tsS){ticks.push(t);const x=Math.round(X(t))+.5;ctx.moveTo(x,padT);ctx.lineTo(x,padT+ph)}ctx.stroke();
+  /* trade zone */
+  if(LC.opened){const za=X(LC.opened),zb=X(LC.closed||Date.now()/1000),pos=(LC.pnl||0)>=0;ctx.fillStyle=pos?'rgba(43,255,136,.05)':'rgba(255,92,108,.05)';ctx.fillRect(za,padT,Math.max(0,zb-za),mainH);
+    ctx.setLineDash([3,4]);ctx.strokeStyle='rgba(91,140,255,.55)';ctx.beginPath();ctx.moveTo(Math.round(za)+.5,padT);ctx.lineTo(Math.round(za)+.5,padT+ph);ctx.stroke();
+    if(LC.closed){ctx.strokeStyle='rgba(255,255,255,.35)';ctx.beginPath();ctx.moveTo(Math.round(zb)+.5,padT);ctx.lineTo(Math.round(zb)+.5,padT+ph);ctx.stroke()}ctx.setLineDash([])}
+  /* volume */
+  if(LC.vol&&vis.length){const vmax=Math.max(...vis.map(k=>k.v))||1,vb=padT+ph,bw=Math.max(1,sec/span*pw*.72);vis.forEach(k=>{const h=k.v/vmax*volH,x=X(k.t+sec/2);ctx.fillStyle=k.c>=k.o?'rgba(43,255,136,.32)':'rgba(255,92,108,.32)';ctx.fillRect(x-bw/2,vb-h,bw,h)});
+    ctx.strokeStyle='#15181b';ctx.beginPath();ctx.moveTo(padL,padT+mainH+4.5);ctx.lineTo(padL+pw,padT+mainH+4.5);ctx.stroke();ctx.fillStyle='#5f656d';ctx.font='10px '+LC_F;ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText('VOL $',padL+4,padT+mainH+8)}
+  /* watermark */
+  ctx.fillStyle='rgba(255,255,255,.04)';ctx.font='800 '+(phone?34:46)+'px '+LC_F;ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(LC.sym,padL+10,padT+26);
+  /* guide lines */
+  const hl=(u,col,dash,w)=>{if(u==null||u<ymin||u>ymax)return;const y=Math.round(Y(u))+.5;ctx.strokeStyle=col;ctx.lineWidth=w||1.2;ctx.setLineDash(dash||[]);ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+pw,y);ctx.stroke();ctx.setLineDash([])};
+  hl(peakU,'rgba(255,209,102,.7)',[2,4]);hl(stopU,'rgba(255,92,108,.9)',[6,4],1.4);hl(entryU,'rgba(91,140,255,.95)',[6,4],1.4);
+  /* price */
+  const bw=Math.max(1,Math.min(18,sec/span*pw*.7)),glow=!LC_REDUCE&&vis.length<=240;
+  if(LC.style==='line'){const pts=vis.map(k=>[X(k.t+sec/2),Y(lcU(k.c))]);if(LC.live&&!LC.closed&&liveU!=null)pts.push([X(Math.min(Date.now()/1000,v.t1)),Y(liveU)]);
+    if(pts.length){const up=(pts[pts.length-1][1]<=Y(entryU!=null?entryU:lcU(vis[0].o))),col=up?LCC.g:LCC.r;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
+      const ag=ctx.createLinearGradient(0,padT,0,padT+mainH);ag.addColorStop(0,up?'rgba(43,255,136,.22)':'rgba(255,92,108,.2)');ag.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.save();ctx.lineTo(pts[pts.length-1][0],padT+mainH);ctx.lineTo(pts[0][0],padT+mainH);ctx.closePath();ctx.fillStyle=ag;ctx.fill();ctx.restore();
+      ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.strokeStyle=col;ctx.lineWidth=2;ctx.lineJoin='round';if(glow){ctx.shadowColor=col;ctx.shadowBlur=8}ctx.stroke();ctx.shadowBlur=0}}
+  else vis.forEach(k=>{const x=X(k.t+sec/2),up=k.c>=k.o,col=up?LCC.g:LCC.r,yo=Y(lcU(k.o)),yc=Y(lcU(k.c));ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(Math.round(x)+.5,Y(lcU(k.h)));ctx.lineTo(Math.round(x)+.5,Y(lcU(k.l)));ctx.stroke();if(glow){ctx.shadowColor=up?'rgba(43,255,136,.4)':'rgba(255,92,108,.35)';ctx.shadowBlur=5}
+    ctx.fillRect(x-bw/2,Math.min(yo,yc),bw,Math.max(1.5,Math.abs(yc-yo)));ctx.shadowBlur=0});
+  /* live line + dot */
+  if(liveU!=null&&liveU>=ymin&&liveU<=ymax){hl(liveU,'rgba(126,240,192,.55)',[1,3]);if(!LC.closed){const lx=X(Math.min(Date.now()/1000,v.t1)),ly=Y(liveU);if(lx>=padL&&lx<=padL+pw){ctx.fillStyle='rgba(126,240,192,.22)';ctx.beginPath();ctx.arc(lx,ly,9,0,7);ctx.fill();ctx.fillStyle=LCC.live;ctx.beginPath();ctx.arc(lx,ly,3.5,0,7);ctx.fill()}}}
+  /* markers */
+  const tag=(x,y,txt,col,above)=>{ctx.font='700 '+(fs-1)+'px '+LC_F;const w=ctx.measureText(txt).width+10,h=18;let tx=Math.min(padL+pw-w-2,Math.max(padL+2,x-w/2)),ty=above?y-h-9:y+9;ty=Math.max(padT+2,Math.min(padT+mainH-h-2,ty));lcRR(ctx,tx,ty,w,h,5);ctx.fillStyle='rgba(8,9,11,.9)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=1;ctx.stroke();ctx.fillStyle=col;ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText(txt,tx+5,ty+h/2+.5)};
+  if(inT(LC.opened)&&entryU!=null){const x=X(LC.opened),y=Y(entryU);ctx.fillStyle=LCC.e;ctx.beginPath();ctx.moveTo(x,y-7);ctx.lineTo(x-6,y+4);ctx.lineTo(x+6,y+4);ctx.closePath();if(glow){ctx.shadowColor=LCC.e;ctx.shadowBlur=8}ctx.fill();ctx.shadowBlur=0;tag(x,y,'BUY '+lcHM(LC.opened)+' · '+lcMc(LC.entryMc),'#8fb0ff',false)}
+  let si=0;parts.forEach(p=>{if(!inT(p.t)||p.u==null)return;const x=X(p.t),y=Y(p.u),col=p.io?LCC.io:LCC.p;si+=p.io?0:1;ctx.fillStyle=col;if(glow){ctx.shadowColor=col;ctx.shadowBlur=8}ctx.beginPath();
+    if(p.io){ctx.moveTo(x,y-7);ctx.lineTo(x+6,y);ctx.lineTo(x,y+7);ctx.lineTo(x-6,y)}else{ctx.moveTo(x-6,y-7);ctx.lineTo(x+6,y-7);ctx.lineTo(x,y+2)}ctx.closePath();ctx.fill();ctx.shadowBlur=0;
+    const pc=LC.entryMc&&p.mc?(p.mc/LC.entryMc-1)*100:null;tag(x,y-4,(p.io?'INITIALS OUT ':'S'+si+' ')+lcPct(pc),col,true)});
+  if(inT(LC.closed)&&exitU!=null){const x=X(LC.closed),y=Y(exitU),col=(LC.pnl||0)>=0?LCC.g:LCC.r;ctx.strokeStyle=col;ctx.lineWidth=2.4;ctx.beginPath();ctx.moveTo(x-5,y-5);ctx.lineTo(x+5,y+5);ctx.moveTo(x+5,y-5);ctx.lineTo(x-5,y+5);ctx.stroke();ctx.beginPath();ctx.arc(x,y,9,0,7);ctx.lineWidth=1;ctx.stroke();
+    tag(x,y,'EXIT '+lcHM(LC.closed)+' · '+lcMc(LC.exitMc)+(LC.pnlPct!=null?' · '+lcPct(LC.pnlPct):''),col,false)}
+  /* crosshair (snapped to candle) */
+  const cr=LC.cross;let crPill=null,crT=null;
+  if(cr){const t=v.t0+(cr.x-padL)/pw*span;let best=null,bd=Infinity;vis.forEach(k=>{const d=Math.abs(k.t+sec/2-t);if(d<bd){bd=d;best=k}});
+    const snap=best&&bd<=Math.max(sec,span/pw*14)?best:null,cx=snap?X(snap.t+sec/2):cr.x,cy=Math.max(padT,Math.min(padT+mainH,cr.y));if(cr.c!==snap){cr.c=snap;lcReadout()}
+    if(snap){ctx.fillStyle='rgba(255,255,255,.05)';ctx.fillRect(cx-Math.max(bw,6)/2-2,padT,Math.max(bw,6)+4,ph)}
+    ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(Math.round(cx)+.5,padT);ctx.lineTo(Math.round(cx)+.5,padT+ph);ctx.moveTo(padL,Math.round(cy)+.5);ctx.lineTo(padL+pw,Math.round(cy)+.5);ctx.stroke();ctx.setLineDash([]);
+    if(snap){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,Y(lcU(snap.c)),3,0,7);ctx.fill()}
+    crPill={y:cy,u:ymin+(1-(cy-padT)/mainH)*yr};crT={x:cx,t:snap?snap.t:t}}
   ctx.restore();
-
-  const candles=LC.candles||[];
-  if(!candles.length){
-    ctx.fillStyle='#9aa0a8'; ctx.font='13px -apple-system,system-ui,sans-serif';
-    ctx.fillText(LC.candleInflight||!LC.ohlcv?'Loading candles…':'No candle data', 16, 28);
-    return;
-  }
-  const n=candles.length;
-  const i0=Math.floor(LC.view.x0*(n-1)), i1=Math.max(i0+2, Math.ceil(LC.view.x1*(n-1)));
-  const view=candles.slice(i0, i1+1);
-  if(!view.length) return;
-
-  const padL=8, padR=62, padT=18, padB=28;
-  const plotW=W-padL-padR, plotH=H-padT-padB;
-  let uview=view.map(o=>({t:o.t,o:lcToUnit(o.o),h:lcToUnit(o.h),l:lcToUnit(o.l),c:lcToUnit(o.c)})).filter(x=>x.o!=null&&x.h!=null&&x.l!=null&&x.c!=null);
-  if(!uview.length){
-    ctx.fillStyle='#ffb84d'; ctx.font='12px -apple-system,system-ui,sans-serif';
-    ctx.fillText('Market cap needs entry MC + entry SOL. Nothing invented.', 12, 28);
-    return;
-  }
-
-  // Stable scale: recompute from candles+guides only when unlocked; keep locked across quote ticks
-  let yMin, yMax;
-  const guides=[lcToUnit(LC.entrySol), lcToUnit(LC.stopSol)].filter(v=>v!=null);
-  const liveU=lcToUnit(LC.liveSol);
-  if(!LC.yScale){
-    yMin=Math.min(...uview.map(x=>x.l), ...guides);
-    yMax=Math.max(...uview.map(x=>x.h), ...guides);
-    if(liveU!=null){ yMin=Math.min(yMin, liveU); yMax=Math.max(yMax, liveU); }
-    if(yMax<=yMin){ yMax=yMin*1.01; yMin*=0.99; }
-    const yPad=(yMax-yMin)*0.06; yMin-=yPad; yMax+=yPad;
-    LC.yScale={min:yMin, max:yMax};
-  } else {
-    yMin=LC.yScale.min; yMax=LC.yScale.max;
-    // Expand only if live/guides leave the frame (real data), never invent mid-range
-    if(liveU!=null && (liveU<yMin || liveU>yMax)){
-      const pad=(yMax-yMin)*0.04;
-      yMin=Math.min(yMin, liveU-pad); yMax=Math.max(yMax, liveU+pad);
-      LC.yScale={min:yMin, max:yMax};
-    }
-  }
-  const span=yMax-yMin;
-  const X=(i)=>padL+((i+0.5)/uview.length)*plotW;
-  const Y=(v)=>padT+(1-(v-yMin)/span)*plotH;
-  const bodyW=Math.max(2, Math.min(14, plotW/uview.length*0.62));
-  const glow=!LC_REDUCE && uview.length<=120;
-
-  function hline(val, color, label, dash){
-    if(val==null||!isFinite(val)) return;
-    const y=Y(val);
-    ctx.save();
-    ctx.strokeStyle=color; ctx.lineWidth=1.25; if(dash) ctx.setLineDash(dash);
-    if(glow){ ctx.shadowColor=color; ctx.shadowBlur=6; }
-    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
-    ctx.setLineDash([]); ctx.shadowBlur=0;
-    ctx.fillStyle=color; ctx.font='700 10px -apple-system,system-ui,sans-serif';
-    ctx.fillText(label, W-padR+4, y+3);
-    ctx.restore();
-  }
-  hline(lcToUnit(LC.entrySol), '#5b8cff', 'ENTRY', [5,4]);
-  hline(lcToUnit(LC.stopSol), '#ff5c6c', 'STOP', [4,4]);
-  hline(liveU, 'rgba(126,240,192,.9)', 'LIVE', null);
-
-  for(let i=0;i<uview.length;i++){
-    const cd=uview[i], x=X(i), up=cd.c>=cd.o, col=up?'#2bff88':'#ff5c6c';
-    ctx.strokeStyle=col; ctx.fillStyle=col;
-    if(glow){ ctx.shadowColor=up?'rgba(43,255,136,.35)':'rgba(255,92,108,.3)'; ctx.shadowBlur=4; }
-    ctx.beginPath(); ctx.moveTo(x, Y(cd.h)); ctx.lineTo(x, Y(cd.l)); ctx.lineWidth=1.25; ctx.stroke();
-    const yO=Y(cd.o), yC=Y(cd.c), y1=Math.min(yO,yC), bh=Math.max(1.5, Math.abs(yC-yO));
-    ctx.fillRect(x-bodyW/2, y1, bodyW, bh);
-    if(glow) ctx.shadowBlur=0;
-  }
-
-  (LC.partials||[]).forEach(p=>{
-    if(!p||!p.t) return;
-    const ts=Date.parse(p.t)/1000; if(!isFinite(ts)) return;
-    const t0=uview[0].t, t1=uview[uview.length-1].t;
-    if(ts<t0||ts>t1) return;
-    const x=padL+((ts-t0)/Math.max(1e-9,t1-t0))*plotW;
-    let yVal=null;
-    if(p.mc!=null && LC.unit==='mc') yVal=+p.mc;
-    else if(p.mc!=null && LC.entryMc && LC.entrySol) yVal=lcToUnit(LC.entrySol*(+p.mc/LC.entryMc));
-    const y=yVal!=null?Y(yVal):padT+plotH*0.2;
-    ctx.fillStyle='#ffb84d';
-    if(glow){ ctx.shadowColor='rgba(255,184,77,.45)'; ctx.shadowBlur=8; }
-    ctx.beginPath(); ctx.arc(x,y,4.5,0,Math.PI*2); ctx.fill();
-    ctx.shadowBlur=0;
-    ctx.font='700 10px -apple-system,system-ui,sans-serif'; ctx.fillText('SELL', x+6, y-6);
-  });
-
-  ctx.fillStyle='#8b919a'; ctx.font='11px ui-monospace,SFMono-Regular,Menlo,monospace';
-  for(let i=0;i<=4;i++){
-    const v=yMin+span*i/4, y=Y(v);
-    const label=LC.unit==='mc'?lcFmtMc(v):lcFmtSol(v, span).replace(' SOL','');
-    ctx.fillText(label, W-padR+4, y+3);
-  }
-  const idxs=[0, Math.floor(uview.length/2), uview.length-1];
-  idxs.forEach(idx=>{
-    const cd=uview[idx]; if(!cd) return;
-    const x=X(idx);
-    const t=new Date(cd.t*1000).toLocaleTimeString('en-GB',{hour12:false,timeZone:'Europe/Amsterdam',hour:'2-digit',minute:'2-digit'});
-    ctx.fillStyle='#6d737c'; ctx.font='10px -apple-system,system-ui,sans-serif';
-    ctx.fillText(t, x-12, H-10);
-  });
-  ctx.fillStyle='rgba(255,255,255,0.045)'; ctx.font='800 42px -apple-system,system-ui,sans-serif';
-  ctx.fillText(LC.sym, padL+10, padT+48);
-
-  LC._geom={padL,padR,padT,padB,plotW,plotH,W,H,yMin,yMax,uview,X,Y,i0,i1,span};
-  // Restore crosshair after redraw without resetting user focus
-  if(LC.cross) lcPaintCross(LC.cross);
+  /* P&L badge */
+  if(LC.pnlPct!=null||LC.live){const lp=LC.closed?LC.pnlPct:lcVsEntryUsd(LC.live?LC.live.usd:null);if(lp!=null){const col=lp>=0?LCC.g:LCC.r;lcPill(ctx,padL+8,padT+13,(LC.closed?'P&L ':'vs entry ')+lcPct(lp),lp>=0?'rgba(43,255,136,.16)':'rgba(255,92,108,.16)',col,'800 '+fs+'px '+LC_F)}}
+  /* y-axis labels */
+  ctx.font=fs+'px '+LC_M;ctx.fillStyle=LCC.ax;ctx.textAlign='left';ctx.textBaseline='middle';
+  for(let gv=Math.ceil(ymin/ys)*ys;gv<=ymax;gv+=ys){const y=Y(gv);if(y>padT+6&&y<padT+mainH-4)ctx.fillText(lcAxisLbl(gv,ys),W-padR+6,y)}
+  /* x-axis labels */
+  ctx.font=fs+'px '+LC_F;ctx.fillStyle=LCC.ax;ctx.textAlign='center';ctx.textBaseline='middle';
+  ticks.forEach(t=>{const x=X(t);if(x<padL+18||x>padL+pw-18)return;const lt=t+off,mid=((lt%86400)+86400)%86400===0;ctx.fillText(mid||tsM>=1440?lcFDM.format(new Date(t*1000)):lcHM(t),x,H-padB/2)});
+  /* right-axis value pills (TradingView style), de-overlapped */
+  const pills=[];const addP=(u,col,fg,txt)=>{if(u==null)return;let y=Y(u),arrow='';if(y<padT+9){y=padT+9;arrow='↑'}else if(y>padT+mainH-9){y=padT+mainH-9;arrow='↓'}pills.push({y,col,fg,txt:arrow+txt})};
+  addP(peakU,'#4a3c12','#ffd166',lcFmt(peakU).replace('$','PK $'));addP(stopU,'#5a1d24','#ffb3bb',lcFmt(stopU).replace('$','SL $'));addP(entryU,'#1d2b57','#c9d8ff',lcFmt(entryU).replace('$','EN $'));
+  if(liveU!=null)addP(liveU,LCC.g,'#00140a',lcFmt(liveU));
+  pills.sort((a,b)=>a.y-b.y);for(let i=1;i<pills.length;i++)if(pills[i].y-pills[i-1].y<19)pills[i].y=pills[i-1].y+19;
+  const fpx='700 '+(fs-1)+'px '+LC_M;pills.forEach(p=>{ctx.font=fpx;lcRR(ctx,W-padR+2,p.y-9,padR-4,18,4);ctx.fillStyle=p.col;ctx.fill();ctx.fillStyle=p.fg;ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(p.txt,W-padR+6,p.y+.5,padR-12)});
+  if(crPill){const vs=lcVsEntryU(crPill.u);ctx.font=fpx;lcRR(ctx,W-padR+1,crPill.y-17,padR-2,34,5);ctx.fillStyle='#f2f4f6';ctx.fill();ctx.fillStyle='#000';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText(lcFmt(crPill.u),W-padR+5,crPill.y-7,padR-10);
+    ctx.fillStyle=vs==null?'#333':vs>=0?'#007a3d':'#c01d2e';ctx.fillText(lcPct(vs),W-padR+5,crPill.y+8,padR-10)}
+  if(crT){ctx.font='700 '+fs+'px '+LC_M;const tx=lcHMS(crT.t),w=ctx.measureText(tx).width+12,x0=Math.max(2,Math.min(W-padR-w-2,crT.x-w/2));lcRR(ctx,x0,H-padB+3,w,padB-6,5);ctx.fillStyle='#f2f4f6';ctx.fill();ctx.fillStyle='#000';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(tx,x0+w/2,H-padB/2)}
+  LC.g={W,H,padL,padR,padT,padB,pw,ph,mainH};
+  if(animating)scheduleDraw();
 }
 
-function lcHit(clientX, clientY){
-  const st=$('lcStage'); if(!st||!LC||!LC._geom) return null;
-  const r=st.getBoundingClientRect();
-  const x=clientX-r.left, y=clientY-r.top;
-  const g=LC._geom;
-  if(x<g.padL||x>g.W-g.padR||y<g.padT||y>g.H-g.padB) return null;
-  const frac=(x-g.padL)/g.plotW;
-  const idx=Math.max(0, Math.min(g.uview.length-1, Math.floor(frac*g.uview.length)));
-  return {x,y,idx,cd:g.uview[idx]};
-}
-function lcPaintCross(hit){
-  const cross=$('lcCross'), tip=$('lcTip'); if(!cross||!tip||!hit||!hit.cd||!LC._geom){ cross.classList.remove('on'); return; }
-  cross.classList.add('on');
-  cross.querySelector('.v').style.left=hit.x+'px';
-  cross.querySelector('.h').style.top=hit.y+'px';
-  const cd=hit.cd, span=LC._geom.span;
-  const t=new Date(cd.t*1000).toLocaleString('en-GB',{timeZone:'Europe/Amsterdam', hour12:false});
-  const fmt=v=>LC.unit==='mc'?lcFmtMc(v):lcFmtSol(v, span);
-  tip.textContent=t+' · O '+fmt(cd.o)+'  H '+fmt(cd.h)+'  L '+fmt(cd.l)+'  C '+fmt(cd.c);
-  tip.style.left=Math.max(60, Math.min(LC._geom.W-60, hit.x))+'px';
-  tip.style.top=Math.max(28, hit.y)+'px';
-}
-function lcShowCross(ev){
-  const hit=lcHit(ev.clientX, ev.clientY);
-  LC.cross=hit;
-  lcPaintCross(hit);
-}
-
+/* ---------- controls ---------- */
 document.addEventListener('click',e=>{
-  const b=e.target.closest&&e.target.closest('[data-chart]');
-  if(b){ e.preventDefault(); openLiveChart(b); return; }
-  const tf=e.target.closest&&e.target.closest('#lcTf [data-tf]');
-  if(tf&&LC){
-    const next=+tf.getAttribute('data-tf');
-    if(next===LC.tf) return;
-    LC.tf=next; LC.yScale=null;
-    $$('#lcTf button').forEach(x=>x.classList.toggle('on',x===tf));
-    refreshLiveChart(true); return;
-  }
-  const un=e.target.closest&&e.target.closest('#lcUnit [data-unit]');
-  if(un&&LC){
-    const u=un.getAttribute('data-unit');
-    if(u==='mc' && !(LC.entrySol&&LC.entryMc)){ toast('Market cap scale needs entry MC + entry SOL on this trade'); return; }
-    if(u===LC.unit) return;
-    LC.unit=u; LC.yScale=null;
-    $$('#lcUnit button').forEach(x=>x.classList.toggle('on',x===un));
-    scheduleDraw(); return;
-  }
+  const t=e.target.closest&&e.target;if(!t)return;
+  const b=t.closest('[data-chart]');if(b){e.preventDefault();openLiveChart(b);return}
+  if(!LC)return;
+  const tf=t.closest('#lcTf [data-tf]');if(tf){const n=+tf.getAttribute('data-tf');if(n!==LC.tf){LC.tf=n;LC.autoY=true;if(LC.range)LC.view=null;lcBtns();lcFetchCandles(true);scheduleDraw()}return}
+  const rg=t.closest('#lcRange [data-r]');if(rg){lcSetRange(rg.getAttribute('data-r'));return}
+  const un=t.closest('#lcUnit [data-unit]');if(un){const u=un.getAttribute('data-unit');if(u==='mc'&&!LC.K){toast('Market cap needs entry MC and entry price on this trade');return}if(u!==LC.unit){LC.unit=u;LC.y=null;LC.autoY=true;lcBtns();lcHeader();lcReadout();scheduleDraw()}return}
+  const sy=t.closest('#lcStyle [data-s]');if(sy){LC.style=sy.getAttribute('data-s');lcBtns();scheduleDraw();return}
+  if(t.closest('#lcVol')){LC.vol=!LC.vol;lcBtns();scheduleDraw();return}
+  if(t.closest('#lcAuto')){LC.autoY=true;lcBtns();scheduleDraw();return}
+  if(t.closest('#lcGoLive')){lcGoLive();return}
 });
-document.addEventListener('visibilitychange', ()=>{
-  if(document.hidden){ stopLcTicker(); if(LC&&LC.quoteAbort) try{LC.quoteAbort.abort()}catch(e){} }
-  else if(LC){ startLcTicker(); refreshLiveChart(false); }
-});
+document.addEventListener('keydown',e=>{if(!LC||$('livechart').classList.contains('hide'))return;const v=LC.view;
+  if(e.key==='Escape'){closeLiveChart();return}if(!v)return;const sp=v.t1-v.t0;
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){const d=(e.key==='ArrowLeft'?-1:1)*sp*.1;LC.view={t0:v.t0+d,t1:v.t1+d};lcAfterView();e.preventDefault()}
+  else if(e.key==='+'||e.key==='='||e.key==='-'){const k=e.key==='-'?1.25:.8,ns=sp*k;LC.view={t0:v.t1-ns,t1:v.t1};lcAfterView()}
+  else if(e.key==='l'||e.key==='L')lcGoLive()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopLcTicker();if(LC&&LC.qAbort)try{LC.qAbort.abort()}catch(e){}}else if(LC){startLcTicker();lcFetchQuote();scheduleDraw()}});
 (function(){
-  const c=$('lcClose'), m=$('livechart'), st=$('lcStage');
-  if(c) c.onclick=closeLiveChart;
-  if(m) m.addEventListener('click',e=>{ if(e.target===m) closeLiveChart(); });
-  window.addEventListener('resize', ()=>{ if(LC) resizeLc(false); }, {passive:true});
-  if(!st) return;
-  st.addEventListener('mousemove', e=>{ if(LC) lcShowCross(e); }, {passive:true});
-  st.addEventListener('mouseleave', ()=>{ if(LC){ LC.cross=null; $('lcCross').classList.remove('on'); } });
-  st.addEventListener('touchstart', e=>{
-    if(!LC) return;
-    if(e.touches.length===1){ LC.dragging=true; LC.lastX=e.touches[0].clientX; lcShowCross(e.touches[0]); }
-    else if(e.touches.length===2){
-      const dx=e.touches[0].clientX-e.touches[1].clientX, dy=e.touches[0].clientY-e.touches[1].clientY;
-      LC.pinch={dist:Math.hypot(dx,dy), view:{x0:LC.view.x0,x1:LC.view.x1}};
-    }
-  }, {passive:true});
-  st.addEventListener('touchmove', e=>{
-    if(!LC) return;
-    if(e.touches.length===1 && LC.dragging){
-      const x=e.touches[0].clientX, dx=x-LC.lastX; LC.lastX=x;
-      const span=LC.view.x1-LC.view.x0;
-      const shift=-(dx/(st.clientWidth||1))*span;
-      let x0=LC.view.x0+shift, x1=LC.view.x1+shift;
-      if(x0<0){ x1-=x0; x0=0; } if(x1>1){ x0-=(x1-1); x1=1; }
-      LC.view={x0:Math.max(0,x0), x1:Math.min(1,x1)};
-      LC.yScale=null; // pan changes visible candles → rescaled once
-      scheduleDraw(); lcShowCross(e.touches[0]);
-    } else if(e.touches.length===2 && LC.pinch){
-      const dx=e.touches[0].clientX-e.touches[1].clientX, dy=e.touches[0].clientY-e.touches[1].clientY;
-      const dist=Math.hypot(dx,dy), scale=LC.pinch.dist/Math.max(1,dist);
-      const mid=(LC.pinch.view.x0+LC.pinch.view.x1)/2;
-      let span=(LC.pinch.view.x1-LC.pinch.view.x0)*scale; span=Math.min(1, Math.max(0.05, span));
-      LC.view={x0:Math.max(0, mid-span/2), x1:Math.min(1, mid+span/2)};
-      LC.yScale=null;
-      scheduleDraw();
-    }
-  }, {passive:true});
-  st.addEventListener('touchend', ()=>{ if(LC){ LC.dragging=false; LC.pinch=null; } }, {passive:true});
-  st.addEventListener('wheel', e=>{
-    if(!LC) return; e.preventDefault();
-    const span=LC.view.x1-LC.view.x0;
-    const next=Math.min(1, Math.max(0.05, span*(e.deltaY>0?1.12:0.88)));
-    const mid=(LC.view.x0+LC.view.x1)/2;
-    LC.view={x0:Math.max(0, mid-next/2), x1:Math.min(1, mid+next/2)};
-    LC.yScale=null;
-    scheduleDraw();
-  }, {passive:false});
+  const cb=$('lcClose'),m=$('livechart'),st=$('lcStage');if(cb)cb.onclick=closeLiveChart;if(m)m.addEventListener('click',e=>{if(e.target===m)closeLiveChart()});
+  window.addEventListener('resize',()=>{if(LC)resizeLc(false)},{passive:true});if(!st)return;
+  const pts=new Map();let g0=null,lp=null,lastTap=0;
+  const rel=e=>{const r=st.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}};
+  const zone=p=>{const g=LC&&LC.g;if(!g)return'plot';if(p.x>g.W-g.padR)return'y';if(p.y>g.H-g.padB)return'x';return'plot'};
+  const startOne=(p,touch,moved)=>({p,view:LC.view?{...LC.view}:null,y:LC.y?{...LC.y}:null,z:zone(p),t:Date.now(),moved:!!moved,touch});
+  st.addEventListener('pointerdown',e=>{if(!LC||!LC.view||e.target.closest('button'))return;try{st.setPointerCapture(e.pointerId)}catch(x){}const p=rel(e);pts.set(e.pointerId,p);
+    if(pts.size===1){g0=startOne(p,e.pointerType!=='mouse');clearTimeout(lp);if(g0.touch&&g0.z==='plot')lp=setTimeout(()=>{if(g0&&!g0.moved&&pts.size===1){LC.scrub=true;lcSetCross(g0.p);try{navigator.vibrate&&navigator.vibrate(8)}catch(x){}}},260)}
+    else if(pts.size===2){clearTimeout(lp);LC.scrub=false;const[a,b]=[...pts.values()];g0={pinch:true,d:Math.hypot(a.x-b.x,a.y-b.y)||1,mid:(a.x+b.x)/2,view:{...LC.view},moved:true}}});
+  st.addEventListener('pointermove',e=>{if(!LC||!LC.g||!LC.view)return;const p=rel(e),g=LC.g;
+    if(!pts.has(e.pointerId)){if(e.pointerType==='mouse'){if(zone(p)==='plot')lcSetCross(p);else lcClearCross()}return}
+    pts.set(e.pointerId,p);if(!g0)return;
+    if(g0.pinch){if(pts.size<2)return;const[a,b]=[...pts.values()],d=Math.hypot(a.x-b.x,a.y-b.y)||1,mid=(a.x+b.x)/2,sp0=g0.view.t1-g0.view.t0,sp=sp0*g0.d/d,tm=g0.view.t0+(g0.mid-g.padL)/g.pw*sp0,fr=(mid-g.padL)/g.pw;LC.view={t0:tm-fr*sp,t1:tm-fr*sp+sp};lcAfterView();return}
+    const dx=p.x-g0.p.x,dy=p.y-g0.p.y;if(!g0.moved&&Math.hypot(dx,dy)>6){g0.moved=true;if(!LC.scrub)clearTimeout(lp)}if(!g0.moved)return;
+    if(LC.scrub){lcSetCross(p);return}
+    if(g0.z==='y'&&g0.y){const k=Math.exp(dy*.006),mid=(g0.y.min+g0.y.max)/2,half=(g0.y.max-g0.y.min)/2*k;LC.autoY=false;LC.y={min:mid-half,max:mid+half};lcBtns();scheduleDraw();return}
+    const sp=g0.view.t1-g0.view.t0;
+    if(g0.z==='x'){const ns=sp*Math.exp(-dx*.006);LC.view={t0:g0.view.t1-ns,t1:g0.view.t1};lcAfterView();return}
+    const dt=-dx/g.pw*sp;LC.view={t0:g0.view.t0+dt,t1:g0.view.t1+dt};
+    if(!LC.autoY&&g0.y){const dv=dy/g.mainH*(g0.y.max-g0.y.min);LC.y={min:g0.y.min+dv,max:g0.y.max+dv}}
+    if(e.pointerType==='mouse'&&LC.cross)LC.cross=null;lcAfterView()});
+  const end=e=>{if(!pts.has(e.pointerId))return;pts.delete(e.pointerId);clearTimeout(lp);
+    if(g0&&!g0.moved&&!g0.pinch&&g0.touch&&Date.now()-g0.t<300){const now=Date.now();if(g0.z!=='plot'){if(now-lastTap<350){LC.autoY=true;lcBtns();scheduleDraw()}lastTap=now}else if(LC.cross)lcClearCross();else lcSetCross(g0.p)}
+    LC.scrub=false;if(!pts.size)g0=null;else if(pts.size===1){const p=[...pts.values()][0];g0=startOne(p,true,true)}};
+  st.addEventListener('pointerup',end);st.addEventListener('pointercancel',end);
+  st.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&!pts.size)lcClearCross()});
+  st.addEventListener('dblclick',e=>{if(!LC)return;if(zone(rel(e))==='y'){LC.autoY=true;lcBtns();scheduleDraw()}else lcSetRange(LC.range||'trade')});
+  st.addEventListener('wheel',e=>{if(!LC||!LC.view||!LC.g)return;e.preventDefault();const g=LC.g,p=rel(e),v=LC.view,sp=v.t1-v.t0;
+    if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){const dt=e.deltaX/g.pw*sp;LC.view={t0:v.t0+dt,t1:v.t1+dt}}
+    else{const ns=sp*Math.exp(e.deltaY*(e.ctrlKey?.01:.0015)),fr=Math.max(0,Math.min(1,(p.x-g.padL)/g.pw)),tm=v.t0+fr*sp;LC.view={t0:tm-fr*ns,t1:tm-fr*ns+ns}}
+    lcAfterView()},{passive:false});
 })();
 
 </script></body></html>
