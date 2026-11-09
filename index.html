@@ -12,7 +12,7 @@
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--m);font-size:12px}.badge{background:var(--g);color:#000;font-weight:800;font-size:11px;letter-spacing:.12em;padding:4px 9px;border-radius:20px}.mode{border:1px solid #333;padding:3px 9px;border-radius:20px;font-size:11px;letter-spacing:.08em;white-space:nowrap}
 .clock{font-variant-numeric:tabular-nums;text-align:center;font-size:12px;color:#d7dadf}.uptime{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:var(--m)}.uptime span{background:#0d0e10;border:1px solid var(--line);border-radius:12px;padding:3px 8px;font-variant-numeric:tabular-nums}.uptime b{color:var(--g);font-weight:600}
 .bal{font-size:52px;font-weight:800;color:var(--g);letter-spacing:-.03em;margin:14px 0 4px;font-variant-numeric:tabular-nums;text-shadow:0 0 30px rgba(43,255,136,.25);overflow-wrap:anywhere}.bal small{font-size:22px;font-weight:700;margin-left:6px}.sub{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;flex-wrap:wrap}.up{color:var(--g)}.dn{color:var(--r)}.flat{color:var(--m)}.pillx{background:rgba(43,255,136,.14);color:var(--g);padding:3px 9px;border-radius:12px;font-size:12px;font-weight:700}.usd{color:var(--m);font-size:12px;margin-top:4px}
-.chart{margin:12px -6px 4px;height:260px;position:relative;touch-action:none;-webkit-user-select:none;user-select:none;overflow:hidden;z-index:1}.chart svg{width:100%;height:100%;display:block;overflow:visible}.eq-tip{position:absolute;left:50%;top:8px;transform:translateX(-50%);background:rgba(10,12,14,.94);border:1px solid rgba(43,255,136,.4);color:#fff;font:700 11px -apple-system,system-ui,sans-serif;padding:6px 10px;border-radius:12px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .12s;z-index:2;font-variant-numeric:tabular-nums;box-shadow:0 8px 24px rgba(0,0,0,.45)}.eq-tip.on{opacity:1}.eq-tip.dn{border-color:rgba(255,92,108,.45)}.btn.live{margin-top:8px;width:100%;background:linear-gradient(90deg,#10261a,#1b1d20);border:1px solid rgba(43,255,136,.35);color:var(--g);letter-spacing:.04em}
+.chart{margin:12px -6px 4px;height:260px;position:relative;touch-action:pan-y;-webkit-user-select:none;user-select:none;overflow:hidden;z-index:1;cursor:grab}.chart:active{cursor:grabbing}.chart svg{width:100%;height:100%;display:block;overflow:hidden}.eq-tip{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:rgba(10,12,14,.94);border:1px solid rgba(43,255,136,.35);color:#fff;font:700 11px -apple-system,system-ui,sans-serif;padding:6px 10px;border-radius:12px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .12s;z-index:3;font-variant-numeric:tabular-nums;box-shadow:0 8px 24px rgba(0,0,0,.45)}.eq-tip.on{opacity:1}.eq-tip.dn{border-color:rgba(255,92,108,.4)}.eq-end{position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:2;pointer-events:none;text-align:right;font-variant-numeric:tabular-nums}.eq-end .v{display:block;font:800 13px -apple-system,system-ui,sans-serif;letter-spacing:-.02em;text-shadow:0 0 12px currentColor}.eq-end .p{display:block;margin-top:2px;font:600 10px -apple-system,system-ui,sans-serif;opacity:.72}.eq-end.up .v,.eq-end.up .p{color:var(--g)}.eq-end.dn .v{color:#ff7a86}.eq-end.dn .p{color:#ff8f99}.eq-live{position:absolute;right:10px;bottom:30px;z-index:3;background:rgba(43,255,136,.95);color:#00140a;border:0;border-radius:999px;padding:7px 12px;font:800 12px -apple-system,system-ui,sans-serif;box-shadow:0 0 18px rgba(43,255,136,.4);cursor:pointer;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .2s,transform .2s}.eq-live.on{opacity:1;transform:none;pointer-events:auto}.btn.live{margin-top:8px;width:100%;background:linear-gradient(90deg,#10261a,#1b1d20);border:1px solid rgba(43,255,136,.35);color:var(--g);letter-spacing:.04em}
 .livechart-modal{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:90;display:flex;align-items:stretch;justify-content:center;padding:0;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:1;transition:opacity .18s ease}
 .livechart-modal.hide{display:none;opacity:0;pointer-events:none}
 .livechart-modal.lc-closing{opacity:0}
@@ -92,14 +92,16 @@ nav{position:fixed;left:0;right:0;bottom:0;background:rgba(0,0,0,.94);backdrop-f
 .lc-foot{padding:6px 14px calc(10px + env(safe-area-inset-bottom));font-size:10.5px}
 @media(max-width:380px){.lc-read{grid-template-columns:repeat(4,minmax(0,1fr))}.lc-ctrl .lc-seg button{padding:6px 8px}}
 @media (prefers-reduced-motion:reduce){.lc-golive,.lc-hint{transition:none}}
-@media(max-width:420px){.chart{height:270px}}.eq-cross,.eq-cross *{position:absolute;pointer-events:none!important}.eq-cross{inset:0;display:none}.eq-cross.on{display:block}.eq-cross .v{top:0;bottom:22px;width:1px;background:rgba(255,255,255,.35)}.eq-cross .dot{width:9px;height:9px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px currentColor}.eq-tip{pointer-events:none!important}</style></head><body><div class="toast" id="toast" role="status" aria-live="polite"></div><header class="appbar"><div class="top"><span class="badge">PAPER</span><span class="clock" id="clock" aria-label="Current time Europe/Amsterdam">—</span><span class="mode" id="mode">—</span></div><div class="ttl"><b id="ttl">Home</b><span id="ttlr"></span></div><div class="ptr" id="ptr">Release to refresh</div></header>
+@media(max-width:420px){.chart{height:270px}}.eq-cross,.eq-cross *{position:absolute;pointer-events:none!important}.eq-cross{inset:0;display:none}.eq-cross.on{display:block}.eq-cross .v{top:0;bottom:26px;width:1px;background:rgba(255,255,255,.28)}.eq-cross .dot{width:9px;height:9px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px currentColor}.eq-tip,.eq-end{pointer-events:none!important}
+@keyframes eqPulse{0%{r:4;opacity:.9}70%{r:14;opacity:0}100%{r:14;opacity:0}}
+@media (prefers-reduced-motion:reduce){.eq-live{transition:none}}</style></head><body><div class="toast" id="toast" role="status" aria-live="polite"></div><header class="appbar"><div class="top"><span class="badge">PAPER</span><span class="clock" id="clock" aria-label="Current time Europe/Amsterdam">—</span><span class="mode" id="mode">—</span></div><div class="ttl"><b id="ttl">Home</b><span id="ttlr"></span></div><div class="ptr" id="ptr">Release to refresh</div></header>
 <main class="app" id="app">
 <div class="panel on" id="tab-home" data-tab="home" role="tabpanel" aria-label="Home">
 <section id="home">
 <div class="uptime"><span>Session <b id="upSess">—</b></span><span>Bot uptime <b id="upBot">—</b></span><span>Data <b id="dAge">—</b></span><button class="iconbtn" id="refresh" aria-label="Refresh data">↻ Refresh</button></div>
 <div class="banner hide" id="stale"></div>
 <div class="bal sk" id="bal">0.000 SOL</div><div class="sub" id="chg"></div><div class="usd" id="usd"></div>
-<div class="chart" id="chart"><div class="sk" style="height:260px"></div><div class="eq-tip" id="eqTip"></div><div class="eq-cross" id="eqCross"><div class="v"></div><div class="dot"></div></div></div><div class="cnote" id="cnote"></div>
+<div class="chart" id="chart"><div class="sk" style="height:260px"></div><div class="eq-tip" id="eqTip"></div><div class="eq-end" id="eqEnd" aria-hidden="true"></div><button type="button" class="eq-live" id="eqLive" aria-label="Jump to live">Live ⟶</button><div class="eq-cross" id="eqCross"><div class="v"></div><div class="dot"></div></div></div><div class="cnote" id="cnote"></div>
 <div class="tabs" id="tabs" role="tablist"><button data-r="live" class="on">ALL</button><button data-r="1">1H</button><button data-r="4">4H</button><button data-r="24">1D</button><button data-r="168">1W</button></div><button class="opencta none" id="homeOpen" type="button">No open trades<i>Trades ›</i></button></section>
 <section id="perf"><h2>Performance <span class="seg" id="pseg"><button data-p="tonight" class="on">Tonight</button><button data-p="7d">7D</button><button data-p="all">All</button></span></h2><div class="stats" id="stats"></div></section>
 <section id="night"><h2>Daily session <span class="r" id="nstate"></span></h2><div class="box"><div class="lbl" id="nwin">Trading 24/7 · daily session &amp; recap 07:00–07:00 Europe/Amsterdam · loss limit resets at Amsterdam midnight</div><div class="bar"><i id="nbar" style="width:0"></i></div><div class="li" style="border:0"><span id="nleft">—</span><i id="nmeta"></i></div><h3>Latest daily recap</h3><div id="recap"></div><div id="pastrecaps"></div></div></section>
@@ -191,52 +193,103 @@ $('chg').innerHTML='<span class="'+cls(pnl)+'">'+(pnl>0?'▲':pnl<0?'▼':'■')
 $('usd').textContent=px()?(S.usd?'= '+f(D.equity_sol)+' SOL':'≈ $'+(D.equity_sol*px()).toFixed(2))+' at SOL $'+px()+' (DexScreener, '+tm(p.market_data_at)+')':'USD hidden: no SOL price in data';
 drawChart();renderTrades();renderStats();renderRecap();renderRisk();renderHist();renderWhales();renderAgents();renderSignals();renderFeed();renderHealth();renderAcct();homeCta();ttlRight();tick();if(typeof lcSync==='function'&&LC)lcSync()}
 function homeCta(){const ps=D.positions||[],b=$('homeOpen');b.classList.toggle('none',!ps.length);b.innerHTML=ps.length?'<span><i class="pulse"></i>'+ps.length+' open trade'+(ps.length>1?'s':'')+': '+ps.map(p=>esc(p.symbol)+' <span class="'+cls(p.unrealized_pnl_sol)+'">'+samt(p.unrealized_pnl_sol)+'</span>').join(' · ')+'</span><i>Live ›</i>':'<span>No open trades · watching '+((D.whales||[]).filter(w=>w.eligible).length)+' wallets</span><i>Trades ›</i>'}
-function drawChart(){let pts=(D.equity||[]).map(e=>({t:Date.parse(e.timestamp),y:+e.equity_sol}));if(R!=='live'){const c=Date.now()-R*3600e3;pts=pts.filter(e=>e.t>=c)}
-EQ.pts=pts;EQ.R=R;
-if(!pts.length){$('chart').querySelectorAll('svg').forEach(n=>n.remove());const sk=$('chart').querySelector('.sk');if(sk)sk.remove();$('cnote').textContent='No equity history in this range';EQ.clearScrub();return}
-if(pts.length===1)pts=[pts[0],{t:pts[0].t+1,y:pts[0].y}];
-const ys=pts.map(e=>e.y),ymin=Math.min(...ys),ymax=Math.max(...ys),start=D.start_sol;
-const sorted=ys.slice().sort((a,b)=>a-b),n=sorted.length,p05=sorted[Math.max(0,Math.floor(n*0.05))],p95=sorted[Math.min(n-1,Math.floor(n*0.95))];
-const bulkLo=p05,bulkHi=p95,bulkSpan=Math.max(1e-6,bulkHi-bulkLo),fullSpan=Math.max(1e-6,ymax-ymin);
-/* Prefer bulk band when the start cliff (or a single outlier) stretches the axis and flattens moves. */
-let lo=ymin,hi=ymax,near=false,usedBulk=false;
-if(fullSpan>bulkSpan*1.35&&(Math.abs(ymax-start)<1e-9||Math.abs(ymin-start)<1e-9||(start>bulkHi+bulkSpan*0.3)||(start<bulkLo-bulkSpan*0.3))){
-  lo=bulkLo;hi=bulkHi;usedBulk=true;
-}else{
-  lo=ymin;hi=ymax;
-}
-near=!usedBulk&&start>=lo-Math.max(fullSpan,bulkSpan)*0.25&&start<=hi+Math.max(fullSpan,bulkSpan)*0.25;
-if(near){lo=Math.min(lo,start);hi=Math.max(hi,start)}
-const span=Math.max(1e-6,hi-lo),pad=Math.max(span*0.16,0.015);lo-=pad;hi+=pad;
-const t0=pts[0].t,t1=pts[pts.length-1].t,W=390,H=260,padL=42,padR=12,padT=28,padB=28,pw=W-padL-padR,ph=H-padT-padB;
-const X=t=>padL+(t-t0)/Math.max(1,t1-t0)*pw,Y=v=>padT+(hi-v)/(hi-lo)*ph;
-const c=pts.map(e=>[X(e.t),Y(e.y)]);let d='M'+c[0][0].toFixed(2)+','+c[0][1].toFixed(2);for(let i=1;i<c.length;i++){const a=c[i-1],b=c[i],mx=(a[0]+b[0])/2;d+=' C'+mx.toFixed(2)+','+a[1].toFixed(2)+' '+mx.toFixed(2)+','+b[1].toFixed(2)+' '+b[0].toFixed(2)+','+b[1].toFixed(2)}
-const L=c[c.length-1],ch=pts[pts.length-1].y-pts[0].y,col=ch<0?'#ff5c6c':'#2bff88',lx=Math.min(W-padR-46,Math.max(padL+46,L[0])),ly=Math.max(4,L[1]-34);
-const yTicks=(()=>{const n=4,out=[];for(let i=0;i<n;i++){const v=lo+(hi-lo)*i/(n-1);out.push(v)}return out})();
-const xTicks=(()=>{const n=t1-t0>20*3600e3?5:4,out=[];for(let i=0;i<n;i++)out.push(t0+(t1-t0)*i/(n-1));return out})();
-let grid='';yTicks.forEach((v,i)=>{const y=Y(v);grid+='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+y+'" y2="'+y+'" stroke="#1a1c1f" stroke-width="1"/>';grid+='<text x="'+(padL-6)+'" y="'+(y+4)+'" fill="#8b9098" font-size="10" text-anchor="end" font-variant-numeric="tabular-nums">'+f(v)+(i===yTicks.length-1?' SOL':'')+'</text>'});
-xTicks.forEach(t=>{const x=X(t);grid+='<text x="'+x+'" y="'+(H-8)+'" fill="#8b9098" font-size="10" text-anchor="middle">'+tm(t)+'</text>'});
-let startLayer='';if(near){const by=Y(start);startLayer='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+by+'" y2="'+by+'" stroke="#3a3d42" stroke-dasharray="3 5"/><text x="'+(W-padR)+'" y="'+(by-4)+'" fill="#6a6f76" font-size="9" text-anchor="end">start '+f(start)+'</text>'}
-else{startLayer='<text x="'+(W-padR)+'" y="'+(padT+10)+'" fill="#6a6f76" font-size="9" text-anchor="end">start '+f(start)+' ↑</text>'}
-const svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Paper equity curve"><defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+col+'" stop-opacity=".30"/><stop offset="1" stop-color="'+col+'" stop-opacity="0"/></linearGradient><filter id="gl"><feGaussianBlur stdDeviation="4"/></filter><clipPath id="eqClip"><rect x="'+padL+'" y="'+padT+'" width="'+pw+'" height="'+ph+'"/></clipPath></defs>'+grid+startLayer+'<g clip-path="url(#eqClip)"><path d="'+d+' L'+L[0].toFixed(2)+','+(padT+ph)+' L'+c[0][0].toFixed(2)+','+(padT+ph)+'Z" fill="url(#gf)"/><path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g><circle cx="'+L[0]+'" cy="'+L[1]+'" r="9" fill="'+col+'" opacity=".45" filter="url(#gl)"/><circle cx="'+L[0]+'" cy="'+L[1]+'" r="4.5" fill="'+col+'"/><rect x="'+(lx-44)+'" y="'+ly+'" width="88" height="22" rx="11" fill="#111" stroke="'+col+'"/><text x="'+lx+'" y="'+(ly+15)+'" fill="'+col+'" font-size="12" font-weight="700" text-anchor="middle">'+(ch<0?'−':'+')+f(Math.abs(ch))+' SOL</text></svg>';
-const hold=$('eqTip'),cross=$('eqCross');$('chart').querySelectorAll('svg,.sk').forEach(n=>n.remove());
-$('chart').insertAdjacentHTML('afterbegin',svg);if(hold)$('chart').appendChild(hold);if(cross)$('chart').appendChild(cross);
-EQ.geom={t0,t1,lo,hi,padL,padR,padT,padB,W,H,pw,ph,col,near,start};
-$('cnote').textContent=pts.length+' real marks · '+(R==='live'?'since start ':'last '+R+'h ')+tm(t0)+' → '+tm(t1)+' · y '+f(lo+pad)+'–'+f(hi-pad)+(near?' · dashed = start '+f(start):(usedBulk||start<lo||start>hi?' · start '+f(start)+' off-scale':''))+' · drag to read'}
-const EQ={pts:[],geom:null,R:'live',scrubbing:false,
-clearScrub(){const tip=$('eqTip'),cx=$('eqCross');if(tip)tip.classList.remove('on');if(cx)cx.classList.remove('on')},
-scrubAt(clientX){const g=EQ.geom,pts=EQ.pts,el=$('chart');if(!g||!pts||!pts.length||!el)return;const r=el.getBoundingClientRect(),plotL=r.width*(g.padL/g.W),plotW=r.width*(g.pw/g.W),plotT=r.height*(g.padT/g.H),plotH=r.height*(g.ph/g.H);
-const rel=Math.max(0,Math.min(1,(clientX-r.left-plotL)/Math.max(1,plotW)));const t=g.t0+rel*(g.t1-g.t0);
-let best=pts[0],bd=Math.abs(pts[0].t-t);for(let i=1;i<pts.length;i++){const d=Math.abs(pts[i].t-t);if(d<bd){bd=d;best=pts[i]}}
-const x=plotL+((best.t-g.t0)/Math.max(1,g.t1-g.t0))*plotW;const y=plotT+((g.hi-best.y)/Math.max(1e-9,g.hi-g.lo))*plotH;
-const tip=$('eqTip'),cx=$('eqCross'),ch=best.y-pts[0].y;tip.textContent=f(best.y)+' SOL · '+dtm(best.t)+' · '+(ch<0?'−':'+')+f(Math.abs(ch))+' vs range start';tip.classList.add('on');tip.classList.toggle('dn',ch<0);cx.classList.add('on');cx.querySelector('.v').style.left=x+'px';const dot=cx.querySelector('.dot');dot.style.left=x+'px';dot.style.top=y+'px';dot.style.color=g.col;dot.style.background=g.col}
+function drawChart(){if(!D)return;EQ.render()}
+const EQ={
+  all:[],vis:[],geom:null,R:'live',follow:true,endT:null,spanMs:null,minSpan:15*60e3,
+  scrubbing:false,panning:false,mode:null,holdTimer:null,origin:null,lastPan:null,vel:0,raf:0,
+  clearScrub(){const tip=$('eqTip'),cx=$('eqCross');if(tip)tip.classList.remove('on');if(cx)cx.classList.remove('on')},
+  showLiveBtn(on){const b=$('eqLive');if(b)b.classList.toggle('on',!!on)},
+  resetLive(){EQ.follow=true;EQ.endT=null;EQ.clearScrub();EQ.render()},
+  setRange(r){EQ.R=r;EQ.follow=true;EQ.endT=null;EQ.spanMs=null;EQ.clearScrub();EQ.render()},
+  basePts(){let pts=(D.equity||[]).map(e=>({t:Date.parse(e.timestamp),y:+e.equity_sol})).filter(e=>e.t&&!isNaN(e.y));
+    if(EQ.R!=='live'){const c=Date.now()-EQ.R*3600e3;pts=pts.filter(e=>e.t>=c)}
+    if(pts.length===1)pts=[pts[0],{t:pts[0].t+1,y:pts[0].y}];return pts},
+  windowFor(pts){if(!pts.length)return null;const data0=pts[0].t,data1=pts[pts.length-1].t,full=Math.max(1,data1-data0);
+    let span=EQ.spanMs;if(span==null){span=EQ.R==='live'?full:Math.min(full,EQ.R*3600e3);EQ.spanMs=span}
+    span=Math.max(EQ.minSpan,Math.min(full,span));EQ.spanMs=span;
+    let end=EQ.follow||EQ.endT==null?data1:EQ.endT;end=Math.min(data1,Math.max(data0+span,end));
+    const start=end-span;EQ.endT=end;return{t0:start,t1:end,data0,data1,full}},
+  yScale(ys,startSol){const ymin=Math.min(...ys),ymax=Math.max(...ys),start=startSol;
+    const sorted=ys.slice().sort((a,b)=>a-b),n=sorted.length,p05=sorted[Math.max(0,Math.floor(n*0.05))],p95=sorted[Math.min(n-1,Math.floor(n*0.95))];
+    const bulkLo=p05,bulkHi=p95,bulkSpan=Math.max(1e-6,bulkHi-bulkLo),fullSpan=Math.max(1e-6,ymax-ymin);
+    let lo=ymin,hi=ymax,near=false,usedBulk=false;
+    if(fullSpan>bulkSpan*1.35&&(Math.abs(ymax-start)<1e-9||Math.abs(ymin-start)<1e-9||start>bulkHi+bulkSpan*0.3||start<bulkLo-bulkSpan*0.3)){lo=bulkLo;hi=bulkHi;usedBulk=true}
+    near=!usedBulk&&start>=lo-Math.max(fullSpan,bulkSpan)*0.25&&start<=hi+Math.max(fullSpan,bulkSpan)*0.25;
+    if(near){lo=Math.min(lo,start);hi=Math.max(hi,start)}
+    const span=Math.max(1e-6,hi-lo),pad=Math.max(span*0.16,0.015);return{lo:lo-pad,hi:hi+pad,pad,near,usedBulk,ymin,ymax}},
+  render(){const pts=EQ.basePts();EQ.all=pts;const el=$('chart');
+    if(!pts.length){el.querySelectorAll('svg,.sk').forEach(n=>n.remove());$('cnote').textContent='No equity history in this range';EQ.showLiveBtn(false);const ee=$('eqEnd');if(ee)ee.innerHTML='';EQ.clearScrub();return}
+    const win=EQ.windowFor(pts);let vis=pts.filter(e=>e.t>=win.t0&&e.t<=win.t1);
+    if(!vis.length){/* pick nearest */let best=pts[0],bd=1e99;for(const e of pts){const d=Math.min(Math.abs(e.t-win.t0),Math.abs(e.t-win.t1));if(d<bd){bd=d;best=e}}vis=[best]}
+    if(vis.length===1)vis=[vis[0],{t:vis[0].t+1,y:vis[0].y}];EQ.vis=vis;
+    const ys=vis.map(e=>e.y),yscaled=EQ.yScale(ys,D.start_sol),lo=yscaled.lo,hi=yscaled.hi,near=yscaled.near,usedBulk=yscaled.usedBulk,pad=yscaled.pad,start=D.start_sol;
+    const t0=win.t0,t1=win.t1,W=390,H=260,padL=44,padR=58,padT=34,padB=30,pw=W-padL-padR,ph=H-padT-padB;
+    const X=t=>padL+(t-t0)/Math.max(1,t1-t0)*pw,Y=v=>padT+(hi-v)/Math.max(1e-9,hi-lo)*ph;
+    const c=vis.map(e=>[X(e.t),Y(e.y)]);let d='M'+c[0][0].toFixed(2)+','+c[0][1].toFixed(2);for(let i=1;i<c.length;i++){const a=c[i-1],b=c[i],mx=(a[0]+b[0])/2;d+=' C'+mx.toFixed(2)+','+a[1].toFixed(2)+' '+mx.toFixed(2)+','+b[1].toFixed(2)+' '+b[0].toFixed(2)+','+b[1].toFixed(2)}
+    const L=c[c.length-1],last=vis[vis.length-1],first=vis[0],ch=last.y-first.y,col=ch<0?'#ff7a86':'#2bff88';
+    const yTicks=(()=>{const n=4,out=[];for(let i=0;i<n;i++)out.push(lo+(hi-lo)*i/(n-1));return out})();
+    const xTicks=(()=>{const n=t1-t0>20*3600e3?5:4,out=[];for(let i=0;i<n;i++)out.push(t0+(t1-t0)*i/(n-1));return out})();
+    let grid='';yTicks.forEach((v,i)=>{const y=Math.min(padT+ph-2,Math.max(padT+10,Y(v)));grid+='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#1a1c1f" stroke-width="1"/>';grid+='<text x="'+(padL-6)+'" y="'+y+'" fill="#8b9098" font-size="10" text-anchor="end" dominant-baseline="middle" font-variant-numeric="tabular-nums">'+f(v)+'</text>'});
+    grid+='<text x="'+(padL-6)+'" y="'+(padT-12)+'" fill="#6a6f76" font-size="9" text-anchor="end">SOL</text>';
+    xTicks.forEach(t=>{const x=X(t);grid+='<text x="'+x+'" y="'+(H-10)+'" fill="#8b9098" font-size="10" text-anchor="middle">'+tm(t)+'</text>'});
+    let startLayer='';if(near&&start>=lo&&start<=hi){const by=Y(start);startLayer='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+by+'" y2="'+by+'" stroke="#3a3d42" stroke-dasharray="3 5"/><text x="'+(W-padR-4)+'" y="'+(by-6)+'" fill="#6a6f76" font-size="9" text-anchor="end">start '+f(start)+'</text>'}
+    else{startLayer='<text x="'+(W-padR-4)+'" y="'+(padT-12)+'" fill="#6a6f76" font-size="9" text-anchor="end">start '+f(start)+' ↑</text>'}
+    const pulse='<circle cx="'+L[0].toFixed(2)+'" cy="'+L[1].toFixed(2)+'" r="4" fill="'+col+'" opacity=".55"><animate attributeName="r" values="4;13;4" dur="2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".55;0;0.55" dur="2.2s" repeatCount="indefinite"/></circle>';
+    const svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Paper equity curve"><defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+col+'" stop-opacity=".28"/><stop offset="1" stop-color="'+col+'" stop-opacity="0"/></linearGradient><clipPath id="eqClip"><rect x="'+padL+'" y="'+padT+'" width="'+pw+'" height="'+ph+'" rx="2"/></clipPath></defs>'+grid+startLayer+'<g clip-path="url(#eqClip)"><path d="'+d+' L'+L[0].toFixed(2)+','+(padT+ph)+' L'+c[0][0].toFixed(2)+','+(padT+ph)+'Z" fill="url(#gf)"/><path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+pulse+'<circle cx="'+L[0].toFixed(2)+'" cy="'+L[1].toFixed(2)+'" r="4.2" fill="'+col+'" stroke="#0a0c0e" stroke-width="1.5"/></g></svg>';
+    const tip=$('eqTip'),cross=$('eqCross'),endPill=$('eqEnd'),live=$('eqLive');
+    el.querySelectorAll('svg,.sk').forEach(n=>n.remove());
+    el.insertAdjacentHTML('afterbegin',svg);
+    if(tip)el.appendChild(tip);if(endPill)el.appendChild(endPill);if(live)el.appendChild(live);if(cross)el.appendChild(cross);
+    /* End marker: current value + muted PnL, pinned to right — not a harsh bordered badge on the line */
+    const totalCh=(D.equity_sol||last.y)-(D.start_sol||3),pc=D.start_sol?totalCh/D.start_sol*100:0;
+    const winCh=last.y-first.y;const showCh=EQ.follow?totalCh:winCh;const showPc=EQ.follow?(D.start_sol?totalCh/D.start_sol*100:(first.y?winCh/first.y*100:0)):(first.y?winCh/first.y*100:0);
+    if(endPill){endPill.className='eq-end '+(showCh<0?'dn':'up');
+      /* Position vertically near last point but keep fully inside chart */
+      const r=el.getBoundingClientRect(),yy=(L[1]/H)*r.height;endPill.style.top=Math.max(40,Math.min(r.height-48,yy))+'px';endPill.style.transform='translateY(-50%)';
+      endPill.innerHTML='<span class="v">'+f(last.y)+'</span><span class="p">'+(showCh<0?'−':'+')+f(Math.abs(showCh))+' · '+(showPc<0?'−':'+')+f(Math.abs(showPc),1)+'%</span>'}
+    const away=!EQ.follow||(win.data1-win.t1>30e3);EQ.showLiveBtn(away);
+    EQ.geom={t0,t1,lo,hi,padL,padR,padT,padB,W,H,pw,ph,col,near,start,data0:win.data0,data1:win.data1};
+    const spanH=Math.round((t1-t0)/3600e3*10)/10;
+    $('cnote').textContent=vis.length+' marks · '+tm(t0)+' → '+tm(t1)+(EQ.follow?' · live':(' · '+spanH+'h window'))+' · swipe to scroll · pinch zoom · hold to scrub'},
+  scrubAt(clientX){const g=EQ.geom,pts=EQ.vis,el=$('chart');if(!g||!pts||!pts.length||!el)return;const r=el.getBoundingClientRect(),plotL=r.width*(g.padL/g.W),plotW=r.width*(g.pw/g.W),plotT=r.height*(g.padT/g.H),plotH=r.height*(g.ph/g.H);
+    const rel=Math.max(0,Math.min(1,(clientX-r.left-plotL)/Math.max(1,plotW)));const t=g.t0+rel*(g.t1-g.t0);
+    let best=pts[0],bd=Math.abs(pts[0].t-t);for(let i=1;i<pts.length;i++){const dd=Math.abs(pts[i].t-t);if(dd<bd){bd=dd;best=pts[i]}}
+    const x=plotL+((best.t-g.t0)/Math.max(1,g.t1-g.t0))*plotW;const y=plotT+((g.hi-best.y)/Math.max(1e-9,g.hi-g.lo))*plotH;
+    const tip=$('eqTip'),cx=$('eqCross');tip.textContent=f(best.y)+' SOL · '+dtm(best.t);tip.classList.add('on');tip.classList.toggle('dn',best.y<(pts[0].y));cx.classList.add('on');cx.querySelector('.v').style.left=x+'px';const dot=cx.querySelector('.dot');dot.style.left=x+'px';dot.style.top=y+'px';dot.style.color=g.col;dot.style.background=g.col},
+  panByPx(dx){const g=EQ.geom;if(!g)return;const ms=-dx/Math.max(1,g.pw)*(g.t1-g.t0);EQ.follow=false;EQ.endT=(EQ.endT==null?g.t1:EQ.endT)+ms;EQ.render()},
+  zoomAt(factor,clientX){const g=EQ.geom,el=$('chart');if(!g||!el)return;const r=el.getBoundingClientRect(),plotL=r.width*(g.padL/g.W),plotW=r.width*(g.pw/g.W);
+    const rel=Math.max(0,Math.min(1,(clientX-r.left-plotL)/Math.max(1,plotW)));const anchor=g.t0+rel*(g.t1-g.t0);
+    let span=Math.max(EQ.minSpan,Math.min(g.data1-g.data0,(EQ.spanMs||(g.t1-g.t0))*factor));EQ.spanMs=span;EQ.follow=false;
+    EQ.endT=Math.min(g.data1,Math.max(g.data0+span,anchor+(g.t1-anchor)/(g.t1-g.t0)*span));EQ.render()},
+  hoverTip(clientX){EQ.scrubAt(clientX)}
 };
-(function bindEqScrub(){const el=$('chart');if(!el||el.dataset.eqBound)return;el.dataset.eqBound='1';
-const go=e=>{const t=e.touches?e.touches[0]:e;if(!t)return;EQ.scrubbing=true;EQ.scrubAt(t.clientX);if(e.cancelable&&e.type.startsWith('touch'))e.preventDefault()};
-const end=()=>{EQ.scrubbing=false;setTimeout(()=>EQ.clearScrub(),900)};
-el.addEventListener('pointerdown',go);el.addEventListener('pointermove',e=>{if(EQ.scrubbing||e.buttons)go(e)});
-el.addEventListener('pointerup',end);el.addEventListener('pointerleave',end);el.addEventListener('pointercancel',end);
-el.addEventListener('touchstart',go,{passive:false});el.addEventListener('touchmove',go,{passive:false});el.addEventListener('touchend',end);el.addEventListener('touchcancel',end);
+(function bindEqGestures(){const el=$('chart');if(!el||el.dataset.eqBound)return;el.dataset.eqBound='1';
+  const live=$('eqLive');if(live)live.onclick=e=>{e.preventDefault();e.stopPropagation();EQ.resetLive()};
+  let pid=null,sx=0,sy=0,lx=0,ly=0,moved=false,axis=null,pinch0=0,span0=0;
+  const clearHold=()=>{if(EQ.holdTimer){clearTimeout(EQ.holdTimer);EQ.holdTimer=null}};
+  const endAll=()=>{clearHold();if(EQ.mode==='scrub')setTimeout(()=>EQ.clearScrub(),700);EQ.mode=null;EQ.panning=false;EQ.scrubbing=false;axis=null;pid=null;el.style.touchAction='pan-y'};
+  el.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;if(e.target.closest&&e.target.closest('.eq-live'))return;
+    pid=e.pointerId;sx=lx=e.clientX;sy=ly=e.clientY;moved=false;axis=null;EQ.mode=null;
+    try{el.setPointerCapture(e.pointerId)}catch(err){}
+    if(e.pointerType!=='mouse'){clearHold();EQ.holdTimer=setTimeout(()=>{if(!moved){EQ.mode='scrub';EQ.scrubbing=true;EQ.scrubAt(lx);el.style.touchAction='none'}},380)}
+    else{EQ.mode='pan'}
+  });
+  el.addEventListener('pointermove',e=>{if(pid!==e.pointerId)return;const dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;const adx=Math.abs(e.clientX-sx),ady=Math.abs(e.clientY-sy);
+    if(!moved&&adx+ady>6){moved=true;clearHold();if(!EQ.mode){if(ady>adx*1.15){endAll();return}EQ.mode='pan';EQ.panning=true;el.style.touchAction='none'}}
+    if(EQ.mode==='scrub'){EQ.scrubAt(e.clientX);e.preventDefault();return}
+    if(EQ.mode==='pan'){EQ.panByPx(dx);e.preventDefault();return}
+  });
+  el.addEventListener('pointerup',endAll);el.addEventListener('pointercancel',endAll);el.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'){EQ.clearScrub();if(EQ.mode==='pan')endAll()}});
+  el.addEventListener('lostpointercapture',endAll);
+  /* Desktop hover tip */
+  el.addEventListener('mousemove',e=>{if(EQ.mode||EQ.panning)return;if(e.buttons)return;EQ.hoverTip(e.clientX)});
+  el.addEventListener('mouseleave',()=>{if(!EQ.scrubbing)EQ.clearScrub()});
+  /* Wheel zoom */
+  el.addEventListener('wheel',e=>{e.preventDefault();const f=e.deltaY>0?1.18:1/1.18;EQ.zoomAt(f,e.clientX)},{passive:false});
+  /* Pinch zoom */
+  el.addEventListener('touchstart',e=>{if(e.touches.length===2){clearHold();EQ.mode='pinch';pinch0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);span0=EQ.spanMs||(EQ.geom?(EQ.geom.t1-EQ.geom.t0):3.6e6);el.style.touchAction='none'}},{passive:true});
+  el.addEventListener('touchmove',e=>{if(EQ.mode==='pinch'&&e.touches.length===2){e.preventDefault();const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(pinch0>0){const mid=(e.touches[0].clientX+e.touches[1].clientX)/2;EQ.spanMs=span0;EQ.zoomAt(pinch0/Math.max(10,d),mid);EQ.spanMs=Math.max(EQ.minSpan,span0*(pinch0/Math.max(10,d)));EQ.render()}}},{passive:false});
+  el.addEventListener('touchend',e=>{if(e.touches.length<2&&EQ.mode==='pinch')endAll()},{passive:true});
 })();
 function parts(ps,io){return (io?'<span class="chip g" style="margin-right:6px">Initials out</span>':'')+(ps&&ps.length?'<div class="lbl" style="margin:6px 0">Partial sells:</div>'+ps.map(e=>'<div class="li"><span>'+esc(/initials/.test(e.reason)?'Initials out':(e.reason||'').split(':')[0])+' · '+tm(e.timestamp)+(e.market_cap?' · '+mc(e.market_cap):'')+'</span><i>'+amt(e.amount_sol)+' · <span class="'+cls(e.pnl_sol)+'">'+samt(e.pnl_sol)+'</span></i></div>').join(''):'')}
 function wl(list){return list&&list.length?'<div class="wl">'+list.map(w=>'<i>🐋 '+esc(w)+'</i>').join('')+'</div>':''}
@@ -290,7 +343,7 @@ const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',
 $('notif').onclick=async()=>{if(!window.Notification){toast('Notifications not supported here');return}const p=await Notification.requestPermission();toast(p==='granted'?'Alerts on while the app is open':'Alerts not allowed')};
 document.querySelectorAll('.tg').forEach(b=>{b.classList.toggle('on',!!S[b.dataset.k]);b.setAttribute('aria-pressed',!!S[b.dataset.k]);b.onclick=()=>{S[b.dataset.k]=!S[b.dataset.k];save();b.classList.toggle('on',S[b.dataset.k]);b.setAttribute('aria-pressed',S[b.dataset.k]);if(D)render()}});
 const seg=(id,fn)=>$(id).onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$(id).children].forEach(x=>x.classList.toggle('on',x===b));fn(b);};
-seg('tabs',b=>{R=b.dataset.r==='live'?'live':+b.dataset.r;if(typeof EQ!=='undefined')EQ.clearScrub();if(D)drawChart()});seg('pseg',b=>{PS=b.dataset.p;if(D)renderStats()});seg('hseg',b=>{HF=b.dataset.h;if(D)renderHist()});
+seg('tabs',b=>{R=b.dataset.r==='live'?'live':+b.dataset.r;if(typeof EQ!=='undefined')EQ.setRange(R);else if(D)drawChart()});seg('pseg',b=>{PS=b.dataset.p;if(D)renderStats()});seg('hseg',b=>{HF=b.dataset.h;if(D)renderHist()});
 $('seeall').onclick=e=>{e.preventDefault();ALL=!ALL;if(D)renderFeed()};$('refresh').onclick=()=>{toast('Refreshing…');load()};
 $('cards').onscroll=()=>{const c=$('cards'),i=Math.round(c.scrollLeft/((c.firstChild&&c.firstChild.offsetWidth+12)||1));[...$('dots').children].forEach((d,j)=>d.classList.toggle('on',j===i))};
 const AB=document.querySelector('.appbar'),setAb=()=>document.documentElement.style.setProperty('--ab',AB.offsetHeight+'px');setAb();if(window.ResizeObserver)new ResizeObserver(setAb).observe(AB);
