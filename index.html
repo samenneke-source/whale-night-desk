@@ -202,13 +202,16 @@ const EQ={
   resetLive(){EQ.follow=true;EQ.endT=null;EQ.clearScrub();EQ.render()},
   setRange(r){EQ.R=r;EQ.follow=true;EQ.endT=null;EQ.spanMs=null;EQ.clearScrub();EQ.render()},
   basePts(){let pts=(D.equity||[]).map(e=>({t:Date.parse(e.timestamp),y:+e.equity_sol})).filter(e=>e.t&&!isNaN(e.y));
-    if(EQ.R!=='live'){const c=Date.now()-EQ.R*3600e3;pts=pts.filter(e=>e.t>=c)}
     if(pts.length===1)pts=[pts[0],{t:pts[0].t+1,y:pts[0].y}];return pts},
+  defaultSpan(full){if(EQ.R==='live')return full;return Math.min(full,EQ.R*3600e3)},
   windowFor(pts){if(!pts.length)return null;const data0=pts[0].t,data1=pts[pts.length-1].t,full=Math.max(1,data1-data0);
-    let span=EQ.spanMs;if(span==null){span=EQ.R==='live'?full:Math.min(full,EQ.R*3600e3);EQ.spanMs=span}
+    let span=EQ.spanMs;if(span==null){span=EQ.defaultSpan(full);EQ.spanMs=span}
     span=Math.max(EQ.minSpan,Math.min(full,span));EQ.spanMs=span;
-    let end=EQ.follow||EQ.endT==null?data1:EQ.endT;end=Math.min(data1,Math.max(data0+span,end));
-    const start=end-span;EQ.endT=end;return{t0:start,t1:end,data0,data1,full}},
+    let end=EQ.follow||EQ.endT==null?data1:EQ.endT;
+    /* Keep a sliding window inside the full series so history is scrollable */
+    end=Math.min(data1,Math.max(data0+Math.min(span,full),end));
+    let start=end-span;if(start<data0){start=data0;end=Math.min(data1,start+span)}
+    EQ.endT=end;return{t0:start,t1:end,data0,data1,full}},
   yScale(ys,startSol){const ymin=Math.min(...ys),ymax=Math.max(...ys),start=startSol;
     const sorted=ys.slice().sort((a,b)=>a-b),n=sorted.length,p05=sorted[Math.max(0,Math.floor(n*0.05))],p95=sorted[Math.min(n-1,Math.floor(n*0.95))];
     const bulkLo=p05,bulkHi=p95,bulkSpan=Math.max(1e-6,bulkHi-bulkLo),fullSpan=Math.max(1e-6,ymax-ymin);
