@@ -109,7 +109,7 @@ if(!ps.length){$('tlist').innerHTML='<div class="box"><div class="empty" style="
 $('tlist').innerHTML=ps.map(p=>{const u=p.unrealized_pnl_sol,pc=p.unrealized_pnl_pct,st=p.stop_mc,c=nil(u)?'flat':cls(u),cp=p.entry_price_sol&&p.entry_mc&&p.current_mc?p.entry_price_sol*p.current_mc/p.entry_mc:null;
 return '<div class="box '+(u>0?'pos':u<0?'neg':'')+'"><div class="trh"><div><b>'+esc(p.symbol||'—')+'</b>'+(p.initials_out?' <span class="chip g">Initials out</span>':'')+'<small>'+esc(p.name||'—')+(p.mark_stale?' · <span class="dn">mark stale</span>':'')+'</small></div><div class="pl '+c+'">'+samt(u)+'<small><br>'+pct(pc)+'</small></div></div>'+
 '<div class="kv"><div><span>Entry '+(S.price?'price':'MC')+'</span><b>'+lvl(p.entry_mc,p.entry_price_sol)+'</b></div><div><span>Now</span><b>'+lvl(p.current_mc,cp)+'</b></div><div><span>'+(p.trail_active?'Trailing stop':'Stop (−30%)')+'</span><b class="dn">'+lvl(st,p.stop_price_sol)+'</b></div><div><span>Peak</span><b>'+lvl(p.peak_mc,p.peak_price_sol)+'</b></div><div><span>Next scale-out +'+((p.tp_step_next||1)*10)+'%</span><b class="up">'+lvl(p.tp_mc,p.tp_price_sol)+'</b></div><div><span>Remaining</span><b>'+(nil(p.remaining_pct)?'—':f(p.remaining_pct,0)+'%')+'</b></div><div><span>To next</span><b>'+(nil(p.tp_mc)||nil(st)||nil(p.current_mc)?'—':f(Math.max(0,Math.min(100,(p.current_mc-st)/(p.tp_mc-st)*100)),0)+'%')+'</b></div><div><span>Size</span><b>'+amt(p.remaining_cost_sol)+'</b></div><div><span>Of stack</span><b>'+(nil(p.stack_pct)?'—':f(p.stack_pct,1)+'%')+'</b></div><div><span>Opened</span><b>'+dtm(p.opened_at)+'</b></div></div>'+(nil(p.tp_mc)||nil(st)||nil(p.current_mc)?'':'<div class="lbl" style="display:flex;justify-content:space-between"><span class="dn">stop '+mc(st)+'</span><span class="up">next +'+((p.tp_step_next||1)*10)+'% '+mc(p.tp_mc)+'</span></div><div class="bar" role="progressbar" aria-label="Progress from stop to take-profit"><i style="width:'+Math.max(0,Math.min(100,(p.current_mc-st)/(p.tp_mc-st)*100))+'%"></i></div>')+'<div class="lbl">In trade <b data-open="'+esc(p.opened_at)+'" style="color:#fff">'+dur(since(p.opened_at))+'</b></div>'+
-parts(p.partials,false)+'<div class="why"><em>Why we’re in:</em> '+esc(p.why||'—')+wl(p.triggered_by)+'</div></div>'}).join('')}
+parts(p.partials,false)+'<button type="button" class="btn live" data-chart="'+esc(p.mint)+'" data-sym="'+esc(p.symbol||'')+'" data-entry-sol="'+(p.entry_price_sol??'')+'" data-entry-usd="'+(p.entry_price_usd??'')+'" data-opened="'+esc(p.opened_at||'')+'" data-pair="'+esc(p.pair||'')+'">Live chart</button><div class="why"><em>Why we’re in:</em> '+esc(p.why||'—')+wl(p.triggered_by)+'</div></div>'}).join('')}
 function renderStats(){const s=(D.stats||{})[PS];if(!s){$('stats').innerHTML='<div class="empty">Stats not in data yet</div>';return}
 const it=[['Realised',samt(s.realized_pnl_sol),cls(s.realized_pnl_sol)],['Unrealised',samt(s.unrealized_pnl_sol),cls(s.unrealized_pnl_sol)],['Trades',s.trades,''],['Win rate',nil(s.win_rate)?'—':f(s.win_rate*100,1)+'%',''],['Profit factor',nil(s.profit_factor)?'—':f(s.profit_factor,2),''],['Max DD',s.trades?amt(s.max_drawdown_sol):'—','dn'],['Avg win',amt(s.avg_win_sol),'up'],['Avg loss',amt(s.avg_loss_sol),'dn'],['Streak',s.streak?(s.streak>0?s.streak+'W':-s.streak+'L'):'—',s.streak>0?'up':s.streak<0?'dn':''],['Best',s.best?esc(s.best.symbol)+' '+samt(s.best.pnl_sol):'—','up'],['Worst',s.worst?esc(s.worst.symbol)+' '+samt(s.worst.pnl_sol):'—','dn'],['W / L',s.wins+' / '+s.losses,'']];
 $('stats').innerHTML=it.map(x=>'<div><span>'+x[0]+'</span><b class="'+x[2]+'">'+x[1]+'</b></div>').join('')+(s.trades?'':'<div style="grid-column:1/-1"><span>No closed trades in this period yet.</span></div>')}
@@ -122,7 +122,7 @@ const hr=k.hard_rules||[];$('rules').innerHTML=hr.length?hr.map(r=>'<div class="
 const catChip=c=>{c=c||'other';const col=/take|whales exited/.test(c)?'g':/stop/.test(c)?'r':/night/.test(c)?'y':'';return '<span class="chip '+col+'">'+esc(c)+'</span>'};
 function renderHist(){const all=(D.closed_view||[]).slice().reverse(),h=all.filter(t=>HF==='all'||(HF==='win'?t.pnl_sol>0:t.pnl_sol<=0));
 $('hist').innerHTML=h.length?h.map(t=>'<details class="box '+(t.pnl_sol>0?'pos':'neg')+'"><summary><div class="trh"><div><b>'+esc(t.symbol||'—')+'</b><small>'+dtm(t.closed_at)+' · held '+dur(t.hold_s)+'</small></div><div class="pl '+cls(t.pnl_sol)+'">'+samt(t.pnl_sol)+'<small><br>'+pct(t.pnl_pct)+'</small></div></div><div style="margin-top:6px">'+catChip(t.exit_category)+'</div></summary>'+
-'<div class="kv"><div><span>Entry</span><b>'+lvl(t.entry_mc)+'</b></div><div><span>Exit</span><b>'+lvl(t.exit_mc)+'</b></div><div><span>Size</span><b>'+amt(t.cost_sol)+'</b></div><div><span>Opened</span><b>'+dtm(t.opened_at)+'</b></div><div><span>Closed</span><b>'+dtm(t.closed_at)+'</b></div><div><span>Hold</span><b>'+dur(t.hold_s)+'</b></div></div><div class="lbl">Final exit: '+esc(t.exit_reason||'—')+' · P&amp;L includes partials</div>'+parts(t.partials,t.initials_out)+'<div class="why"><em>Why we’re in:</em> '+esc(t.why||'—')+wl(t.triggered_by)+'</div></details>').join(''):'<div class="box"><div class="empty">'+(all.length?'No '+(HF==='win'?'winning':'losing')+' trades yet':'No closed paper trades yet')+'</div></div>'}
+'<div class="kv"><div><span>Entry</span><b>'+lvl(t.entry_mc)+'</b></div><div><span>Exit</span><b>'+lvl(t.exit_mc)+'</b></div><div><span>Size</span><b>'+amt(t.cost_sol)+'</b></div><div><span>Opened</span><b>'+dtm(t.opened_at)+'</b></div><div><span>Closed</span><b>'+dtm(t.closed_at)+'</b></div><div><span>Hold</span><b>'+dur(t.hold_s)+'</b></div></div><div class="lbl">Final exit: '+esc(t.exit_reason||'—')+' · P&amp;L includes partials</div>'+parts(t.partials,t.initials_out)+'<button type="button" class="btn live" data-chart="'+esc(t.mint)+'" data-sym="'+esc(t.symbol||'')+'" data-entry-sol="'+(t.entry_price_sol??'')+'" data-entry-usd="'+(t.entry_price_usd??'')+'" data-opened="'+esc(t.opened_at||'')+'" data-pair="'+esc(t.pair||'')+'">Live chart</button><div class="why"><em>Why we’re in:</em> '+esc(t.why||'—')+wl(t.triggered_by)+'</div></details>').join(''):'<div class="box"><div class="empty">'+(all.length?'No '+(HF==='win'?'winning':'losing')+' trades yet':'No closed paper trades yet')+'</div></div>'}
 function renderWhales(){const ws=(D.whales||[]).slice().sort((a,b)=>(b.eligible-a.eligible)||((b.copy_pnl_sol||0)-(a.copy_pnl_sol||0))||((b.pnl_sol_30d||0)-(a.pnl_sol_30d||0)));$('wcount').textContent=ws.filter(w=>w.eligible).length+' qualified · '+ws.length+' watched';
 $('wl').innerHTML=ws.length?ws.map((w,i)=>'<div class="box"><div class="ch" style="margin:0"><div class="ic">'+(i+1)+'</div><div style="min-width:0"><b>'+esc(w.label)+'</b><small>'+(w.user_override?'<span class="chip y">'+esc(w.status)+'</span>':w.eligible?'<span class="up">qualified</span>':'probation · '+esc(String(w.status||'').replace(/^probation: /,'')))+'</small></div><span class="dot'+(w.eligible?'':' off')+'"></span></div>'+
 '<div class="kv"><div><span>Last activity</span><b>'+(w.last_activity?dur(since(w.last_activity))+' ago':'—')+'</b></div><div><span>Buys seen (30m)</span><b>'+(w.signalled_buys??'—')+'</b></div><div><span>Our copies</span><b>'+(w.copies||0)+(w.copies?' · '+w.copy_wins+'W':'')+'</b></div><div><span>Copy P&amp;L</span><b class="'+cls(w.copy_pnl_sol)+'">'+(w.copies?samt(w.copy_pnl_sol):'—')+'</b></div><div><span>30d PnL (research)</span><b>'+(nil(w.pnl_sol_30d)?'—':f(w.pnl_sol_30d,0)+' SOL')+'</b></div><div><span>Win rate (research)</span><b>'+(nil(w.win_rate)?'—':f(w.win_rate*100,0)+'%')+'</b></div></div>'+
@@ -140,7 +140,7 @@ function renderFeed(){const ev=[];(D.closed_view||[]).forEach(t=>ev.push({id:t.i
 ev.sort((a,b)=>Date.parse(b.t||0)-Date.parse(a.t||0));const n=ALL?ev.length:6,tr=(D.closed_view||[]).length+(D.positions||[]).length;
 $('feed').innerHTML=(tr?'':'<div class="empty">No trades yet tonight</div>')+ev.slice(0,n).map(e=>'<div class="act"><div class="ic">'+e.ic+'</div><div><b>'+e.h+'</b><small>'+esc(e.s)+' · '+tm(e.t)+'</small></div><div class="amt">'+e.a+'<small>'+e.x+'</small></div></div>').join('');$('seeall').textContent=ALL?'Show less':'See all ('+ev.length+')'}
 function renderHealth(){const h=D.health||{},p=D.last_poll||{},a=since(D.data_asof);const row=(l,ok,v)=>'<div class="rule"><span class="dot '+(ok?'':'bad')+'" style="margin:0"></span><div>'+l+'<small>'+v+'</small></div></div>';
-$('hbox').innerHTML=row('Last poll',a<600,dtm(p.timestamp)+' · '+dur(a)+' ago · all wallets polled every '+(p.poll_interval_s||'—')+'s (adaptive 15–60s)'+(p.prev_cycle_s?' · cycle '+p.prev_cycle_s+'s':''))+row('Poll success rate',(h.success_rate??0)>=.9,nil(h.success_rate)?'—':f(h.success_rate*100,0)+'% of last '+h.polls_sampled+' polls complete')+row('Solana RPC',h.rpc_ok,(h.rpc_ok?'OK':'degraded')+' · slot '+esc(p.slot??'—')+' · '+p.wallets_polled+'/'+p.wallets_total+' wallets')+row('DexScreener',h.dexscreener_ok,h.dexscreener_ok?'OK · SOL $'+p.sol_usd:'no SOL price')+row('Bot uptime',!!h.bot_started_at,'since '+dtm(h.bot_started_at)+' · <b data-open="'+esc(h.bot_started_at)+'">'+dur(since(h.bot_started_at))+'</b>')+row('Publishing',a<15*60,'site data '+dtm(D.generated_at)+'; republished every 5 min and on every trade')+(h.last_error?'<div class="lbl dn">Last error: '+esc(h.last_error)+'</div>':'')}
+$('hbox').innerHTML=row('Last poll',a<600,dtm(p.timestamp)+' · '+dur(a)+' ago · all wallets polled every '+(p.poll_interval_s||'—')+'s (adaptive 15–60s)'+(p.prev_cycle_s?' · cycle '+p.prev_cycle_s+'s':''))+row('Poll success rate',(h.success_rate??0)>=.9,nil(h.success_rate)?'—':f(h.success_rate*100,0)+'% of last '+h.polls_sampled+' polls complete')+row('Solana RPC',h.rpc_ok,(h.rpc_ok?'OK':'degraded')+' · slot '+esc(p.slot??'—')+' · '+p.wallets_polled+'/'+p.wallets_total+' wallets')+row('DexScreener',h.dexscreener_ok,h.dexscreener_ok?'OK · SOL $'+p.sol_usd:'no SOL price')+row('Bot uptime',!!h.bot_started_at,'since '+dtm(h.bot_started_at)+' · <b data-open="'+esc(h.bot_started_at)+'">'+dur(since(h.bot_started_at))+'</b>')+row('Open-position marks',!!(h.position_monitor_alive||(h.last_mark&&h.last_mark.ok)),(h.position_monitor_alive?'1s monitor alive':'monitor down · cycle fallback')+' · last mark '+dtm((h.last_mark||{}).timestamp)+' · target 1s (DexScreener)')+row('Publishing',a<15*60,'site data '+dtm(D.generated_at)+'; republished every 5 min / on trade · live chart prices come from your browser, not git')+(h.last_error?'<div class="lbl dn">Last error: '+esc(h.last_error)+'</div>':'')}
 function renderAcct(){const k=D.risk||{};$('acct').innerHTML='<div class="li" style="border:0"><span>Start balance</span><i>'+amt(D.start_sol)+'</i></div><div class="li"><span>Portfolio now</span><i>'+amt(D.equity_sol)+'</i></div><div class="li"><span>Cash</span><i>'+amt(D.cash_sol)+'</i></div><div class="li"><span>Closed / open</span><i>'+(D.closed_trades||0)+' / '+(D.open_positions||0)+'</i></div><div class="li"><span>Paper since</span><i>'+dtm(D.health&&D.health.state_started_at)+'</i></div><div class="li"><span>Limits</span><i>10% default, 20% hard cap · −30% stop · 2 open max</i></div><div class="lbl" style="margin-top:8px">Bonding-curve entries stay blocked (reserve/impact adapter not built). Whale stats are a 25 Oct research snapshot.</div>'}
 function notify(){const ids=[...(D.positions||[]).map(p=>'o|'+p.mint+'|'+p.opened_at),...(D.closed_view||[]).map(t=>'c|'+t.id)];const seen=JSON.parse(localStorage.getItem('wd.seen')||'null');
 if(seen===null){localStorage.setItem('wd.seen',JSON.stringify(ids));return}const nw=ids.filter(i=>!seen.includes(i));$('tbadge').textContent=nw.length?nw.length:'';
@@ -161,4 +161,69 @@ document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>doc
 let y0=null;addEventListener('touchstart',e=>{y0=scrollY<=0?e.touches[0].clientY:null},{passive:true});addEventListener('touchmove',e=>{if(y0!==null)$('ptr').classList.toggle('on',e.touches[0].clientY-y0>70)},{passive:true});addEventListener('touchend',()=>{if($('ptr').classList.contains('on')){$('ptr').classList.remove('on');load()}y0=null});
 load();setInterval(load,45000);setInterval(tick,1000);tick();
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(console.warn);
+
+
+/* Live chart: browser fetches public DexScreener + GeckoTerminal (CORS *). Not published via git each second. */
+let LC=null, lcTimer=null, lcLive=[];
+function openLiveChart(el){
+  const mint=el.getAttribute('data-chart'), sym=el.getAttribute('data-sym')||(mint||'').slice(0,6);
+  const entrySol=parseFloat(el.getAttribute('data-entry-sol')), entryUsd=parseFloat(el.getAttribute('data-entry-usd'));
+  const opened=el.getAttribute('data-opened')||'', pair0=el.getAttribute('data-pair')||'';
+  LC={mint,sym,entrySol,entryUsd,opened,pair:pair0,ohlcv:null}; lcLive=[];
+  $('livechart').classList.remove('hide');
+  $('lcTitle').textContent=sym+' · live chart';
+  $('lcMeta').textContent='Entry '+dtm(opened)+' (Europe/Amsterdam) · '+(isFinite(entrySol)?('entry '+Number(entrySol).toPrecision(6)+' SOL'):'entry price unavailable')+(isFinite(entryUsd)?' · $'+entryUsd:'');
+  $('lcNote').textContent='Candles: GeckoTerminal public 1-minute OHLCV in SOL. Live dots: DexScreener public API ~1s in this browser. Real fetches only — no simulated ticks. App JSON on GitHub Pages still updates every 5 min / on trade.';
+  $('lcPrice').textContent='Loading…'; $('lcAge').textContent='';
+  refreshLiveChart(); clearInterval(lcTimer); lcTimer=setInterval(refreshLiveChart,1000);
+}
+async function refreshLiveChart(){
+  if(!LC) return;
+  try{
+    const tok=await fetch('https://api.dexscreener.com/latest/dex/tokens/'+encodeURIComponent(LC.mint),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('DexScreener HTTP '+r.status);return r.json()});
+    const pairs=(tok.pairs||[]).filter(p=>p.chainId==='solana').sort((a,b)=>((b.liquidity&&b.liquidity.usd)||0)-((a.liquidity&&a.liquidity.usd)||0));
+    const best=pairs[0];
+    if(!best){ $('lcPrice').textContent='No Solana pair on DexScreener'; $('lcAge').textContent='stale / unavailable'; return; }
+    if(!LC.pair) LC.pair=best.pairAddress;
+    const pxSol=parseFloat(best.priceNative), pxUsd=parseFloat(best.priceUsd), fetched=Date.now();
+    lcLive.push({t:fetched/1000, px:pxSol}); if(lcLive.length>180) lcLive=lcLive.slice(-180);
+    $('lcPrice').innerHTML='Live <b>'+(isFinite(pxSol)?Number(pxSol).toPrecision(6):'—')+' SOL</b>'+(isFinite(pxUsd)?' · $'+pxUsd:'')+' · '+esc(best.dexId||'');
+    $('lcAge').textContent='fetched '+new Date(fetched).toLocaleTimeString('en-GB',{hour12:false,timeZone:'Europe/Amsterdam'})+' Europe/Amsterdam · DexScreener print (provider exchange time unavailable)';
+    if(!LC.ohlcv){
+      const oh=await fetch('https://api.geckoterminal.com/api/v2/networks/solana/pools/'+encodeURIComponent(LC.pair)+'/ohlcv/minute?aggregate=1&limit=120&currency=token',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('GeckoTerminal HTTP '+r.status);return r.json()});
+      LC.ohlcv=(oh.data&&oh.data.attributes&&oh.data.attributes.ohlcv_list)||[];
+    }
+    drawLiveChart(LC.ohlcv, lcLive, LC.entrySol, LC.opened);
+  }catch(e){ $('lcAge').textContent='feed error: '+e.message+' · chart may be stale'; }
+}
+function drawLiveChart(ohlcv, live, entrySol, opened){
+  const W=600,H=220,pad=16;
+  const entryTs=opened?Date.parse(opened)/1000:null;
+  const pts=[];
+  (ohlcv||[]).slice().reverse().forEach(row=>{ const t=+row[0], c=+row[4]; if(isFinite(t)&&isFinite(c)&&c>0) pts.push({t,c}); });
+  (live||[]).forEach(p=>{ if(isFinite(p.t)&&isFinite(p.px)&&p.px>0) pts.push({t:p.t,c:p.px}); });
+  pts.sort((a,b)=>a.t-b.t);
+  if(!pts.length){ $('lcSvg').innerHTML=''; return; }
+  let t0=pts[0].t, t1=pts[pts.length-1].t;
+  if(entryTs&&entryTs<t0) t0=entryTs-60;
+  if(t1<=t0) t1=t0+60;
+  const ys=pts.map(p=>p.c).concat(isFinite(entrySol)?[entrySol]:[]);
+  let y0=Math.min.apply(null,ys), y1=Math.max.apply(null,ys); if(y1<=y0){ y0*=0.99; y1*=1.01; }
+  const X=t=>pad+(t-t0)/(t1-t0)*(W-2*pad), Y=v=>H-pad-(v-y0)/(y1-y0)*(H-2*pad);
+  let d=''; pts.forEach((p,i)=>{ d+=(i?'L':'M')+X(p.t)+','+Y(p.c); });
+  let entry='';
+  if(isFinite(entrySol)){
+    const ey=Y(entrySol), ex=entryTs?X(Math.min(Math.max(entryTs,t0),t1)):pad;
+    entry='<line x1="'+pad+'" x2="'+(W-pad)+'" y1="'+ey+'" y2="'+ey+'" stroke="#5b8cff" stroke-dasharray="4 4" stroke-width="1"/>'
+      +'<line x1="'+ex+'" x2="'+ex+'" y1="'+pad+'" y2="'+(H-pad)+'" stroke="#5b8cff" stroke-width="1.5"/>'
+      +'<circle cx="'+ex+'" cy="'+ey+'" r="4" fill="#5b8cff"/>'
+      +'<text x="'+(ex+6)+'" y="'+(ey-6)+'" fill="#5b8cff" font-size="11">entry</text>';
+  }
+  $('lcSvg').innerHTML='<rect width="'+W+'" height="'+H+'" fill="#07080a"/>'+entry
+    +'<path d="'+d+'" fill="none" stroke="#3ddc97" stroke-width="2" stroke-linecap="round"/>'
+    +'<text x="'+pad+'" y="14" fill="#888" font-size="10">1m candles + live prints (SOL)</text>';
+}
+document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('[data-chart]'); if(b){ e.preventDefault(); openLiveChart(b); } });
+(function(){ const c=$('lcClose'), m=$('livechart'); if(c) c.onclick=()=>{ m.classList.add('hide'); clearInterval(lcTimer); LC=null; }; if(m) m.addEventListener('click',e=>{ if(e.target===m){ m.classList.add('hide'); clearInterval(lcTimer); LC=null; } }); })();
+
 </script></body></html>
