@@ -196,17 +196,17 @@ EQ.pts=pts;EQ.R=R;
 if(!pts.length){$('chart').querySelectorAll('svg').forEach(n=>n.remove());const sk=$('chart').querySelector('.sk');if(sk)sk.remove();$('cnote').textContent='No equity history in this range';EQ.clearScrub();return}
 if(pts.length===1)pts=[pts[0],{t:pts[0].t+1,y:pts[0].y}];
 const ys=pts.map(e=>e.y),ymin=Math.min(...ys),ymax=Math.max(...ys),start=D.start_sol;
-/* Tight fit to visible marks. If start is an outlier above/below the bulk of points, keep it as an edge label instead of stretching the axis. */
 const sorted=ys.slice().sort((a,b)=>a-b),n=sorted.length,p05=sorted[Math.max(0,Math.floor(n*0.05))],p95=sorted[Math.min(n-1,Math.floor(n*0.95))];
-const bulkLo=Math.min(p05,sorted[0]+(sorted[n-1]-sorted[0])*0.02),bulkHi=Math.max(p95,sorted[n-1]-(sorted[n-1]-sorted[0])*0.02);
-const bulkSpan=Math.max(1e-6,bulkHi-bulkLo);
-const startNearBulk=start>=bulkLo-bulkSpan*0.35&&start<=bulkHi+bulkSpan*0.35;
-let lo,hi,near;
-if(startNearBulk){lo=Math.min(ymin,start);hi=Math.max(ymax,start);near=true}
-else{lo=ymin;hi=ymax;near=false}
-/* If ALL-range includes the start cliff but most marks sit in a tighter band, prefer the bulk band so moves aren't flat. */
-if(R==='live'&&!startNearBulk){lo=Math.min(lo,bulkLo);hi=Math.max(hi,bulkHi)}
-if(R==='live'&&startNearBulk&&(ymax-ymin)>bulkSpan*1.8&&(ymax-start<1e-9||start-ymin<1e-9)){lo=bulkLo;hi=bulkHi;near=start>=lo-bulkSpan*0.2&&start<=hi+bulkSpan*0.2;if(near){lo=Math.min(lo,start);hi=Math.max(hi,start)}else{near=false}}
+const bulkLo=p05,bulkHi=p95,bulkSpan=Math.max(1e-6,bulkHi-bulkLo),fullSpan=Math.max(1e-6,ymax-ymin);
+/* Prefer bulk band when the start cliff (or a single outlier) stretches the axis and flattens moves. */
+let lo=ymin,hi=ymax,near=false,usedBulk=false;
+if(fullSpan>bulkSpan*1.35&&(Math.abs(ymax-start)<1e-9||Math.abs(ymin-start)<1e-9||(start>bulkHi+bulkSpan*0.3)||(start<bulkLo-bulkSpan*0.3))){
+  lo=bulkLo;hi=bulkHi;usedBulk=true;
+}else{
+  lo=ymin;hi=ymax;
+}
+near=!usedBulk&&start>=lo-Math.max(fullSpan,bulkSpan)*0.25&&start<=hi+Math.max(fullSpan,bulkSpan)*0.25;
+if(near){lo=Math.min(lo,start);hi=Math.max(hi,start)}
 const span=Math.max(1e-6,hi-lo),pad=Math.max(span*0.16,0.015);lo-=pad;hi+=pad;
 const t0=pts[0].t,t1=pts[pts.length-1].t,W=390,H=260,padL=42,padR=12,padT=28,padB=28,pw=W-padL-padR,ph=H-padT-padB;
 const X=t=>padL+(t-t0)/Math.max(1,t1-t0)*pw,Y=v=>padT+(hi-v)/(hi-lo)*ph;
@@ -222,7 +222,7 @@ const svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" 
 const hold=$('eqTip'),cross=$('eqCross');$('chart').querySelectorAll('svg,.sk').forEach(n=>n.remove());
 $('chart').insertAdjacentHTML('afterbegin',svg);if(hold)$('chart').appendChild(hold);if(cross)$('chart').appendChild(cross);
 EQ.geom={t0,t1,lo,hi,padL,padR,padT,padB,W,H,pw,ph,col,near,start};
-$('cnote').textContent=pts.length+' real marks · '+(R==='live'?'since start ':'last '+R+'h ')+tm(t0)+' → '+tm(t1)+' · y auto-fit '+f(ymin)+'–'+f(ymax)+(near?' · dashed = start '+f(start):' · start '+f(start)+' off-scale')+' · drag to read'}
+$('cnote').textContent=pts.length+' real marks · '+(R==='live'?'since start ':'last '+R+'h ')+tm(t0)+' → '+tm(t1)+' · y '+f(lo+pad)+'–'+f(hi-pad)+(near?' · dashed = start '+f(start):(usedBulk||start<lo||start>hi?' · start '+f(start)+' off-scale':''))+' · drag to read'}
 const EQ={pts:[],geom:null,R:'live',scrubbing:false,
 clearScrub(){const tip=$('eqTip'),cx=$('eqCross');if(tip)tip.classList.remove('on');if(cx)cx.classList.remove('on')},
 scrubAt(clientX){const g=EQ.geom,pts=EQ.pts,el=$('chart');if(!g||!pts||!pts.length||!el)return;const r=el.getBoundingClientRect(),plotL=r.width*(g.padL/g.W),plotW=r.width*(g.pw/g.W),plotT=r.height*(g.padT/g.H),plotH=r.height*(g.ph/g.H);
