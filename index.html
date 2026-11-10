@@ -455,7 +455,7 @@ $('wcount').textContent=ws.filter(w=>w.eligible).length+' live · '+((D.whales||
 $('wl').innerHTML=ws.length?'<div class="box" style="padding:4px 14px">'+ws.map((w,i)=>{
   const st=w.user_override?'Override':w.eligible?'Qualified':'Probation';
   const sub=(w.last_activity?dur(since(w.last_activity))+' ago':'No recent')+(w.copies?' · '+w.copies+' cp':'');
-  const pnl=w.copies?('<b class="'+cls(w.copy_pnl_sol)+'">'+samt(w.copy_pnl_sol)+'</b><small>copy PnL</small>'):('<b>'+(nil(w.win_rate)?'—':f(w.win_rate*100,0)+'%')+'</b><small>research WR</small>');
+  const pnl=w.copies?('<b class="'+cls(w.copy_pnl_sol)+'">'+samt(w.copy_pnl_sol)+'</b><small>copy</small>'):(nil(w.win_rate)?'<b class="muted">—</b>':'<b>'+f(w.win_rate*100,0)+'%</b><small>WR</small>');
   return '<div class="wrow"><div class="rk">'+(i+1)+'</div><div class="meta"><b>'+esc(w.label)+'</b><small>'+st+' · '+sub+'</small></div><div class="right">'+pnl+'</div></div>'}).join('')+'</div>':'<div class="box"><div class="empty">'+(q?'No wallets match “'+esc(q)+'”':'No wallets in data')+'</div></div>'}
 function renderAgents(){const p=D.last_poll||{},ws=D.wallets||[],el=ws.filter(w=>w.eligible),night=/NIGHT/.test(p.mode||''),ok=!(p.errors||[]).length,bl=D.blocked||[];
 const cards=[['🐋','Whale Watch',p.wallets_polled+'/'+p.wallets_total+' wallets polled',ok,'<div class="big">'+ws.length+'</div><div class="lbl">watched · '+el.length+' qualified · '+(ws.length-el.length)+' probation</div>'+ws.slice(0,3).map(w=>'<div class="li"><span>'+esc(w.label)+'</span><i>'+(w.eligible?'<span class="up">qualified</span>':esc(String(w.status).replace(/^probation: /,'')))+'</i></div>').join('')],
