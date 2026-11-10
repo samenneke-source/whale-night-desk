@@ -432,15 +432,16 @@ function renderRisk(){const k=D.risk||{},pv=k.portfolio_sol||D.equity_sol,dl=Mat
 $('riskg').innerHTML=gauge('Daily loss',dl,dcap,amt(dl)+' / '+amt(dcap))+gauge('Exposure',dep,pv*.4,amt(dep)+' / '+amt(pv*.4))+gauge('Open risk @ stop',k.open_risk_sol||0,k.open_risk_cap_sol,amt(k.open_risk_sol||0)+' / '+amt(k.open_risk_cap_sol))+gauge('Cash',k.cash_sol||0,pv,amt(k.cash_sol)+' of '+amt(pv),true);
 const book=[
 ['Hours','24/7 trading · daily recap 07:00 Europe/Amsterdam · loss limit resets at Amsterdam midnight'],
-['Entry','Single tracked-wallet buy · narrative ≥ 60 · bundlers/insiders < 20% · RugCheck pass · prefer early coins'],
+['Entry','Single tracked-wallet buy ≥ 1 SOL, ≤ 15 min old · MC ≤ $2M · insiders/bundlers ≤ 2% · narrative ≥ 60 · RugCheck pass'],
 ['Size','~10% default · hard cap 20% per trade · max 40% exposure · max 2 open · no leverage · no averaging down'],
-['Stops','−30% stop at entry · trailing 30% below peak (never moves down) · sell all remaining on hit'],
+['Stops','−30% stop at entry · trailing 30% below peak, tightens to 20% once peak ≥ +30% (never moves down) · sell all remaining on hit'],
+['Time stop','Open ≥ 4h and still within ±10% of entry → close fully (time stop, flat 4h)'],
 ['Ladder','Sell 10% of original size at each +10% step · initials out at 2× (+100%)'],
 ['Safety','Never trade on failed checks or conflicting/down data · bonding-curve entries blocked']
 ];
 if($('rulesPlaybook'))$('rulesPlaybook').innerHTML='<div class="lbl">Playbook</div>'+book.map(x=>'<div class="li"><span><b style="color:#fff;font-weight:650">'+x[0]+'</b><small style="display:block;color:var(--m);margin-top:2px;font-size:12px;line-height:1.4">'+x[1]+'</small></span></div>').join('');
 const hr=k.hard_rules||[];$('rules').innerHTML='<div class="lbl">Live checks</div>'+(hr.length?hr.map(r=>'<div class="rule"><span class="st '+(r.ok?'ok':'no')+'">'+(r.ok?'PASS':'FAIL')+'</span><div>'+esc(r.rule)+'<small>'+esc(r.value)+'</small></div></div>').join(''):'<div class="empty">Rule states not in data yet</div>')}
-const catChip=c=>{c=c||'other';const col=/take|whales exited/.test(c)?'g':/stop/.test(c)?'r':/night/.test(c)?'y':'';return '<span class="chip '+col+'">'+esc(c)+'</span>'};
+const catChip=c=>{c=c||'other';const col=/take|whales exited/.test(c)?'g':/time stop/.test(c)?'y':/stop/.test(c)?'r':/night/.test(c)?'y':'';return '<span class="chip '+col+'">'+esc(c)+'</span>'};
 function renderHist(){const all=(D.closed_view||[]).slice().reverse(),h=all.filter(t=>HF==='all'||(HF==='win'?t.pnl_sol>0:t.pnl_sol<=0));
 if(!h.length){$('hist').innerHTML='<div class="box"><div class="empty">'+(all.length?'No '+(HF==='win'?'winning':'losing')+' trades yet':'No closed paper trades yet')+'</div></div>';return}
 const groups={};h.forEach(t=>{const p=amsParts(new Date(Date.parse(t.closed_at)));const key=p.year+'-'+p.month+'-'+p.day,label=p.day+' '+['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+p.month]+' '+p.year;if(!groups[key])groups[key]={label,items:[],pnl:0};groups[key].items.push(t);groups[key].pnl+=(+t.pnl_sol||0)});
