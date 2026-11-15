@@ -298,7 +298,7 @@ function nightWin(){const n=new Date(),p=amsParts(n),y=+p.year,mo=+p.month,da=+p
 function tick(){const n=new Date();$('clock').textContent=n.toLocaleString('en-GB',{timeZone:TZ,weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:S.h12,timeZoneName:'short'}).replace(/,(?=[^,]*$)/,'');
 const w=nightWin(),now=Date.now();$('nbar').style.width=w.on?Math.min(100,(now-w.st)/(w.en-w.st)*100)+'%':'0%';$('nleft').textContent='Recap in '+dur((w.en-now)/1e3);$('nstate').textContent='● 24/7';$('nmeta').textContent=dtm(w.st)+' → '+tm(w.en);
 if(D){const a=since(D.data_asof),ss=D.session&&D.session.started_at,st=$('statusTxt'),dot=$('liveDot');
-if(st)st.textContent=(a<90?'Live · '+dur(a):'Stale · '+dur(a))+' · up '+(dur(since(D.health&&D.health.bot_started_at)));
+if(st)st.textContent=(a<((D.health&&D.health.publish_interval_s)||300)+120?'Live · '+dur(a):'Stale · '+dur(a))+' · up '+(dur(since(D.health&&D.health.bot_started_at)));
 if(dot)dot.classList.toggle('bad',a>15*60);
 document.querySelectorAll('[data-open]').forEach(e=>e.textContent=dur(since(e.dataset.open)));document.querySelectorAll('[data-exp]').forEach(e=>{const s=(Date.parse(e.dataset.exp)-now)/1e3;e.textContent=s>0?dur(s)+' left':'expired'});staleCheck()}}
 function staleCheck(){const a=since(D.data_asof),b=$('stale');if(a>15*60){b.classList.remove('hide');b.textContent='Data is '+dur(a)+' old — publisher may be delayed.'}else b.classList.add('hide')}
