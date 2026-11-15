@@ -56,7 +56,7 @@ h3{font-size:13px;margin:16px 0 8px;color:var(--m);font-weight:600;letter-spacin
 
 /* Equity chart (v3 kept) */
 .chart{margin:14px -4px 4px;height:260px;position:relative;touch-action:pan-y;-webkit-user-select:none;user-select:none;overflow:hidden;z-index:1;cursor:grab;border-radius:var(--rad);background:linear-gradient(180deg,#0d0f13,#090a0c);border:1px solid var(--line2)}
-.chart:active{cursor:grabbing}.chart svg{width:100%;height:100%;display:block;overflow:hidden}
+.chart:active{cursor:grabbing}.chart svg,.chart .eq-cv{width:100%;height:100%;display:block;overflow:hidden}.chart .eq-cv{position:absolute;inset:0}
 .eq-tip{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:rgba(10,12,14,.94);border:1px solid rgba(43,255,136,.28);color:#fff;font:700 11px var(--font);padding:6px 10px;border-radius:12px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .12s;z-index:3;font-variant-numeric:tabular-nums;box-shadow:0 8px 24px rgba(0,0,0,.45)}
 .eq-tip.on{opacity:1}.eq-tip.dn{border-color:rgba(255,107,120,.35)}
 .eq-end{position:absolute;right:8px;top:50%;transform:translateY(-50%);z-index:2;pointer-events:none;text-align:right;font-variant-numeric:tabular-nums;padding:6px 8px;border-radius:12px;background:rgba(8,10,12,.72);backdrop-filter:blur(8px)}
@@ -212,8 +212,8 @@ nav .nb{position:absolute;top:2px;right:10px;background:var(--r);color:#fff;font
 <div class="statusline" id="statusline"><span class="dotlive" id="liveDot" aria-hidden="true"></span><span id="statusTxt">Connecting…</span><button type="button" id="refresh" aria-label="Refresh">Refresh</button></div>
 <div class="banner hide" id="stale"></div>
 <div class="bal sk" id="bal">0.000 SOL</div><div class="sub" id="chg"></div><div class="usd" id="usd"></div>
-<div class="chart" id="chart"><div class="sk" style="height:260px"></div><div class="eq-tip" id="eqTip"></div><div class="eq-end" id="eqEnd" aria-hidden="true"></div><button type="button" class="eq-live" id="eqLive" aria-label="Jump to live">Live ⟶</button><div class="eq-cross" id="eqCross"><div class="v"></div><div class="dot"></div></div></div><div class="cnote" id="cnote"></div>
-<div class="tabs" id="tabs" role="tablist"><button data-r="live" class="on">ALL</button><button data-r="1">1H</button><button data-r="4">4H</button><button data-r="24">1D</button><button data-r="168">1W</button></div><button class="opencta none" id="homeOpen" type="button">No open trades<i>Trades ›</i></button></section>
+<div class="chart" id="chart"><div class="sk" style="height:260px"></div><div class="eq-tip" id="eqTip"></div><button type="button" class="eq-live" id="eqLive" aria-label="Jump to live">Live ⟶</button></div><div class="cnote" id="cnote"></div>
+<div class="tabs" id="tabs" role="tablist"><button data-r="1">1H</button><button data-r="6">6H</button><button data-r="24" class="on">24H</button><button data-r="live">ALL</button></div><button class="opencta none" id="homeOpen" type="button">No open trades<i>Trades ›</i></button></section>
 <section id="perf"><h2>Performance <span class="seg" id="pseg"><button data-p="tonight" class="on">Tonight</button><button data-p="7d">7D</button><button data-p="all">All</button></span></h2><div class="stats" id="stats"></div></section>
 <section id="night"><h2>Daily session <span class="r" id="nstate"></span></h2><div class="box"><div class="lbl" id="nwin">Trading 24/7 · daily session &amp; recap 07:00–07:00 Europe/Amsterdam · loss limit resets at Amsterdam midnight</div><div class="bar"><i id="nbar" style="width:0"></i></div><div class="li" style="border:0"><span id="nleft">—</span><i id="nmeta"></i></div><h3>Latest daily recap</h3><div id="recap"></div><div id="pastrecaps"></div></div></section>
 </div>
@@ -278,7 +278,7 @@ nav .nb{position:absolute;top:2px;right:10px;background:var(--r);color:#fff;font
 
 <script>
 "use strict";
-const TZ='Europe/Amsterdam';let D=null,R='live',ALL=false,PS='tonight',HF='all';
+const TZ='Europe/Amsterdam';let D=null,R='24',ALL=false,PS='tonight',HF='all';
 const S=Object.assign({usd:false,price:false,compact:false,h12:false},JSON.parse(localStorage.getItem('wd.settings')||'{}'));
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),f=(n,d=3)=>Number(n).toFixed(d),
 nil=v=>v==null||Number.isNaN(v),sg=n=>(n>0?'+':n<0?'−':'+')+f(Math.abs(n)),cls=n=>n>0?'up':n<0?'dn':'flat',
@@ -308,106 +308,112 @@ $('chg').innerHTML='<span class="'+cls(pnl)+'">'+(pnl>0?'▲':pnl<0?'▼':'■')
 $('usd').textContent=px()?(S.usd?'= '+f(D.equity_sol)+' SOL':'≈ $'+(D.equity_sol*px()).toFixed(2))+' at SOL $'+px()+' (DexScreener, '+tm(p.market_data_at)+')':'USD hidden: no SOL price in data';
 drawChart();renderTrades();renderStats();renderRecap();renderRisk();renderHist();renderWhales();renderAgents();renderSignals();renderFeed();renderHealth();renderAcct();homeCta();ttlRight();tick();if(typeof lcSync==='function'&&LC)lcSync()}
 function homeCta(){const ps=D.positions||[],b=$('homeOpen');b.classList.toggle('none',!ps.length);b.innerHTML=ps.length?'<span><i class="pulse"></i>'+ps.length+' open · '+ps.map(p=>esc(p.symbol)+' <span class="'+cls(p.unrealized_pnl_sol)+'">'+samt(p.unrealized_pnl_sol)+'</span>').join(' · ')+'</span><i>Live ›</i>':'<span>No open trades · '+(D.wallets||[]).length+' wallets watched</span><i>Trades ›</i>'}
-function drawChart(){if(!D)return;if(typeof R!=="undefined")EQ.R=R;EQ.render()}
+function drawChart(){if(!D)return;EQ.setData()}
+/* Equity chart v4 (16 Nov chartfix): one persistent canvas, view kept across data refreshes, drag/swipe pan, wheel/pinch zoom, tap/hover tooltip. Display only. */
 const EQ={
-  all:[],vis:[],geom:null,R:'live',follow:true,endT:null,spanMs:null,minSpan:15*60e3,
-  scrubbing:false,panning:false,mode:null,holdTimer:null,origin:null,lastPan:null,vel:0,raf:0,
-  clearScrub(){const tip=$('eqTip'),cx=$('eqCross');if(tip)tip.classList.remove('on');if(cx)cx.classList.remove('on')},
-  showLiveBtn(on){const b=$('eqLive');if(b)b.classList.toggle('on',!!on)},
-  resetLive(){EQ.follow=true;EQ.endT=null;EQ.clearScrub();EQ.render()},
-  setRange(r){EQ.R=r;EQ.follow=true;EQ.endT=null;EQ.spanMs=null;EQ.clearScrub();EQ.render()},
-  basePts(){let pts=(D.equity||[]).map(e=>({t:Date.parse(e.timestamp),y:+e.equity_sol})).filter(e=>e.t&&!isNaN(e.y));
-    if(pts.length===1)pts=[pts[0],{t:pts[0].t+1,y:pts[0].y}];return pts},
-  defaultSpan(full){if(EQ.R==='live')return full;return Math.min(full,EQ.R*3600e3)},
-  windowFor(pts){if(!pts.length)return null;const data0=pts[0].t,data1=pts[pts.length-1].t,full=Math.max(1,data1-data0);
-    let span=EQ.spanMs;if(span==null){span=EQ.defaultSpan(full);EQ.spanMs=span}
-    span=Math.max(EQ.minSpan,Math.min(full,span));EQ.spanMs=span;
-    let end=EQ.follow||EQ.endT==null?data1:EQ.endT;
-    /* Keep a sliding window inside the full series so history is scrollable */
-    end=Math.min(data1,Math.max(data0+Math.min(span,full),end));
-    let start=end-span;if(start<data0){start=data0;end=Math.min(data1,start+span)}
-    EQ.endT=end;return{t0:start,t1:end,data0,data1,full}},
-  yScale(ys,startSol){const ymin=Math.min(...ys),ymax=Math.max(...ys),start=startSol;
-    const sorted=ys.slice().sort((a,b)=>a-b),n=sorted.length,p05=sorted[Math.max(0,Math.floor(n*0.05))],p95=sorted[Math.min(n-1,Math.floor(n*0.95))];
-    const bulkLo=p05,bulkHi=p95,bulkSpan=Math.max(1e-6,bulkHi-bulkLo),fullSpan=Math.max(1e-6,ymax-ymin);
-    let lo=ymin,hi=ymax,near=false,usedBulk=false;
-    if(fullSpan>bulkSpan*1.35&&(Math.abs(ymax-start)<1e-9||Math.abs(ymin-start)<1e-9||start>bulkHi+bulkSpan*0.3||start<bulkLo-bulkSpan*0.3)){lo=bulkLo;hi=bulkHi;usedBulk=true}
-    near=!usedBulk&&start>=lo-Math.max(fullSpan,bulkSpan)*0.25&&start<=hi+Math.max(fullSpan,bulkSpan)*0.25;
-    if(near){lo=Math.min(lo,start);hi=Math.max(hi,start)}
-    const span=Math.max(1e-6,hi-lo),pad=Math.max(span*0.16,0.015);return{lo:lo-pad,hi:hi+pad,pad,near,usedBulk,ymin,ymax}},
-  render(){const pts=EQ.basePts();EQ.all=pts;const el=$('chart');
-    if(!pts.length){el.querySelectorAll('svg,.sk').forEach(n=>n.remove());$('cnote').textContent='No equity history in this range';EQ.showLiveBtn(false);const ee=$('eqEnd');if(ee)ee.innerHTML='';EQ.clearScrub();return}
-    const win=EQ.windowFor(pts);let vis=pts.filter(e=>e.t>=win.t0&&e.t<=win.t1);
-    if(!vis.length){/* pick nearest */let best=pts[0],bd=1e99;for(const e of pts){const d=Math.min(Math.abs(e.t-win.t0),Math.abs(e.t-win.t1));if(d<bd){bd=d;best=e}}vis=[best]}
-    if(vis.length===1)vis=[vis[0],{t:vis[0].t+1,y:vis[0].y}];EQ.vis=vis;
-    const ys=vis.map(e=>e.y),yscaled=EQ.yScale(ys,D.start_sol),lo=yscaled.lo,hi=yscaled.hi,near=yscaled.near,usedBulk=yscaled.usedBulk,pad=yscaled.pad,start=D.start_sol;
-    const t0=win.t0,t1=win.t1,W=390,H=260,padL=46,padR=62,padT=44,padB=30,pw=W-padL-padR,ph=H-padT-padB;
-    const X=t=>padL+(t-t0)/Math.max(1,t1-t0)*pw,Y=v=>padT+(hi-v)/Math.max(1e-9,hi-lo)*ph;
-    const c=vis.map(e=>[X(e.t),Y(e.y)]);let d='M'+c[0][0].toFixed(2)+','+c[0][1].toFixed(2);for(let i=1;i<c.length;i++){const a=c[i-1],b=c[i],mx=(a[0]+b[0])/2;d+=' C'+mx.toFixed(2)+','+a[1].toFixed(2)+' '+mx.toFixed(2)+','+b[1].toFixed(2)+' '+b[0].toFixed(2)+','+b[1].toFixed(2)}
-    const L=c[c.length-1],last=vis[vis.length-1],first=vis[0],ch=last.y-first.y,col=ch<0?'#ff7a86':'#2bff88';
-    const yTicks=(()=>{const n=4,out=[];for(let i=0;i<n;i++)out.push(lo+(hi-lo)*i/(n-1));return out})();
-    const xTicks=(()=>{const n=t1-t0>20*3600e3?5:4,out=[];for(let i=0;i<n;i++)out.push(t0+(t1-t0)*i/(n-1));return out})();
-    let grid='';yTicks.forEach((v,i)=>{const yy=Y(v),y=Math.min(padT+ph-4,Math.max(padT+8,yy));grid+='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+yy+'" y2="'+yy+'" stroke="#1a1c1f" stroke-width="1"/>';grid+='<text x="'+(padL-6)+'" y="'+y+'" fill="#8b9098" font-size="10" text-anchor="end" dominant-baseline="middle" font-variant-numeric="tabular-nums">'+f(v)+'</text>'});
-    grid+='<text x="'+(padL-6)+'" y="'+(padT-12)+'" fill="#6a6f76" font-size="9" text-anchor="end">SOL</text>';
-    xTicks.forEach(t=>{const x=X(t);grid+='<text x="'+x+'" y="'+(H-10)+'" fill="#8b9098" font-size="10" text-anchor="middle">'+tm(t)+'</text>'});
-    let startLayer='';if(near&&start>=lo&&start<=hi){const by=Y(start);startLayer='<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+by+'" y2="'+by+'" stroke="#3a3d42" stroke-dasharray="3 5"/><text x="'+(W-padR-4)+'" y="'+(by-6)+'" fill="#6a6f76" font-size="9" text-anchor="end">start '+f(start)+'</text>'}
-    else{startLayer='<text x="'+(W-padR-4)+'" y="'+(padT-12)+'" fill="#6a6f76" font-size="9" text-anchor="end">start '+f(start)+' ↑</text>'}
-    const pulse='<circle cx="'+L[0].toFixed(2)+'" cy="'+L[1].toFixed(2)+'" r="4" fill="'+col+'" opacity=".55"><animate attributeName="r" values="4;13;4" dur="2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".55;0;0.55" dur="2.2s" repeatCount="indefinite"/></circle>';
-    const svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Paper equity curve"><defs><linearGradient id="gf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+col+'" stop-opacity=".28"/><stop offset="1" stop-color="'+col+'" stop-opacity="0"/></linearGradient><clipPath id="eqClip"><rect x="'+padL+'" y="'+padT+'" width="'+pw+'" height="'+ph+'" rx="2"/></clipPath></defs>'+grid+startLayer+'<g clip-path="url(#eqClip)"><path d="'+d+' L'+L[0].toFixed(2)+','+(padT+ph)+' L'+c[0][0].toFixed(2)+','+(padT+ph)+'Z" fill="url(#gf)"/><path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+pulse+'<circle cx="'+L[0].toFixed(2)+'" cy="'+L[1].toFixed(2)+'" r="4.2" fill="'+col+'" stroke="#0a0c0e" stroke-width="1.5"/></g></svg>';
-    const tip=$('eqTip'),cross=$('eqCross'),endPill=$('eqEnd'),live=$('eqLive');
-    el.querySelectorAll('svg,.sk').forEach(n=>n.remove());
-    el.insertAdjacentHTML('afterbegin',svg);
-    if(tip)el.appendChild(tip);if(endPill)el.appendChild(endPill);if(live)el.appendChild(live);if(cross)el.appendChild(cross);
-    /* End marker: current value + muted PnL, pinned to right — not a harsh bordered badge on the line */
-    const totalCh=(D.equity_sol||last.y)-(D.start_sol||3),pc=D.start_sol?totalCh/D.start_sol*100:0;
-    const winCh=last.y-first.y;const showCh=EQ.follow?totalCh:winCh;const showPc=EQ.follow?(D.start_sol?totalCh/D.start_sol*100:(first.y?winCh/first.y*100:0)):(first.y?winCh/first.y*100:0);
-    if(endPill){endPill.className='eq-end '+(showCh<0?'dn':'up');
-      /* Position vertically near last point but keep fully inside chart */
-      const r=el.getBoundingClientRect(),yy=(L[1]/H)*r.height;endPill.style.top=Math.max(40,Math.min(r.height-48,yy))+'px';endPill.style.transform='translateY(-50%)';
-      endPill.innerHTML='<span class="v">'+f(last.y)+'</span><span class="p">'+(showCh<0?'−':'+')+f(Math.abs(showCh))+' · '+(showPc<0?'−':'+')+f(Math.abs(showPc),1)+'%</span>'}
-    EQ.showLiveBtn(!EQ.follow);
-    EQ.geom={t0,t1,lo,hi,padL,padR,padT,padB,W,H,pw,ph,col,near,start,data0:win.data0,data1:win.data1};
-    const spanH=Math.round((t1-t0)/3600e3*10)/10;
-    $('cnote').textContent=vis.length+' marks · '+tm(t0)+' → '+tm(t1)+(EQ.follow?' · live':(' · '+spanH+'h window'))+' · swipe to scroll · pinch zoom · hold to scrub'},
-  scrubAt(clientX){const g=EQ.geom,pts=EQ.vis,el=$('chart');if(!g||!pts||!pts.length||!el)return;const r=el.getBoundingClientRect(),plotL=r.width*(g.padL/g.W),plotW=r.width*(g.pw/g.W),plotT=r.height*(g.padT/g.H),plotH=r.height*(g.ph/g.H);
-    const rel=Math.max(0,Math.min(1,(clientX-r.left-plotL)/Math.max(1,plotW)));const t=g.t0+rel*(g.t1-g.t0);
-    let best=pts[0],bd=Math.abs(pts[0].t-t);for(let i=1;i<pts.length;i++){const dd=Math.abs(pts[i].t-t);if(dd<bd){bd=dd;best=pts[i]}}
-    const x=plotL+((best.t-g.t0)/Math.max(1,g.t1-g.t0))*plotW;const y=plotT+((g.hi-best.y)/Math.max(1e-9,g.hi-g.lo))*plotH;
-    const tip=$('eqTip'),cx=$('eqCross');tip.textContent=f(best.y)+' SOL · '+dtm(best.t);tip.classList.add('on');tip.classList.toggle('dn',best.y<(pts[0].y));cx.classList.add('on');cx.querySelector('.v').style.left=x+'px';const dot=cx.querySelector('.dot');dot.style.left=x+'px';dot.style.top=y+'px';dot.style.color=g.col;dot.style.background=g.col},
-  panByPx(dx){const g=EQ.geom;if(!g)return;const ms=-dx/Math.max(1,g.pw)*(g.t1-g.t0);EQ.follow=false;EQ.endT=(EQ.endT==null?g.t1:EQ.endT)+ms;EQ.render()},
-  zoomAt(factor,clientX){const g=EQ.geom,el=$('chart');if(!g||!el)return;const r=el.getBoundingClientRect(),plotL=r.width*(g.padL/g.W),plotW=r.width*(g.pw/g.W);
-    const rel=Math.max(0,Math.min(1,(clientX-r.left-plotL)/Math.max(1,plotW)));const anchor=g.t0+rel*(g.t1-g.t0);
-    let span=Math.max(EQ.minSpan,Math.min(g.data1-g.data0,(EQ.spanMs||(g.t1-g.t0))*factor));EQ.spanMs=span;EQ.follow=false;
-    EQ.endT=Math.min(g.data1,Math.max(g.data0+span,anchor+(g.t1-anchor)/(g.t1-g.t0)*span));EQ.render()},
-  hoverTip(clientX){EQ.scrubAt(clientX)}
+  all:[],marks:[],R:'24',follow:true,view:null,y:null,yT:null,cross:null,g:null,raf:0,cv:null,key:'',minSpan:10*60e3,GAP:30*60e3,
+  span(){return EQ.R==='live'?null:(+EQ.R)*3600e3},
+  ensureCanvas(){const el=$('chart');if(!el)return null;if(!EQ.cv||!el.contains(EQ.cv)){el.querySelectorAll('svg,.sk').forEach(n=>n.remove());const c=document.createElement('canvas');c.className='eq-cv';c.setAttribute('aria-label','Paper equity chart');el.insertBefore(c,el.firstChild);EQ.cv=c;const cx=$('eqCross');if(cx)cx.remove();const ee=$('eqEnd');if(ee)ee.remove()}return EQ.cv},
+  setData(){if(!D)return;let pts=(D.equity||[]).map(e=>({t:Date.parse(e.timestamp),y:+e.equity_sol})).filter(e=>e.t&&isFinite(e.y)).sort((a,b)=>a.t-b.t);
+    const now=Date.parse(D.data_asof||D.generated_at||'')||0;if(pts.length&&isFinite(+D.equity_sol)&&now>pts[pts.length-1].t)pts.push({t:now,y:+D.equity_sol});
+    EQ.all=pts;const mk=[];(D.closed_view||D.closed||[]).forEach(t=>{const c=Date.parse(t.closed_at);if(c)mk.push({t:c,k:'x',pnl:+t.pnl_sol||0,sym:t.symbol||''})});
+    (D.closed_view||D.closed||[]).concat(D.positions||[]).forEach(t=>{const o=Date.parse(t.opened_at);if(o)mk.push({t:o,k:'o',sym:t.symbol||''})});EQ.marks=mk;
+    EQ.ensureCanvas();if(!pts.length){$('cnote').textContent='No equity history yet';EQ.view=null;EQ.draw();return}
+    if(!EQ.view)EQ.fitRange();else if(EQ.follow)EQ.followLive();else EQ.clampView();EQ.schedule()},
+  bounds(){const a=EQ.all;return{d0:a[0].t,d1:a[a.length-1].t}},
+  fitRange(){if(!EQ.all.length){EQ.view=null;return}const{d0,d1}=EQ.bounds(),sp=EQ.span();let s=sp==null?Math.max(EQ.minSpan,d1-d0):sp;const rp=s*.04;EQ.view={t0:d1+rp-s,t1:d1+rp};EQ.follow=true;EQ.yT=null;EQ.y=null},
+  followLive(){const v=EQ.view,{d0,d1}=EQ.bounds(),s=EQ.R==='live'?Math.max(EQ.minSpan,(d1-d0)/.96):v.t1-v.t0,rp=s*.04;EQ.view={t0:d1+rp-s,t1:d1+rp}},
+  clampView(){const v=EQ.view;if(!v||!EQ.all.length)return;const{d0,d1}=EQ.bounds(),full=Math.max(EQ.minSpan,d1-d0);let s=Math.max(EQ.minSpan,Math.min(full*1.3+3600e3,v.t1-v.t0)),t1=v.t1;
+    t1=Math.min(t1,d1+s*.5);t1=Math.max(t1,d0+s*.3);EQ.view={t0:t1-s,t1};const lv=d1+s*.04;if(Math.abs(t1-lv)<s*.01)EQ.follow=true},
+  setRange(r){EQ.R=String(r);EQ.cross=null;EQ.tip(null);EQ.fitRange();EQ.schedule()},
+  resetLive(){EQ.cross=null;EQ.tip(null);EQ.follow=true;if(EQ.view)EQ.followLive();else EQ.fitRange();EQ.schedule()},
+  pan(dxPx){const g=EQ.g,v=EQ.view;if(!g||!v)return;const ms=-dxPx/Math.max(1,g.pw)*(v.t1-v.t0);EQ.view={t0:v.t0+ms,t1:v.t1+ms};EQ.follow=false;EQ.clampView();EQ.schedule()},
+  zoom(factor,clientX){const g=EQ.g,v=EQ.view;if(!g||!v)return;const r=EQ.cv.getBoundingClientRect(),fr=Math.max(0,Math.min(1,(clientX-r.left-g.padL)/g.pw)),sp=v.t1-v.t0,a=v.t0+fr*sp,ns=sp*factor;
+    const wasLive=EQ.follow;EQ.view={t0:a-fr*ns,t1:a-fr*ns+ns};EQ.clampView();if(wasLive&&fr>.85){EQ.follow=true;EQ.followLive()}else EQ.follow=false;EQ.schedule()},
+  schedule(){if(EQ.raf)return;EQ.raf=requestAnimationFrame(()=>{EQ.raf=0;EQ.draw()})},
+  tip(txt,dn){const t=$('eqTip');if(!t)return;if(!txt){t.classList.remove('on');return}t.innerHTML=txt;t.classList.add('on');t.classList.toggle('dn',!!dn)},
+  niceStep(raw){const p=Math.pow(10,Math.floor(Math.log10(raw))),n=raw/p;return(n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p},
+  tOff(t){try{const p=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,hour:'numeric',minute:'numeric',hourCycle:'h23',year:'numeric',month:'numeric',day:'numeric'}).formatToParts(new Date(t)),o={};p.forEach(x=>o[x.type]=+x.value);return Date.UTC(o.year,o.month-1,o.day,o.hour%24,o.minute)-Math.floor(t/60e3)*60e3}catch(e){return 0}},
+  draw(){const c=EQ.cv,el=$('chart');if(!c||!el)return;const W=el.clientWidth,H=el.clientHeight;if(W<20||H<20)return;
+    const dpr=Math.min(window.devicePixelRatio||1,2),key=W+'x'+H+'@'+dpr;if(EQ.key!==key){EQ.key=key;c.width=Math.round(W*dpr);c.height=Math.round(H*dpr)}
+    const ctx=c.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
+    const font=getComputedStyle(document.body).fontFamily||'system-ui',fs=W<420?10.5:11;
+    const padL=8,padR=W<420?54:62,padT=14,padB=24,pw=W-padL-padR,ph=H-padT-padB;
+    const v=EQ.view,pts=EQ.all;if(!v||!pts.length){ctx.fillStyle='#8b9098';ctx.font='600 12px '+font;ctx.textAlign='center';ctx.fillText('No equity history yet',W/2,H/2);EQ.g=null;EQ.showLive();return}
+    const start=+D.start_sol||pts[0].y;let i0=0,i1=pts.length-1;while(i0<pts.length-1&&pts[i0+1].t<v.t0)i0++;while(i1>0&&pts[i1-1].t>v.t1)i1--;
+    const vis=pts.slice(i0,i1+1);let lo=Infinity,hi=-Infinity;vis.forEach(p=>{if(p.t>=v.t0-1&&p.t<=v.t1+1){lo=Math.min(lo,p.y);hi=Math.max(hi,p.y)}});
+    if(!isFinite(lo)){lo=hi=vis.length?vis[0].y:start}
+    const sp0=Math.max(hi-lo,.02);if(start>=lo-sp0*1.5&&start<=hi+sp0*1.5){lo=Math.min(lo,start);hi=Math.max(hi,start)}
+    let pad=Math.max((hi-lo)*.12,.01);const tgt={lo:lo-pad,hi:hi+pad};
+    if(!EQ.y)EQ.y={...tgt};else{EQ.y.lo+=(tgt.lo-EQ.y.lo)*.3;EQ.y.hi+=(tgt.hi-EQ.y.hi)*.3;if(Math.abs(tgt.lo-EQ.y.lo)+Math.abs(tgt.hi-EQ.y.hi)>(tgt.hi-tgt.lo)*.002)EQ.schedule();else EQ.y={...tgt}}
+    const yl=EQ.y.lo,yh=EQ.y.hi,X=t=>padL+(t-v.t0)/(v.t1-v.t0)*pw,Y=y=>padT+(yh-y)/(yh-yl)*ph;
+    EQ.g={padL,padR,padT,padB,pw,ph,W,H,X,Y};
+    /* grid + y labels */
+    ctx.font='600 '+fs+'px '+font;ctx.textBaseline='middle';const ys=EQ.niceStep((yh-yl)/4);ctx.lineWidth=1;
+    for(let y=Math.ceil(yl/ys)*ys;y<=yh;y+=ys){const yy=Math.round(Y(y))+.5;ctx.strokeStyle='#1a1c1f';ctx.beginPath();ctx.moveTo(padL,yy);ctx.lineTo(padL+pw,yy);ctx.stroke();ctx.fillStyle='#8b9098';ctx.textAlign='left';ctx.fillText(y.toFixed(ys<.01?3:2),padL+pw+6,yy)}
+    /* x labels (CET) */
+    const span=v.t1-v.t0,steps=[5,10,15,30,60,120,180,360,720,1440,2880,10080].map(m=>m*60e3);let xs=steps.find(s=>span/s<=Math.max(2,Math.floor(pw/80)))||steps[steps.length-1];
+    const off=EQ.tOff(v.t0),dayFmt=xs>=1440*60e3;ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    for(let t=Math.ceil((v.t0+off)/xs)*xs-off;t<=v.t1;t+=xs){const xx=Math.round(X(t))+.5;if(xx<padL+14||xx>padL+pw-14)continue;ctx.strokeStyle='#15171a';ctx.beginPath();ctx.moveTo(xx,padT);ctx.lineTo(xx,padT+ph);ctx.stroke();ctx.fillStyle='#8b9098';
+      const d=new Date(t),lab=dayFmt||((t+off)%(86400e3)===0)?d.toLocaleDateString('en-GB',{timeZone:TZ,day:'numeric',month:'short'}):tm(t);ctx.fillText(lab,xx,H-8)}
+    ctx.fillStyle='#6a6f76';ctx.textAlign='right';ctx.fillText('CET',W-6,H-8);
+    /* start baseline */
+    const last=pts[pts.length-1],col=last.y<start?'#ff7a86':'#2bff88';
+    if(start>=yl&&start<=yh){const by=Math.round(Y(start))+.5;ctx.save();ctx.setLineDash([3,5]);ctx.strokeStyle='#4a4e55';ctx.beginPath();ctx.moveTo(padL,by);ctx.lineTo(padL+pw,by);ctx.stroke();ctx.restore();ctx.fillStyle='#6a6f76';ctx.textAlign='left';ctx.textBaseline='bottom';ctx.fillText('start '+f(start,2),padL+4,by-3)}
+    else{ctx.fillStyle='#6a6f76';ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText('start '+f(start,2)+(start>yh?' ↑':' ↓'),padL+4,start>yh?padT+2:padT+ph-14)}
+    /* line (decimated per px), gaps > 30 min dashed */
+    ctx.save();ctx.beginPath();ctx.rect(padL,padT-4,pw,ph+8);ctx.clip();
+    const segs=[[]];for(let i=0;i<vis.length;i++){if(i&&vis[i].t-vis[i-1].t>EQ.GAP)segs.push([]);segs[segs.length-1].push(vis[i])}
+    const path=s=>{let px=null,mn=0,mx=0,lastp=null;ctx.beginPath();s.forEach((p,j)=>{const x=X(p.t),y=Y(p.y);if(j===0){ctx.moveTo(x,y)}else ctx.lineTo(x,y)})};
+    const grad=ctx.createLinearGradient(0,padT,0,padT+ph);grad.addColorStop(0,col==='#2bff88'?'rgba(43,255,136,.22)':'rgba(255,122,134,.22)');grad.addColorStop(1,'rgba(0,0,0,0)');
+    segs.forEach(s=>{if(!s.length)return;if(s.length===1){ctx.fillStyle=col;ctx.beginPath();ctx.arc(X(s[0].t),Y(s[0].y),2.2,0,7);ctx.fill();return}path(s);ctx.lineTo(X(s[s.length-1].t),padT+ph);ctx.lineTo(X(s[0].t),padT+ph);ctx.closePath();ctx.fillStyle=grad;ctx.fill();path(s);ctx.strokeStyle=col;ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';ctx.stroke()});
+    for(let k=1;k<segs.length;k++){const a=segs[k-1][segs[k-1].length-1],b=segs[k][0];if(!a||!b)continue;ctx.save();ctx.setLineDash([2,4]);ctx.strokeStyle='#3a3d42';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(X(a.t),Y(a.y));ctx.lineTo(X(b.t),Y(b.y));ctx.stroke();ctx.restore();
+      if(X(b.t)-X(a.t)>70){ctx.fillStyle='#55595f';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.font='600 10px '+font;ctx.fillText('bot offline',(X(a.t)+X(b.t))/2,Math.min(Y(a.y),Y(b.y))-6);ctx.font='600 '+fs+'px '+font}}
+    /* trade markers */
+    const yAt=t=>{let j=0;while(j<pts.length-1&&pts[j+1].t<=t)j++;const a=pts[j],b=pts[j+1];if(!b||t<=a.t)return a.y;return a.y+(b.y-a.y)*(t-a.t)/(b.t-a.t)};
+    EQ.vm=[];EQ.marks.forEach(m=>{if(m.t<v.t0||m.t>v.t1)return;const x=X(m.t),y=Y(yAt(m.t));EQ.vm.push({...m,x});ctx.beginPath();if(m.k==='o'){ctx.fillStyle='#8fb3ff';ctx.moveTo(x,y+5);ctx.lineTo(x-4,y+11);ctx.lineTo(x+4,y+11)}else{ctx.fillStyle=m.pnl>=0?'#2bff88':'#ff7a86';ctx.moveTo(x,y-5);ctx.lineTo(x-4,y-11);ctx.lineTo(x+4,y-11)}ctx.closePath();ctx.fill()});
+    /* last point */
+    if(last.t>=v.t0&&last.t<=v.t1){ctx.fillStyle=col;ctx.beginPath();ctx.arc(X(last.t),Y(last.y),3.6,0,7);ctx.fill();ctx.strokeStyle='#0a0c0e';ctx.lineWidth=1.5;ctx.stroke()}
+    ctx.restore();
+    /* right-axis last value tag */
+    {const ly=Math.max(padT+8,Math.min(padT+ph-8,Y(last.y)));ctx.fillStyle=col;const tw=padR-6;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(padL+pw+2,ly-9,tw,18,5);else ctx.rect(padL+pw+2,ly-9,tw,18);ctx.fill();ctx.fillStyle='#00140a';ctx.textAlign='left';ctx.textBaseline='middle';ctx.font='800 '+fs+'px '+font;ctx.fillText(f(last.y,3),padL+pw+6,ly)}
+    /* crosshair */
+    if(EQ.cross!=null){const t=v.t0+(EQ.cross-padL)/pw*(v.t1-v.t0);let b=null,bd=1e99;for(const p of pts){const d=Math.abs(p.t-t);if(d<bd){bd=d;b=p}}
+      if(b&&b.t>=v.t0&&b.t<=v.t1){const x=X(b.t),y=Y(b.y);ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(Math.round(x)+.5,padT);ctx.lineTo(Math.round(x)+.5,padT+ph);ctx.stroke();ctx.fillStyle=col;ctx.beginPath();ctx.arc(x,y,4.5,0,7);ctx.fill();ctx.strokeStyle='#0a0c0e';ctx.stroke();
+        const ch=b.y-start,near=(EQ.vm||[]).filter(m=>Math.abs(m.x-x)<9).slice(0,2).map(m=>m.k==='o'?'bought '+esc(m.sym):'sold '+esc(m.sym)+' '+sg(m.pnl)).join(' · ');
+        EQ.tip('<b>'+f(b.y)+' SOL</b> · '+(ch<0?'−':'+')+f(Math.abs(ch))+' vs start<br><span style="opacity:.75;font-weight:600">'+dtm(b.t)+' CET'+(near?' · '+near:'')+'</span>',ch<0)}else EQ.tip(null)}
+    EQ.showLive();
+    const sh=(v.t1-v.t0)/3600e3;$('cnote').textContent=(EQ.follow?'Live · ':'Viewing history · ')+(sh<48?f(sh,sh<3?1:0)+'h':f(sh/24,1)+'d')+' window · drag or swipe to move · pinch or wheel to zoom · tap for values · ▲ buy ▼ sell'},
+  showLive(){const b=$('eqLive');if(b)b.classList.toggle('on',!EQ.follow&&!!EQ.view)}
 };
-(function bindEqGestures(){const el=$('chart');if(!el||el.dataset.eqBound)return;el.dataset.eqBound='1';
-  const live=$('eqLive');if(live)live.onclick=e=>{e.preventDefault();e.stopPropagation();EQ.resetLive()};
-  let pid=null,sx=0,sy=0,lx=0,ly=0,moved=false,axis=null,pinch0=0,span0=0;
-  const clearHold=()=>{if(EQ.holdTimer){clearTimeout(EQ.holdTimer);EQ.holdTimer=null}};
-  const endAll=()=>{clearHold();if(EQ.mode==='scrub')setTimeout(()=>EQ.clearScrub(),700);EQ.mode=null;EQ.panning=false;EQ.scrubbing=false;axis=null;pid=null;el.style.touchAction='pan-y'};
-  el.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;if(e.target.closest&&e.target.closest('.eq-live'))return;
-    pid=e.pointerId;sx=lx=e.clientX;sy=ly=e.clientY;moved=false;axis=null;EQ.mode=null;
-    try{el.setPointerCapture(e.pointerId)}catch(err){}
-    if(e.pointerType!=='mouse'){clearHold();EQ.holdTimer=setTimeout(()=>{if(!moved){EQ.mode='scrub';EQ.scrubbing=true;EQ.scrubAt(lx);el.style.touchAction='none'}},380)}
-    else{EQ.mode='pan'}
-  });
-  el.addEventListener('pointermove',e=>{if(pid!==e.pointerId)return;const dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;const adx=Math.abs(e.clientX-sx),ady=Math.abs(e.clientY-sy);
-    if(!moved&&adx+ady>6){moved=true;clearHold();if(!EQ.mode){if(ady>adx*1.15){endAll();return}EQ.mode='pan';EQ.panning=true;el.style.touchAction='none'}}
-    if(EQ.mode==='scrub'){EQ.scrubAt(e.clientX);e.preventDefault();return}
-    if(EQ.mode==='pan'){EQ.panByPx(dx);e.preventDefault();return}
-  });
-  el.addEventListener('pointerup',endAll);el.addEventListener('pointercancel',endAll);el.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'){EQ.clearScrub();if(EQ.mode==='pan')endAll()}});
-  el.addEventListener('lostpointercapture',endAll);
-  /* Desktop hover tip */
-  el.addEventListener('mousemove',e=>{if(EQ.mode||EQ.panning)return;if(e.buttons)return;EQ.hoverTip(e.clientX)});
-  el.addEventListener('mouseleave',()=>{if(!EQ.scrubbing)EQ.clearScrub()});
-  /* Wheel zoom */
-  el.addEventListener('wheel',e=>{e.preventDefault();const f=e.deltaY>0?1.18:1/1.18;EQ.zoomAt(f,e.clientX)},{passive:false});
-  /* Pinch zoom */
-  el.addEventListener('touchstart',e=>{if(e.touches.length===2){clearHold();EQ.mode='pinch';pinch0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);span0=EQ.spanMs||(EQ.geom?(EQ.geom.t1-EQ.geom.t0):3.6e6);el.style.touchAction='none'}},{passive:true});
-  el.addEventListener('touchmove',e=>{if(EQ.mode==='pinch'&&e.touches.length===2){e.preventDefault();const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);if(pinch0>0){const mid=(e.touches[0].clientX+e.touches[1].clientX)/2;const factor=pinch0/Math.max(10,d);const g=EQ.geom;if(!g)return;let span=Math.max(EQ.minSpan,Math.min(g.data1-g.data0,span0*factor));EQ.spanMs=span;EQ.follow=false;const rel=Math.max(0,Math.min(1,(mid-el.getBoundingClientRect().left)/(el.getBoundingClientRect().width||1)));const anchor=g.t0+rel*(g.t1-g.t0);EQ.endT=Math.min(g.data1,Math.max(g.data0+span,anchor+span*(g.t1-anchor)/Math.max(1,g.t1-g.t0)));EQ.render()}}},{passive:false});
-  el.addEventListener('touchend',e=>{if(e.touches.length<2&&EQ.mode==='pinch')endAll()},{passive:true});
+(function bindEqGestures(){const el=$('chart');if(!el||el.dataset.eqBound)return;el.dataset.eqBound='1';el.style.touchAction='pan-y';
+  const live=$('eqLive');if(live){live.textContent='Live ⟶';live.onclick=e=>{e.preventDefault();e.stopPropagation();EQ.resetLive()}}
+  const relX=cx=>cx-el.getBoundingClientRect().left;
+  /* mouse: drag pan, hover tooltip, wheel zoom (shift/trackpad sideways = pan) */
+  let md=null;
+  el.addEventListener('mousedown',e=>{if(e.button!==0||e.target.closest('.eq-live'))return;md={x:e.clientX,moved:false};e.preventDefault()});
+  addEventListener('mousemove',e=>{if(md){const dx=e.clientX-md.x;if(Math.abs(dx)>2)md.moved=true;md.x=e.clientX;if(md.moved){EQ.cross=null;EQ.tip(null);EQ.pan(dx)}return}
+    if(e.target.closest&&e.target.closest('#chart')&&!e.target.closest('.eq-live')){EQ.cross=relX(e.clientX);EQ.schedule()}});
+  addEventListener('mouseup',()=>{md=null});
+  el.addEventListener('mouseleave',()=>{if(!md){EQ.cross=null;EQ.tip(null);EQ.schedule()}});
+  el.addEventListener('wheel',e=>{if(!EQ.g)return;e.preventDefault();if(Math.abs(e.deltaX)>Math.abs(e.deltaY)||e.shiftKey){EQ.pan(-(e.deltaX||e.deltaY))}else EQ.zoom(Math.exp(e.deltaY*(e.ctrlKey?.01:.0015)),e.clientX)},{passive:false});
+  /* touch: horizontal swipe pans (vertical still scrolls the page), pinch zooms, tap shows values */
+  let ts=null,vel=0,lt=0,mom=0;
+  const stopMom=()=>{if(mom){cancelAnimationFrame(mom);mom=0}};
+  el.addEventListener('touchstart',e=>{if(e.target.closest('.eq-live'))return;stopMom();if(e.touches.length===2){const a=e.touches[0],b=e.touches[1];ts={pinch:true,d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)||1,mid:(a.clientX+b.clientX)/2,view:EQ.view&&{...EQ.view},follow:EQ.follow};return}
+    const t=e.touches[0];ts={x0:t.clientX,y0:t.clientY,x:t.clientX,axis:null,t0:Date.now()};vel=0;lt=Date.now()},{passive:true});
+  el.addEventListener('touchmove',e=>{if(!ts)return;
+    if(ts.pinch){if(e.touches.length<2||!ts.view||!EQ.g)return;e.preventDefault();e.stopPropagation();const a=e.touches[0],b=e.touches[1],d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)||1,g=EQ.g,r=el.getBoundingClientRect(),v0=ts.view,sp0=v0.t1-v0.t0,fr0=Math.max(0,Math.min(1,(ts.mid-r.left-g.padL)/g.pw)),anchor=v0.t0+fr0*sp0,ns=sp0*ts.d/d,mid=(a.clientX+b.clientX)/2,fr=Math.max(0,Math.min(1,(mid-r.left-g.padL)/g.pw));
+      EQ.view={t0:anchor-fr*ns,t1:anchor-fr*ns+ns};EQ.follow=false;EQ.clampView();if(ts.follow&&fr0>.85){EQ.follow=true;EQ.followLive()}EQ.cross=null;EQ.tip(null);EQ.schedule();return}
+    const t=e.touches[0],ax=Math.abs(t.clientX-ts.x0),ay=Math.abs(t.clientY-ts.y0);
+    if(!ts.axis&&ax+ay>7)ts.axis=ax>ay?'x':'y';
+    if(ts.axis==='x'){e.preventDefault();e.stopPropagation();const dx=t.clientX-ts.x,now=Date.now();vel=.8*vel+.2*(dx/Math.max(1,now-lt));lt=now;ts.x=t.clientX;EQ.cross=null;EQ.tip(null);EQ.pan(dx)}},{passive:false});
+  el.addEventListener('touchend',e=>{if(!ts)return;const s=ts;if(s.pinch){if(e.touches.length===0)ts=null;return}ts=null;
+    if(!s.axis&&Date.now()-s.t0<500){EQ.cross=relX(s.x0);EQ.schedule();clearTimeout(EQ._tt);EQ._tt=setTimeout(()=>{EQ.cross=null;EQ.tip(null);EQ.schedule()},4000);return}
+    if(s.axis==='x'&&Math.abs(vel)>.15){let v=vel*16;const step=()=>{v*=.92;if(Math.abs(v)<.5||EQ.follow){mom=0;return}EQ.pan(v);mom=requestAnimationFrame(step)};mom=requestAnimationFrame(step)}},{passive:true});
+  el.addEventListener('touchcancel',()=>{ts=null},{passive:true});
+  if(window.ResizeObserver)new ResizeObserver(()=>EQ.schedule()).observe(el);else addEventListener('resize',()=>EQ.schedule());
+  document.addEventListener('keydown',e=>{if(document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;if(LC&&!$('livechart').classList.contains('hide'))return;if(TAB!=='home'||!EQ.g)return;if(e.key==='ArrowLeft')EQ.pan(EQ.g.pw*.15);else if(e.key==='ArrowRight')EQ.pan(-EQ.g.pw*.15)});
 })();
 function parts(ps,io){return (io?'<span class="chip g" style="margin-right:6px">Initials out</span>':'')+(ps&&ps.length?'<div class="lbl" style="margin:6px 0">Partial sells:</div>'+ps.map(e=>'<div class="li"><span>'+esc(/initials/.test(e.reason)?'Initials out':(e.reason||'').split(':')[0])+' · '+tm(e.timestamp)+(e.market_cap?' · '+mc(e.market_cap):'')+'</span><i>'+amt(e.amount_sol)+' · <span class="'+cls(e.pnl_sol)+'">'+samt(e.pnl_sol)+'</span></i></div>').join(''):'')}
 function wl(list){return list&&list.length?'<div class="wl">'+list.map(w=>'<i>🐋 '+esc(w)+'</i>').join('')+'</div>':''}
@@ -493,7 +499,7 @@ const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',
 $('notif').onclick=async()=>{if(!window.Notification){toast('Notifications not supported here');return}const p=await Notification.requestPermission();toast(p==='granted'?'Alerts on while the app is open':'Alerts not allowed')};
 document.querySelectorAll('.tg').forEach(b=>{b.classList.toggle('on',!!S[b.dataset.k]);b.setAttribute('aria-pressed',!!S[b.dataset.k]);b.onclick=()=>{S[b.dataset.k]=!S[b.dataset.k];save();b.classList.toggle('on',S[b.dataset.k]);b.setAttribute('aria-pressed',S[b.dataset.k]);if(D)render()}});
 const seg=(id,fn)=>$(id).onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$(id).children].forEach(x=>x.classList.toggle('on',x===b));fn(b);};
-seg('tabs',b=>{R=b.dataset.r==='live'?'live':+b.dataset.r;if(typeof EQ!=='undefined')EQ.setRange(R);else if(D)drawChart()});seg('pseg',b=>{PS=b.dataset.p;if(D)renderStats()});seg('hseg',b=>{HF=b.dataset.h;if(D)renderHist()});
+seg('tabs',b=>{R=b.dataset.r;if(typeof EQ!=='undefined')EQ.setRange(R)});seg('pseg',b=>{PS=b.dataset.p;if(D)renderStats()});seg('hseg',b=>{HF=b.dataset.h;if(D)renderHist()});
 $('seeall').onclick=e=>{e.preventDefault();ALL=!ALL;if(D)renderFeed()};$('refresh').onclick=()=>{toast('Refreshing…');load()};
 if($('wsearch')){$('wsearch').oninput=()=>{if(D)renderWhales()};$('wsearch').onkeydown=e=>{if(e.key==='Escape'){$('wsearch').value='';if(D)renderWhales()}}};
 $('cards').onscroll=()=>{const c=$('cards'),i=Math.round(c.scrollLeft/((c.firstChild&&c.firstChild.offsetWidth+12)||1));[...$('dots').children].forEach((d,j)=>d.classList.toggle('on',j===i))};
