@@ -1,7 +1,7 @@
 {
  "paper": true,
- "generated_at": "2026-11-25T09:11:28+01:00",
- "data_asof": "2026-11-25T09:11:27+01:00",
+ "generated_at": "2026-11-25T09:12:12+01:00",
+ "data_asof": "2026-11-25T09:12:12+01:00",
  "start_sol": 3.0,
  "cash_sol": 1.7441944414129125,
  "equity_sol": 1.7441944414129125,
@@ -14,37 +14,38 @@
  "open_positions": 0,
  "win_rate": 0.42391304347826086,
  "last_poll": {
-  "timestamp": "2026-11-25T09:11:27+01:00",
+  "timestamp": "2026-11-25T09:12:12+01:00",
   "mode": "24/7",
-  "slot": 473674712,
+  "slot": 473674926,
   "wallets_polled": 73,
   "wallets_total": 73,
   "eligible_wallets": 56,
   "baseline_wallets": 0,
-  "parsed_transactions": 1,
+  "parsed_transactions": 0,
   "new_swap_events": 0,
-  "convergence_signals": 8,
-  "backlog_wallets": [],
+  "convergence_signals": 7,
+  "backlog_wallets": [
+   "Pain"
+  ],
   "errors": [],
   "wallet_errors": [],
   "wallets_due": 73,
   "wallets_skipped_by_tier": 0,
-  "sol_usd": 67.82,
-  "market_data_at": "2026-11-25T09:11:27+01:00",
+  "sol_usd": 67.69,
+  "market_data_at": "2026-11-25T09:12:12+01:00",
   "rpc_calls": {
    "getSlot": 1,
-   "http:solana-rpc.publicnode.com": 6,
+   "http:solana-rpc.publicnode.com": 5,
    "getSignaturesForAddress": 73,
-   "batch_http": 5,
-   "getTransaction": 1,
+   "batch_http": 4,
    "DexScreener": 1
   },
   "poll_interval_s": 15,
-  "prev_cycle_s": 3.6,
+  "prev_cycle_s": 2.0,
   "rpc_429s": 0,
   "position_monitor": "alive",
   "last_mark": {
-   "timestamp": "2026-11-25T09:11:25+01:00",
+   "timestamp": "2026-11-25T09:12:10+01:00",
    "ok": false,
    "positions": 0,
    "interval_target_s": 1.0,
@@ -9702,7 +9703,7 @@
  ],
  "equity": [
   {
-   "timestamp": "2026-11-23T05:50:24+01:00",
+   "timestamp": "2026-11-23T05:51:10+01:00",
    "equity_sol": 1.581888410507697,
    "stale": false
   },
@@ -10252,12 +10253,7 @@
    "stale": false
   },
   {
-   "timestamp": "2026-11-24T09:07:46+01:00",
-   "equity_sol": 1.434647840003346,
-   "stale": false
-  },
-  {
-   "timestamp": "2026-11-24T09:11:58+01:00",
+   "timestamp": "2026-11-24T09:12:12+01:00",
    "equity_sol": 1.434647840003346,
    "stale": false
   },
@@ -12897,11 +12893,6 @@
    "stale": false
   },
   {
-   "timestamp": "2026-11-25T07:11:26+01:00",
-   "equity_sol": 1.7441944414129125,
-   "stale": false
-  },
-  {
    "timestamp": "2026-11-25T07:11:40+01:00",
    "equity_sol": 1.7441944414129125,
    "stale": false
@@ -14140,9 +14131,136 @@
    "timestamp": "2026-11-25T09:11:27+01:00",
    "equity_sol": 1.7441944414129125,
    "stale": false
+  },
+  {
+   "timestamp": "2026-11-25T09:11:43+01:00",
+   "equity_sol": 1.7441944414129125,
+   "stale": false
+  },
+  {
+   "timestamp": "2026-11-25T09:11:57+01:00",
+   "equity_sol": 1.7441944414129125,
+   "stale": false
+  },
+  {
+   "timestamp": "2026-11-25T09:12:12+01:00",
+   "equity_sol": 1.7441944414129125,
+   "stale": false
   }
  ],
  "decisions": [
+  {
+   "timestamp": "2026-11-25T09:12:12+01:00",
+   "paper": true,
+   "action": "POLL",
+   "reason": "73/73 wallets checked; 0 new swaps; 7 convergence signals",
+   "mode": "24/7",
+   "slot": 473674926,
+   "wallets_polled": 73,
+   "wallets_total": 73,
+   "eligible_wallets": 56,
+   "baseline_wallets": 0,
+   "parsed_transactions": 0,
+   "new_swap_events": 0,
+   "convergence_signals": 7,
+   "backlog_wallets": [
+    "Pain"
+   ],
+   "errors": [],
+   "wallet_errors": [],
+   "wallets_due": 73,
+   "wallets_skipped_by_tier": 0,
+   "sol_usd": 67.69,
+   "market_data_at": "2026-11-25T09:12:12+01:00",
+   "rpc_calls": {
+    "getSlot": 1,
+    "http:solana-rpc.publicnode.com": 5,
+    "getSignaturesForAddress": 73,
+    "batch_http": 4,
+    "DexScreener": 1
+   },
+   "poll_interval_s": 15,
+   "prev_cycle_s": 2.0,
+   "rpc_429s": 0
+  },
+  {
+   "timestamp": "2026-11-25T09:12:12+01:00",
+   "paper": true,
+   "action": "REJECT",
+   "reason": "edge filter: whale buy only 0.21 SOL (< 0.5 SOL min)",
+   "mint": "9coSqc3mskpSQyi4bYNGKfz9PvLYbRrgAgepHirFpump",
+   "market_cap": 2561.32,
+   "why": "Tracked wallet buy: Tally \uaa04\ufe0e"
+  },
+  {
+   "timestamp": "2026-11-25T09:11:57+01:00",
+   "paper": true,
+   "action": "POLL",
+   "reason": "73/73 wallets checked; 0 new swaps; 7 convergence signals",
+   "mode": "24/7",
+   "slot": 473674856,
+   "wallets_polled": 73,
+   "wallets_total": 73,
+   "eligible_wallets": 56,
+   "baseline_wallets": 0,
+   "parsed_transactions": 2,
+   "new_swap_events": 0,
+   "convergence_signals": 7,
+   "backlog_wallets": [
+    "Fz7",
+    "Pain"
+   ],
+   "errors": [],
+   "wallet_errors": [],
+   "wallets_due": 73,
+   "wallets_skipped_by_tier": 0,
+   "sol_usd": 67.69,
+   "market_data_at": "2026-11-25T09:11:57+01:00",
+   "rpc_calls": {
+    "getSlot": 1,
+    "http:solana-rpc.publicnode.com": 7,
+    "getSignaturesForAddress": 73,
+    "batch_http": 6,
+    "getTransaction": 2,
+    "DexScreener": 1
+   },
+   "poll_interval_s": 15,
+   "prev_cycle_s": 2.5,
+   "rpc_429s": 0
+  },
+  {
+   "timestamp": "2026-11-25T09:11:43+01:00",
+   "paper": true,
+   "action": "POLL",
+   "reason": "73/73 wallets checked; 1 new swaps; 8 convergence signals",
+   "mode": "24/7",
+   "slot": 473674783,
+   "wallets_polled": 73,
+   "wallets_total": 73,
+   "eligible_wallets": 56,
+   "baseline_wallets": 0,
+   "parsed_transactions": 3,
+   "new_swap_events": 1,
+   "convergence_signals": 8,
+   "backlog_wallets": [],
+   "errors": [],
+   "wallet_errors": [],
+   "wallets_due": 73,
+   "wallets_skipped_by_tier": 0,
+   "sol_usd": 67.62,
+   "market_data_at": "2026-11-25T09:11:43+01:00",
+   "rpc_calls": {
+    "getSlot": 1,
+    "http:solana-rpc.publicnode.com": 8,
+    "getSignaturesForAddress": 73,
+    "batch_http": 7,
+    "getTransaction": 3,
+    "DexScreener": 1
+   },
+   "poll_interval_s": 15,
+   "prev_cycle_s": 2.1,
+   "rpc_429s": 0
+  },
   {
    "timestamp": "2026-11-25T09:11:27+01:00",
    "paper": true,
@@ -16189,70 +16307,6 @@
    "poll_interval_s": 15,
    "prev_cycle_s": 4.3,
    "rpc_429s": 4
-  },
-  {
-   "timestamp": "2026-11-25T08:49:34+01:00",
-   "paper": true,
-   "action": "REJECT",
-   "reason": "poll incomplete for signal wallet(s) Tally \uaa04\ufe0e, Tally \uaa04\ufe0e; entries fail closed",
-   "mint": "8vSuXCFgQFSmTx4okY687iMyZYSSSmaytnr4WSdFpump",
-   "market_cap": 8652.58,
-   "why": "Tracked wallet buy: Tally \uaa04\ufe0e"
-  },
-  {
-   "timestamp": "2026-11-25T08:49:34+01:00",
-   "paper": true,
-   "action": "REJECT",
-   "reason": "fresh quote unavailable",
-   "mint": "CJ7yyszVTpmNEV664sREnAPqm5U71BquccujVBabj2JJ",
-   "market_cap": null,
-   "why": "Tracked wallet buy: Thesis \u270d\ufe0f"
-  },
-  {
-   "timestamp": "2026-11-25T08:43:09+01:00",
-   "paper": true,
-   "action": "POLL",
-   "reason": "73/73 wallets checked; 6 new swaps; 5 convergence signals",
-   "mode": "24/7",
-   "slot": 473666781,
-   "wallets_polled": 73,
-   "wallets_total": 73,
-   "eligible_wallets": 56,
-   "baseline_wallets": 0,
-   "parsed_transactions": 7,
-   "new_swap_events": 6,
-   "convergence_signals": 5,
-   "backlog_wallets": [
-    "Pain"
-   ],
-   "errors": [],
-   "wallet_errors": [],
-   "wallets_due": 73,
-   "wallets_skipped_by_tier": 0,
-   "sol_usd": 67.91,
-   "market_data_at": "2026-11-25T08:43:09+01:00",
-   "rpc_calls": {
-    "getSlot": 1,
-    "http:solana-rpc.publicnode.com": 8,
-    "getSignaturesForAddress": 73,
-    "batch_http": 7,
-    "getTransaction": 7,
-    "http:api.mainnet-beta.solana.com": 2,
-    "DexScreener": 1,
-    "RugCheck": 1
-   },
-   "poll_interval_s": 15,
-   "prev_cycle_s": 2.4,
-   "rpc_429s": 0
-  },
-  {
-   "timestamp": "2026-11-25T08:43:09+01:00",
-   "paper": true,
-   "action": "REJECT",
-   "reason": "narrative: no X or Telegram social listed (score 40)",
-   "mint": "HRqyAfBd1t5HEB8N6wyx5MxwVspikPgVcBwm73repump",
-   "market_cap": 1931.5,
-   "why": "Tracked wallet buy: Tally \uaa04\ufe0e"
   }
  ],
  "wallets": [
@@ -22338,13 +22392,13 @@
    "pnl_sol_30d": 3224.2,
    "win_rate": 0.7420066152149944,
    "last_activity": "2026-11-25T04:00:47+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-10-25T22:20:00+01:00",
-   "stats_age_days": 30.45240741574654,
+   "stats_age_days": 30.452927652015177,
    "stats_stale": true
   },
   {
@@ -22355,13 +22409,13 @@
    "pnl_sol_30d": 642.9,
    "win_rate": 0.5220338983050847,
    "last_activity": "2026-11-24T18:51:40+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": 0.04409594067063777,
    "copy_wins": 1,
    "stats_asof": "2026-10-25T22:20:00+01:00",
-   "stats_age_days": 30.45240741574654,
+   "stats_age_days": 30.452927652015177,
    "stats_stale": true
   },
   {
@@ -22372,13 +22426,13 @@
    "pnl_sol_30d": 554.9,
    "win_rate": 0.5729166666666666,
    "last_activity": "2026-11-25T09:09:08+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-10-25T22:20:00+01:00",
-   "stats_age_days": 30.45240741574654,
+   "stats_age_days": 30.452927652015177,
    "stats_stale": true
   },
   {
@@ -22389,13 +22443,13 @@
    "pnl_sol_30d": 229.6,
    "win_rate": 0.6237623762376238,
    "last_activity": "2026-11-25T06:42:15+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-10-25T22:20:00+01:00",
-   "stats_age_days": 30.45240741574654,
+   "stats_age_days": 30.452927652015177,
    "stats_stale": true
   },
   {
@@ -22406,13 +22460,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:07:52+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
-   "signalled_buys": 46,
+   "checked_at": "2026-11-25T09:12:12+01:00",
+   "signalled_buys": 45,
    "copies": 3,
    "copy_pnl_sol": 0.33164832397306554,
    "copy_wins": 3,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22423,13 +22477,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:56:26+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22440,13 +22494,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:10:05+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 3,
    "copy_pnl_sol": -0.05688229750229766,
    "copy_wins": 2,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22457,13 +22511,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:47:57+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.06746678607097825,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22474,13 +22528,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T05:50:27+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22491,13 +22545,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T23:05:53+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22508,13 +22562,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:21:34+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": -0.06314201097977462,
    "copy_wins": 1,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22525,13 +22579,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:09:28+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
-   "signalled_buys": 11,
+   "checked_at": "2026-11-25T09:12:12+01:00",
+   "signalled_buys": 8,
    "copies": 4,
    "copy_pnl_sol": 0.02162560288026205,
    "copy_wins": 2,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22542,13 +22596,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T22:03:50+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": 0.06804449344551511,
    "copy_wins": 1,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22559,13 +22613,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T23:46:46+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22576,13 +22630,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:09:17+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.0040655610411631515,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22593,13 +22647,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:08:52+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22609,14 +22663,14 @@
    "status": "active (user override, unproven)",
    "pnl_sol_30d": null,
    "win_rate": null,
-   "last_activity": "2026-11-25T09:11:09+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "last_activity": "2026-11-25T09:11:55+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22627,13 +22681,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-23T16:47:46+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": 0.09926434365810752,
    "copy_wins": 1,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22644,13 +22698,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T08:42:54+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22661,13 +22715,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:08:29+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22678,13 +22732,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T01:15:37+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22695,13 +22749,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:09:18+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 4,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22712,13 +22766,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T07:00:12+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 15,
    "copy_pnl_sol": -0.05186147564844024,
    "copy_wins": 5,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22729,13 +22783,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T20:59:01+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22746,13 +22800,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:09:35+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 4,
    "copies": 2,
    "copy_pnl_sol": 0.01868805188338045,
    "copy_wins": 2,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22763,13 +22817,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-23T14:40:46+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:05:00+01:00",
-   "stats_age_days": 16.42115741574654,
+   "stats_age_days": 16.421677652015177,
    "stats_stale": true
   },
   {
@@ -22780,7 +22834,7 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-23T15:02:56+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
@@ -22797,13 +22851,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T22:02:04+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:40:00+01:00",
-   "stats_age_days": 16.39685186019098,
+   "stats_age_days": 16.397372096459623,
    "stats_stale": true
   },
   {
@@ -22814,13 +22868,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T05:33:54+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:40:00+01:00",
-   "stats_age_days": 16.39685186019098,
+   "stats_age_days": 16.397372096459623,
    "stats_stale": true
   },
   {
@@ -22831,13 +22885,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T06:04:32+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": -0.0707174323151235,
    "copy_wins": 1,
    "stats_asof": "2026-11-08T23:40:00+01:00",
-   "stats_age_days": 16.39685186019098,
+   "stats_age_days": 16.397372096459623,
    "stats_stale": true
   },
   {
@@ -22848,13 +22902,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T22:04:13+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:40:00+01:00",
-   "stats_age_days": 16.39685186019098,
+   "stats_age_days": 16.397372096459623,
    "stats_stale": true
   },
   {
@@ -22865,13 +22919,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T06:16:59+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.09738787123630599,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:40:00+01:00",
-   "stats_age_days": 16.39685186019098,
+   "stats_age_days": 16.397372096459623,
    "stats_stale": true
   },
   {
@@ -22882,13 +22936,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T17:38:06+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-08T23:40:00+01:00",
-   "stats_age_days": 16.39685186019098,
+   "stats_age_days": 16.397372096459623,
    "stats_stale": true
   },
   {
@@ -22899,13 +22953,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:09:57+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 3,
    "copy_pnl_sol": 0.011057668894006695,
    "copy_wins": 2,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -22916,13 +22970,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T06:30:37+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -22932,14 +22986,14 @@
    "status": "active (user override, unproven)",
    "pnl_sol_30d": null,
    "win_rate": null,
-   "last_activity": "2026-11-25T09:10:49+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
-   "signalled_buys": 2,
+   "last_activity": "2026-11-25T09:12:08+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
+   "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.06823789823630111,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -22950,13 +23004,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T16:17:15+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": 0.02233085863310723,
    "copy_wins": 2,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -22967,13 +23021,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T00:52:13+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 3,
    "copy_pnl_sol": 0.19647656998334534,
    "copy_wins": 2,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -22984,13 +23038,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T07:35:21+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": 0.10230923199235578,
    "copy_wins": 1,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23001,13 +23055,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:09:09+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": 0.08449526790852159,
    "copy_wins": 2,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23018,13 +23072,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T05:36:55+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23035,13 +23089,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T03:43:35+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23052,13 +23106,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T19:44:48+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23069,13 +23123,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T01:40:31+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23086,13 +23140,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T06:40:03+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23103,13 +23157,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T06:49:04+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23120,13 +23174,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:02:42+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 1,
    "copies": 3,
    "copy_pnl_sol": -0.053425519415706085,
    "copy_wins": 1,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23137,13 +23191,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:21:00+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23154,13 +23208,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-23T00:06:08+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23171,13 +23225,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:14:23+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23188,13 +23242,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T01:15:02+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": 0.05476944708697756,
    "copy_wins": 1,
    "stats_asof": "2026-11-09T00:15:00+01:00",
-   "stats_age_days": 16.372546304635428,
+   "stats_age_days": 16.373066540904066,
    "stats_stale": true
   },
   {
@@ -23205,13 +23259,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:11:03+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": 0.18070576292618898,
    "copy_wins": 1,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23221,14 +23275,14 @@
    "status": "active (user override, unproven)",
    "pnl_sol_30d": null,
    "win_rate": null,
-   "last_activity": "2026-11-25T09:09:17+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "last_activity": "2026-11-25T09:11:55+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23239,13 +23293,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:41:30+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23255,14 +23309,14 @@
    "status": "active (user override, unproven)",
    "pnl_sol_30d": null,
    "win_rate": null,
-   "last_activity": "2026-11-25T09:10:59+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "last_activity": "2026-11-25T09:12:11+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23273,13 +23327,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T03:33:04+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.10953171168598932,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23289,14 +23343,14 @@
    "status": "paused: address activity too noisy (>=40 successful touches/30m)",
    "pnl_sol_30d": null,
    "win_rate": null,
-   "last_activity": "2026-11-25T09:11:10+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
-   "signalled_buys": 7,
+   "last_activity": "2026-11-25T09:11:32+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
+   "signalled_buys": 8,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23307,13 +23361,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T07:24:56+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.13299333728807658,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23324,13 +23378,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:47:15+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23341,13 +23395,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:09:11+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": 0.026300170952471363,
    "copy_wins": 2,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23358,13 +23412,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T22:03:59+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.0791864553765394,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23375,13 +23429,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:47:17+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23392,13 +23446,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:41:56+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23409,13 +23463,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:11:23+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23426,13 +23480,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T07:24:53+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 2,
    "copy_pnl_sol": 0.05949641780854503,
    "copy_wins": 2,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23443,13 +23497,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T03:47:03+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23460,13 +23514,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T07:20:45+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23477,13 +23531,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:25:36+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23494,13 +23548,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T22:05:21+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.09436322706006428,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23510,14 +23564,14 @@
    "status": "active (user override, unproven)",
    "pnl_sol_30d": null,
    "win_rate": null,
-   "last_activity": "2026-11-25T09:10:52+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
-   "signalled_buys": 26,
+   "last_activity": "2026-11-25T09:11:34+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
+   "signalled_buys": 25,
    "copies": 2,
    "copy_pnl_sol": -0.09320858360206316,
    "copy_wins": 1,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23528,13 +23582,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T09:09:08+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 1,
    "copies": 2,
    "copy_pnl_sol": 0.04198298105127027,
    "copy_wins": 1,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23545,13 +23599,13 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-25T08:56:10+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 1,
    "copy_pnl_sol": -0.06746678607097825,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   },
   {
@@ -23562,17 +23616,26 @@
    "pnl_sol_30d": null,
    "win_rate": null,
    "last_activity": "2026-11-24T17:05:51+01:00",
-   "checked_at": "2026-11-25T09:11:27+01:00",
+   "checked_at": "2026-11-25T09:12:12+01:00",
    "signalled_buys": 0,
    "copies": 0,
    "copy_pnl_sol": 0,
    "copy_wins": 0,
    "stats_asof": "2026-11-15T22:20:00+01:00",
-   "stats_age_days": 9.452407415746539,
+   "stats_age_days": 9.452927652015179,
    "stats_stale": true
   }
  ],
  "blocked": [
+  {
+   "timestamp": "2026-11-25T09:12:12+01:00",
+   "symbol": "thesisdog",
+   "mint": "9coSqc3mskpSQyi4bYNGKfz9PvLYbRrgAgepHirFpump",
+   "market_cap": 2561.32,
+   "reason": "edge filter: whale buy only 0.21 SOL (< 0.5 SOL min)",
+   "category": "edge filter",
+   "why": "Tracked wallet buy: Tally \uaa04\ufe0e"
+  },
   {
    "timestamp": "2026-11-25T09:11:14+01:00",
    "symbol": "JaoJiu",
@@ -24013,35 +24076,17 @@
    "reason": "RugCheck: copycat token",
    "category": "rugcheck",
    "why": "Tracked wallet buy: Tally \uaa04\ufe0e"
-  },
-  {
-   "timestamp": "2026-11-25T08:13:19+01:00",
-   "symbol": "Feedcoin",
-   "mint": "CUdfgSprZDfrBUmotDy69hfTaDHSxwAMrJoCwdRt3vpP",
-   "market_cap": 2529.48,
-   "reason": "poll incomplete for signal wallet(s) Tally \uaa04\ufe0e; entries fail closed",
-   "category": "incomplete poll",
-   "why": "Tracked wallet buy: Tally \uaa04\ufe0e"
   }
  ],
  "pending": [
   {
-   "mint": "9coSqc3mskpSQyi4bYNGKfz9PvLYbRrgAgepHirFpump",
+   "mint": "Fy4kRHZ55TffuKSjke3iU8f9zK3C2PB9UYcdVrwgpump",
    "wallets": [
-    "Tally \uaa04\ufe0e"
+    "West"
    ],
-   "eligible": true,
-   "first_buy_at": "2026-11-25T08:41:29+01:00",
-   "expires_at": "2026-11-25T09:11:29+01:00"
-  },
-  {
-   "mint": "D6UwzJLsY49L4c3Xpu8Xm11sB4rAWt1yUB2GCiCPpump",
-   "wallets": [
-    "R4"
-   ],
-   "eligible": true,
-   "first_buy_at": "2026-11-25T08:41:45+01:00",
-   "expires_at": "2026-11-25T09:11:45+01:00"
+   "eligible": false,
+   "first_buy_at": "2026-11-25T08:42:13+01:00",
+   "expires_at": "2026-11-25T09:12:13+01:00"
   },
   {
    "mint": "HRqyAfBd1t5HEB8N6wyx5MxwVspikPgVcBwm73repump",
@@ -24114,6 +24159,15 @@
    "eligible": false,
    "first_buy_at": "2026-11-25T08:44:15+01:00",
    "expires_at": "2026-11-25T09:14:15+01:00"
+  },
+  {
+   "mint": "9coSqc3mskpSQyi4bYNGKfz9PvLYbRrgAgepHirFpump",
+   "wallets": [
+    "Tally \uaa04\ufe0e"
+   ],
+   "eligible": true,
+   "first_buy_at": "2026-11-25T08:43:17+01:00",
+   "expires_at": "2026-11-25T09:13:17+01:00"
   },
   {
    "mint": "2UyrvgCRXiEwiKRVk96gs6B4myrBHZAfcLyMVLE8vSCy",
@@ -24233,15 +24287,6 @@
    "expires_at": "2026-11-25T09:36:22+01:00"
   },
   {
-   "mint": "CRs2U6DkeUgCv1AtcVVPa8yKh1KSecUF3MCkVEtipump",
-   "wallets": [
-    "Fz7"
-   ],
-   "eligible": true,
-   "first_buy_at": "2026-11-25T09:08:07+01:00",
-   "expires_at": "2026-11-25T09:38:07+01:00"
-  },
-  {
    "mint": "2FCbrWeQT5Jhs6N1VHhndyj43UuwGTBd42V72jxTUsjf",
    "wallets": [
     "Thesis \u270d\ufe0f"
@@ -24258,15 +24303,6 @@
    "eligible": true,
    "first_buy_at": "2026-11-25T09:09:34+01:00",
    "expires_at": "2026-11-25T09:39:34+01:00"
-  },
-  {
-   "mint": "F3bvQPEv5nEF6thLUUbKTZVRmcvuoVmhBoL77vDzpump",
-   "wallets": [
-    "Fz7"
-   ],
-   "eligible": true,
-   "first_buy_at": "2026-11-25T09:10:06+01:00",
-   "expires_at": "2026-11-25T09:40:06+01:00"
   },
   {
    "mint": "BD5NnhcNkibxjbGeUyDBvTpB5iTfJvWXfgbZLVQ3pump",
@@ -24288,13 +24324,15 @@
   }
  ],
  "health": {
-  "polls_sampled": 144,
-  "polls_ok": 89,
-  "success_rate": 0.6180555555555556,
+  "polls_sampled": 143,
+  "polls_ok": 86,
+  "success_rate": 0.6013986013986014,
   "rpc_ok": true,
   "wallets_due": 73,
   "wallets_skipped_by_tier": 0,
-  "backlog_wallets": [],
+  "backlog_wallets": [
+   "Pain"
+  ],
   "dexscreener_ok": true,
   "bot_started_at": "2026-11-22T20:42:38+01:00",
   "state_started_at": "2026-11-08T22:23:11+01:00",
@@ -24431,7 +24469,7 @@
    },
    {
     "rule": "All data sources healthy & consistent",
-    "value": "OK",
+    "value": "OK \u00b7 backlog blocks only signals from Pain",
     "ok": true
    }
   ],
